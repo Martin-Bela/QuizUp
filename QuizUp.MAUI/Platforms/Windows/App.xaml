@@ -1,8 +1,8 @@
 ﻿<maui:MauiWinUIApplication
-    x:Class="QuizUp___MAUI.WinUI.App"
+    x:Class="QuizUp.MAUI.WinUI.App"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:maui="using:Microsoft.Maui"
-    xmlns:local="using:QuizUp_MAUI.WinUI">
+    xmlns:local="using:QuizUp.MAUI.WinUI">
 
 </maui:MauiWinUIApplication>

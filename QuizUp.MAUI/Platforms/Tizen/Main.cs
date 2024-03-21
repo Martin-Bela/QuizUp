@@ -2,7 +2,7 @@ using Microsoft.Maui;
 using Microsoft.Maui.Hosting;
 using System;
 
-namespace QuizUp___MAUI
+namespace QuizUp.MAUI
 {
     internal class Program : MauiApplication
     {

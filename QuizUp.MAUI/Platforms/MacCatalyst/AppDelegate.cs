@@ -1,6 +1,6 @@
 ﻿using Foundation;
 
-namespace QuizUp_MAUI;
+namespace QuizUp.MAUI;
 
 [Register("AppDelegate")]
 public class AppDelegate : MauiUIApplicationDelegate

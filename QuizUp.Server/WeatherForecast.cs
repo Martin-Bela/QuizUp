@@ -1,4 +1,4 @@
-namespace QuizUp_server;
+namespace QuizUp.Server;
 
 public class WeatherForecast
 {

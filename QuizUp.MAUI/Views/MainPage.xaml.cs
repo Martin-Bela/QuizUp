@@ -1,4 +1,4 @@
-﻿namespace QuizUp_MAUI;
+﻿namespace QuizUp.MAUI;
 
 public partial class MainPage : ContentPage
 {

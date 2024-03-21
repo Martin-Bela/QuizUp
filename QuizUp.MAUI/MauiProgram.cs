@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
 
-namespace QuizUp_MAUI;
+namespace QuizUp.MAUI;
 
 public static class MauiProgram
 {
