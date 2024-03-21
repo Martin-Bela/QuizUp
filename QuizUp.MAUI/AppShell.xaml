@@ -3,13 +3,23 @@
     x:Class="QuizUp.MAUI.AppShell"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:local="clr-namespace:QuizUp.MAUI"
-    Shell.FlyoutBehavior="Disabled"
+    xmlns:v="clr-namespace:QuizUp.MAUI.Views"
+    Shell.FlyoutBehavior="Flyout"
     Title="QuizUp.MAUI">
 
-    <ShellContent
-        Title="Home"
-        ContentTemplate="{DataTemplate local:MainPage}"
-        Route="MainPage" />
+    <Shell.FlyoutHeader>
+        <Grid HorizontalOptions="Start">
+            <Image HeightRequest="50"
+                   HorizontalOptions="Start"
+                   Margin="0, 10, 0, 0"/>
+        </Grid>
+    </Shell.FlyoutHeader>
 
+    <FlyoutItem Title="Home">
+        <ShellContent Title="HomeTitle" ContentTemplate="{DataTemplate v:MainPage}" Route="MainPage"/>
+    </FlyoutItem>
+
+    <FlyoutItem Title="SignalR">
+        <ShellContent Title="SignalRTitle" ContentTemplate="{DataTemplate v:SignalR}" Route="SignalR" />
+    </FlyoutItem>
 </Shell>
