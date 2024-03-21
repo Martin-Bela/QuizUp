@@ -63,7 +63,11 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Folder Include="ViewModels\" />
+		<Folder Include="ViewModels\" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\QuizUp.Common\QuizUp.Common.csproj" />
 	</ItemGroup>
 
 </Project>

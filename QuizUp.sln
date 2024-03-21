@@ -14,7 +14,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Files", "Solution 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QuizUp.Server", "QuizUp.Server\QuizUp.Server.csproj", "{E40C064F-4C88-4810-9137-AE18B7552D97}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QuizUp.Common", "QuizUp.Common\QuizUp.Common.csproj", "{363D66A8-E3A1-4EAF-9220-673FAE0EF60B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QuizUp.Common", "QuizUp.Common\QuizUp.Common.csproj", "{1884D5C5-1198-486A-9B89-0AB62E68147A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -32,10 +32,10 @@ Global
 		{E40C064F-4C88-4810-9137-AE18B7552D97}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E40C064F-4C88-4810-9137-AE18B7552D97}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E40C064F-4C88-4810-9137-AE18B7552D97}.Release|Any CPU.Build.0 = Release|Any CPU
-		{363D66A8-E3A1-4EAF-9220-673FAE0EF60B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{363D66A8-E3A1-4EAF-9220-673FAE0EF60B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{363D66A8-E3A1-4EAF-9220-673FAE0EF60B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{363D66A8-E3A1-4EAF-9220-673FAE0EF60B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1884D5C5-1198-486A-9B89-0AB62E68147A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1884D5C5-1198-486A-9B89-0AB62E68147A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1884D5C5-1198-486A-9B89-0AB62E68147A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1884D5C5-1198-486A-9B89-0AB62E68147A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
