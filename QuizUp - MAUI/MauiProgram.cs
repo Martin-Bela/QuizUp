@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
 
-namespace QuizUp___MAUI
+namespace QuizUp_MAUI
 {
     public static class MauiProgram
     {
@@ -16,7 +16,7 @@ namespace QuizUp___MAUI
                 });
 
 #if DEBUG
-    		builder.Logging.AddDebug();
+            builder.Logging.AddDebug();
 #endif
 
             return builder.Build();

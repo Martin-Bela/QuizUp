@@ -1,7 +1,7 @@
 ﻿using Android.App;
 using Android.Runtime;
 
-namespace QuizUp___MAUI
+namespace QuizUp_MAUI
 {
     [Application]
     public class MainApplication : MauiApplication

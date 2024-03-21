@@ -1,7 +1,7 @@
 ﻿using ObjCRuntime;
 using UIKit;
 
-namespace QuizUp___MAUI
+namespace QuizUp_MAUI
 {
     public class Program
     {

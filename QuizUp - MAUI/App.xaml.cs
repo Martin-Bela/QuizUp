@@ -1,4 +1,4 @@
-﻿namespace QuizUp___MAUI
+﻿namespace QuizUp_MAUI
 {
     public partial class App : Application
     {
