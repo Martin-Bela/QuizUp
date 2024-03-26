@@ -22,4 +22,8 @@
     <FlyoutItem Title="SignalR">
         <ShellContent Title="SignalRTitle" ContentTemplate="{DataTemplate v:SignalR}" Route="SignalR" />
     </FlyoutItem>
+
+    <FlyoutItem Title="Question">
+        <ShellContent Title="Question" ContentTemplate="{DataTemplate v:QuestionView}" Route="Question" />
+    </FlyoutItem>
 </Shell>
