@@ -4,30 +4,25 @@ namespace QuizUp.MAUI.Views;
 
 public partial class SignalR : ContentPage
 {
-    HubConnection hubConnection;
+    readonly HubConnection hubConnection;
     public SignalR()
     {
         InitializeComponent();
 
         var baseUrl = "https://localhost";
 
-        var connection = new HubConnectionBuilder()
-            .WithUrl($"{baseUrl}:7126/chatHub")
-            .Build();
+        hubConnection = new HubConnectionBuilder()
+            .WithUrl($"{baseUrl}:7126/quizHub")
+            .Build()
+            ?? throw new Exception("Unable to connect to SignalR server!");
 
-        if (connection == null)
-        {
-            throw new Exception("Unable to connect to SignalR server!");
-        }
-        hubConnection = connection;
-
-        lblChat.Text ??= "";
+        lblChat.Text ??= string.Empty;
 
         hubConnection.On<string, string>("ReceiveMessage", (user, message) =>
         {
             Dispatcher.Dispatch(() =>
             {
-                lblChat.Text = $"<b>{user}</b>: {message}<br/>";
+                lblChat.Text += $"<b>{user}</b>: {message}<br/>";
             });
         });
 
@@ -48,6 +43,6 @@ public partial class SignalR : ContentPage
             txtMessage.Text
         });
 
-        txtMessage.Text = String.Empty;
+        txtMessage.Text = string.Empty;
     }
 }

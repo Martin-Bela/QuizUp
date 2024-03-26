@@ -18,6 +18,6 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-app.MapHub<GameHub>("/chatHub");
+app.MapHub<QuizHub>("/quizHub");
 
 app.Run();
