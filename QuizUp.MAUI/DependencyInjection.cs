@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace QuizUp.MAUI;
-internal class Dependencies
+internal class DependencyInjection
 {
     public static void RegisterServices(ContainerBuilder builder)
     {

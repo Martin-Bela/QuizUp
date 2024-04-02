@@ -2,5 +2,5 @@
 
 public class Quiz
 {
-    public QuizQuestion[] questions;
+    public required QuizQuestionAnswer[] questions;
 }

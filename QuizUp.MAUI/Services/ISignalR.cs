@@ -11,4 +11,5 @@ public interface ISignalR
     Task StartAsync();
     Task StopAsync();
     Task SendMessage(string user, string message);
+
 }

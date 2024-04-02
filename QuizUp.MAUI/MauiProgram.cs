@@ -21,9 +21,9 @@ public static class MauiProgram
 
         builder.ConfigureContainer(new AutofacServiceProviderFactory(), builder =>
         {
-            Dependencies.RegisterServices(builder);
-            Dependencies.RegisterViewModels(builder);
-            Dependencies.RegisterViews(builder);
+            DependencyInjection.RegisterServices(builder);
+            DependencyInjection.RegisterViewModels(builder);
+            DependencyInjection.RegisterViews(builder);
         });
 
 

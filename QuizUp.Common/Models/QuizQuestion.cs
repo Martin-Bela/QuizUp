@@ -14,7 +14,6 @@ public class QuizQuestion
     public string Answer3 { get; set; }
     public string Answer4 { get; set; }
 
-
     public QuizQuestion(string question, string[] answers)
     {
         if (answers.Length != 4)
