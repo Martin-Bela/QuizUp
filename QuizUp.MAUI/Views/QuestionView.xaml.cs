@@ -4,7 +4,7 @@ namespace QuizUp.MAUI.Views;
 
 public partial class QuestionView : ContentPageBase
 {
-    public QuestionView() : base(new QuestionViewModel() /*todo: use DI*/)
+    public QuestionView(QuestionViewModel questionViewModel) : base(questionViewModel)
     {
         InitializeComponent();
     }

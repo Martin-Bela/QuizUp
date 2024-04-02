@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace QuizUp.MAUI.Services;
-internal interface ISignalR
+public interface ISignalR
 {
     event Action<string, string>? OnMessageReceived;
     Task StartAsync();

@@ -7,11 +7,11 @@ public partial class SignalRView : ContentPage
 {
     readonly ISignalR signalR;
 
-    public SignalRView()
+    public SignalRView(ISignalR signalR)
     {
+        this.signalR = signalR;
         InitializeComponent();
         lblChat.Text ??= string.Empty;
-        signalR = new SignalR();
         _ = signalR.StartAsync();
         signalR.OnMessageReceived += (user, message) =>
         {

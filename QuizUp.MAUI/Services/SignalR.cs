@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace QuizUp.MAUI.Services;
-internal class SignalR : ISignalR
+public class SignalR : ISignalR
 {
     readonly HubConnection hubConnection;
     public event Action<string, string>? OnMessageReceived;
