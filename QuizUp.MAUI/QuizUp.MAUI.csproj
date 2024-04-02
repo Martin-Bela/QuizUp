@@ -69,13 +69,19 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Compile Update="Views\SignalRView.xaml.cs">
+	    <DependentUpon>SignalRView.xaml</DependentUpon>
+	  </Compile>
+	</ItemGroup>
+
+	<ItemGroup>
 	  <MauiXaml Update="Views\ContentPageBase.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\QuestionView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Views\SignalR.xaml">
+	  <MauiXaml Update="Views\SignalRView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	</ItemGroup>

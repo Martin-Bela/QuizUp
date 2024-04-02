@@ -20,7 +20,7 @@
     </FlyoutItem>
 
     <FlyoutItem Title="SignalR">
-        <ShellContent Title="SignalRTitle" ContentTemplate="{DataTemplate v:SignalR}" Route="SignalR" />
+        <ShellContent Title="SignalRTitle" ContentTemplate="{DataTemplate v:SignalRView}" Route="SignalR" />
     </FlyoutItem>
 
     <FlyoutItem Title="Question">
