@@ -16,11 +16,15 @@ internal class DependencyInjection
     public static void RegisterViewModels(ContainerBuilder builder)
     {
         builder.RegisterType<ViewModels.QuestionViewModel>().InstancePerDependency();
+        builder.RegisterType<ViewModels.JoinGameViewModel>().InstancePerDependency();
+        builder.RegisterType<ViewModels.NextQuestionViewModel>().InstancePerDependency();
     }
 
     public static void RegisterViews(ContainerBuilder builder)
     {
         builder.RegisterType<Views.QuestionView>().InstancePerDependency();
         builder.RegisterType<Views.SignalRView>().InstancePerDependency();
+        builder.RegisterType<Views.JoinGameView>().InstancePerDependency();
+        builder.RegisterType<Views.NextQuestionView>().InstancePerDependency();
     }
 }

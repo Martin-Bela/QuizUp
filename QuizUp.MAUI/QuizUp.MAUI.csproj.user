@@ -9,6 +9,12 @@
     <MauiXaml Update="Views\ContentPageBase.xaml">
       <SubType>Designer</SubType>
     </MauiXaml>
+    <MauiXaml Update="Views\JoinGameView.xaml">
+      <SubType>Designer</SubType>
+    </MauiXaml>
+    <MauiXaml Update="Views\NextQuestionView.xaml">
+      <SubType>Designer</SubType>
+    </MauiXaml>
     <MauiXaml Update="Views\QuestionView.xaml">
       <SubType>Designer</SubType>
     </MauiXaml>

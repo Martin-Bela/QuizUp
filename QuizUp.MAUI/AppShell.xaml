@@ -26,4 +26,13 @@
     <FlyoutItem Title="Question">
         <ShellContent Title="Question" ContentTemplate="{DataTemplate v:QuestionView}" Route="Question" />
     </FlyoutItem>
+
+    <FlyoutItem Title="JoinGame">
+        <ShellContent Title="JoinGame" ContentTemplate="{DataTemplate v:JoinGameView}" Route="JoinGame" />
+    </FlyoutItem>
+
+    <FlyoutItem Title="NextQuestion">
+        <ShellContent Title="NextQuestion" ContentTemplate="{DataTemplate v:NextQuestionView}" Route="NextQuestion" />
+    </FlyoutItem>
+
 </Shell>

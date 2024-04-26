@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace QuizUp.MAUI.Services;
@@ -27,6 +28,7 @@ public class SignalR : ISignalR
                     OnMessageReceived(user, message);
                 }
             });
+
     }
 
     public async Task StartAsync()
