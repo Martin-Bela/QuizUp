@@ -1,4 +1,5 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using Autofac;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using QuizUp.MAUI.Services;
 using System;
@@ -9,7 +10,9 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace QuizUp.MAUI.ViewModels;
-public partial class JoinGameViewModel() : ViewModelBase
+
+
+public partial class JoinGameViewModel(GameManager gameManager) : ViewModelBase
 {
     [ObservableProperty]
     public string? gameId;
@@ -17,6 +20,16 @@ public partial class JoinGameViewModel() : ViewModelBase
     [RelayCommand]
     void JoinGame()
     {
-        Debug.WriteLine("Joining game");
+        if (string.IsNullOrWhiteSpace(GameId))
+        {
+            return;
+        }
+
+        Task.Run(
+            async () =>
+            {
+                await gameManager.StartGameAsync(GameId);
+            }
+        );
     }
 }

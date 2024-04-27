@@ -10,9 +10,9 @@ public class QuizService : IQuizService
         {
             questions =
             [
-                new QuizQuestionAnswer{ question = new QuizQuestion("What is 1+1?", ["1", "2", "3", "4"]), answer = "1" },
-                new QuizQuestionAnswer{ question = new QuizQuestion("What is 2+2?", ["1", "2", "3", "4"]), answer = "3" },
-                new QuizQuestionAnswer{ question = new QuizQuestion("What is 3+3?", ["1", "2", "4", "6"]), answer = "3" },
+                new QuizQuestionAnswer { question = new QuizQuestion { GameId = "0", QuestionId = 0, Question = "What is 2 + 2?", Answer1 = "1", Answer2 = "2", Answer3 = "3", Answer4 = "4" }, answer = "4" },
+                new QuizQuestionAnswer { question = new QuizQuestion { GameId = "0", QuestionId = 1, Question = "What is 2 + 3?", Answer1 = "1", Answer2 = "2", Answer3 = "3", Answer4 = "5" }, answer = "5" },
+                new QuizQuestionAnswer { question = new QuizQuestion { GameId = "0", QuestionId = 2, Question = "What is 2 + 4?", Answer1 = "1", Answer2 = "2", Answer3 = "3", Answer4 = "6" }, answer = "6" }
             ]
         }
     ];

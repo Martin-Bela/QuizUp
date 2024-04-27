@@ -10,7 +10,7 @@ internal class DependencyInjection
 {
     public static void RegisterServices(ContainerBuilder builder)
     {
-        builder.RegisterType<Services.SignalR>().As<Services.ISignalR>().InstancePerDependency();
+        builder.RegisterType<Services.GameManager>().SingleInstance();
     }
 
     public static void RegisterViewModels(ContainerBuilder builder)

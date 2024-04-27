@@ -24,7 +24,7 @@ public partial class SignalRView : ContentPage
 
     private async void btnSend_Clicked(object sender, EventArgs e)
     {
-        await signalR.SendMessage(txtUsername.Text, txtMessage.Text);
+        await signalR.SendMessageAsync(txtUsername.Text, txtMessage.Text);
 
         txtMessage.Text = string.Empty;
     }

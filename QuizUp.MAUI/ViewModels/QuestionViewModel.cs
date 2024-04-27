@@ -1,19 +1,26 @@
-﻿using CommunityToolkit.Mvvm.Input;
+﻿using Autofac;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using QuizUp.Common.Models;
+using QuizUp.MAUI.Services;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace QuizUp.MAUI.ViewModels;
-public partial class QuestionViewModel : ViewModelBase
+
+[QueryProperty(nameof(QuizQuestion), nameof(QuizQuestion))]
+public partial class QuestionViewModel(GameManager gameManager) : ViewModelBase
 {
-    public QuizQuestion QuizQuestion { get; set; } = new("Q", ["A", "B", "C", "D"]);
+    [ObservableProperty]
+    public QuizQuestion quizQuestion = new() { GameId = "-1", QuestionId = 0, Answer1 = "1", Answer2 = "2", Answer3 = "3", Answer4 = "4", Question = "QuestionPlaceholder" };
 
     [RelayCommand]
-    void Answer(string number)
+    async Task Answer(string number)
     {
-        Console.WriteLine("");
+        await gameManager.AnswerQuestionAsync(quizQuestion.QuestionId, number);
     }
 }
