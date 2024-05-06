@@ -4,16 +4,30 @@
                        xmlns:views="clr-namespace:QuizUp.MAUI.Views"
                        xmlns:v="clr-namespace:QuizUp.MAUI.Views"
                        xmlns:vm="clr-namespace:QuizUp.MAUI.ViewModels"
+                       xmlns:converters="clr-namespace:QuizUp.MAUI.Converters"
                        x:Class="QuizUp.MAUI.Views.QuestionView"
                        x:DataType="vm:QuestionViewModel"
                        Title="QuestionView"
 >
-    <Grid ColumnDefinitions="*,*" RowDefinitions="*,*,*">
-        <Label Grid.ColumnSpan="2" Text="{Binding QuizQuestion.Question}"/>
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:ButtonColorConverter x:Key="ButtonColorConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
 
-        <Button Grid.Row="1" Grid.Column="0" Text="{Binding QuizQuestion.Answer1}" Command="{Binding AnswerCommand}" CommandParameter="0"/>
-        <Button Grid.Row="1" Grid.Column="1" Text="{Binding QuizQuestion.Answer2}" Command="{Binding AnswerCommand}" CommandParameter="1"/>
-        <Button Grid.Row="2" Grid.Column="0" Text="{Binding QuizQuestion.Answer3}" Command="{Binding AnswerCommand}" CommandParameter="2"/>
-        <Button Grid.Row="2" Grid.Column="1" Text="{Binding QuizQuestion.Answer4}" Command="{Binding AnswerCommand}" CommandParameter="3"/>
+    <Grid ColumnDefinitions="*,*" RowDefinitions="*,*,*">
+        <FlexLayout Margin="20" Grid.ColumnSpan="2" Direction="Row" JustifyContent ="SpaceBetween" AlignContent="Center">
+            <Label Text="{Binding QuizQuestion.Question}"/>
+            <Label Text="{Binding RemainingTime}"/>
+        </FlexLayout>
+        <Button Margin="20" Grid.Row="1" Grid.Column="0" Text="{Binding QuizQuestion.Answer1}" Command="{Binding AnswerCommand}" CommandParameter="0"
+                BackgroundColor="{Binding SelectedAnswer, Converter={StaticResource ButtonColorConverter}, ConverterParameter=0}"/>
+        <Button Margin="20" Grid.Row="1" Grid.Column="1" Text="{Binding QuizQuestion.Answer2}" Command="{Binding AnswerCommand}" CommandParameter="1"
+                BackgroundColor="{Binding SelectedAnswer, Converter={StaticResource ButtonColorConverter}, ConverterParameter=1}"/>
+        <Button Margin="20" Grid.Row="2" Grid.Column="0" Text="{Binding QuizQuestion.Answer3}" Command="{Binding AnswerCommand}" CommandParameter="2"
+                BackgroundColor="{Binding SelectedAnswer, Converter={StaticResource ButtonColorConverter}, ConverterParameter=2}"/>
+        <Button Margin="20" Grid.Row="2" Grid.Column="1" Text="{Binding QuizQuestion.Answer4}" Command="{Binding AnswerCommand}" CommandParameter="3"
+                />
     </Grid>
+
 </views:ContentPageBase>

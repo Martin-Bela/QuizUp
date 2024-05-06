@@ -3,6 +3,7 @@ using QuizUp.Common.Models;
 using QuizUp.Server.Services;
 using System.Diagnostics;
 using System.Numerics;
+using System.Reflection;
 
 namespace QuizUp.Server.Hubs;
 
@@ -33,7 +34,7 @@ public class QuizHub(IQuizService quizService) : Hub
 
         //todo check answer
         Debug.WriteLine($"Player {player} answered {answer}");
-
+        await Task.Delay(2000);
         await Clients.Client(player).SendAsync("NextQuestion", quizService.getQuizQuestion("0", question + 1));
     }
 
