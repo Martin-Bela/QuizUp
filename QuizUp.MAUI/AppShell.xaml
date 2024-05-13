@@ -3,36 +3,36 @@
     x:Class="QuizUp.MAUI.AppShell"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:v="clr-namespace:QuizUp.MAUI.Views"
-    Shell.FlyoutBehavior="Flyout"
-    Title="QuizUp.MAUI">
+    xmlns:constants="clr-namespace:QuizUp.MAUI.Resources.Constants"
+    xmlns:fonts="clr-namespace:QuizUp.MAUI.Resources.Fonts"
+    xmlns:views="clr-namespace:QuizUp.MAUI.Views"
+    Shell.NavBarIsVisible="False"
+    Shell.TabBarIsVisible="True">
 
-    <Shell.FlyoutHeader>
-        <Grid HorizontalOptions="Start">
-            <Image HeightRequest="50"
-                   HorizontalOptions="Start"
-                   Margin="0, 10, 0, 0"/>
-        </Grid>
-    </Shell.FlyoutHeader>
+    <Tab Title="Quizes">
+        <Tab.Icon>
+            <FontImageSource Size="16"
+                             FontFamily="{x:Static constants:Fonts.FontAwesome}"
+                             Glyph="{x:Static fonts:FontAwesomeIcons.House}"/>
+        </Tab.Icon>
+        <ShellContent ContentTemplate="{DataTemplate views:QuizListView}" Route="quizes" />
+    </Tab>
 
-    <FlyoutItem Title="Home">
-        <ShellContent Title="HomeTitle" ContentTemplate="{DataTemplate v:MainPage}" Route="MainPage"/>
-    </FlyoutItem>
+    <Tab Title="Join">
+        <Tab.Icon>
+            <FontImageSource Size="18"
+                             FontFamily="{x:Static constants:Fonts.FontAwesome}"
+                             Glyph="{x:Static fonts:FontAwesomeIcons.Gamepad}"/>
+        </Tab.Icon>
+        <ShellContent ContentTemplate="{DataTemplate views:JoinGameView}" Route="game/join-game" />
+    </Tab>
 
-    <FlyoutItem Title="SignalR">
-        <ShellContent Title="SignalRTitle" ContentTemplate="{DataTemplate v:SignalRView}" Route="SignalR" />
-    </FlyoutItem>
-
-    <FlyoutItem Title="Question">
-        <ShellContent Title="Question" ContentTemplate="{DataTemplate v:QuestionView}" Route="Question" />
-    </FlyoutItem>
-
-    <FlyoutItem Title="JoinGame">
-        <ShellContent Title="JoinGame" ContentTemplate="{DataTemplate v:JoinGameView}" Route="JoinGame" />
-    </FlyoutItem>
-
-    <FlyoutItem Title="NextQuestion">
-        <ShellContent Title="NextQuestion" ContentTemplate="{DataTemplate v:NextQuestionView}" Route="NextQuestion" />
-    </FlyoutItem>
-
+    <Tab Title="Create">
+        <Tab.Icon>
+            <FontImageSource Size="18" 
+                             FontFamily="{x:Static constants:Fonts.FontAwesome}"
+                             Glyph="{x:Static fonts:FontAwesomeIcons.SquarePlus}"/>
+        </Tab.Icon>
+        <ShellContent ContentTemplate="{DataTemplate views:QuizEditView}" Route="quizes/detail/edit" />
+    </Tab>
 </Shell>

@@ -1,18 +1,10 @@
-﻿using Autofac;
-using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using QuizUp.MAUI.Services;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace QuizUp.MAUI.ViewModels;
 
-
-public partial class JoinGameViewModel(GameManager gameManager) : ViewModelBase
+public partial class JoinGameViewModel(ViewModelBase.Dependencies dependencies, GameManager gameManager) : ViewModelBase(dependencies)
 {
     [ObservableProperty]
     public string? gameId;
@@ -31,5 +23,12 @@ public partial class JoinGameViewModel(GameManager gameManager) : ViewModelBase
                 await gameManager.StartGameAsync(GameId);
             }
         );
+    }
+
+    [RelayCommand]
+    private async Task GoBackAsync()
+    {
+        var route = routingService.GetRouteByViewModel<QuizListViewModel>();
+        await Shell.Current.GoToAsync(route);
     }
 }

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<views:ContentPageBase xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:views="clr-namespace:QuizUp.MAUI.Views"
+             xmlns:view_models="clr-namespace:QuizUp.MAUI.ViewModels"
+             x:Class="QuizUp.MAUI.Views.QuizQuestionEditView"
+             x:DataType="view_models:QuizQuestionEditViewModel"
+             Shell.TabBarIsVisible="False">
+    <VerticalStackLayout>
+        <Grid Style="{StaticResource PageHeaderStyle}">
+            <Button Grid.Column="0"
+                    Text="Cancel"
+                    Style="{StaticResource SecondaryButtonStyle}" 
+                    Command="{Binding GoBackCommand}" />
+            <Label Grid.Column="1"
+                    Text="Add question"
+                    Style="{StaticResource PageHeaderLabelStyle}" />
+            <Button Grid.Column="2"
+                    Text="Save"
+                    Style="{StaticResource SecondaryButtonStyle}" />
+        </Grid>
+
+        <Entry Placeholder="Enter question"
+               Style="{StaticResource EntryStyle}"
+               Margin="15, 15, 15, 0" />
+
+        <Grid RowDefinitions="*, *"
+              ColumnDefinitions="*, *"
+              RowSpacing="10"
+              ColumnSpacing="10"
+              Padding="15"
+              HeightRequest="250">
+            <Button Grid.Row="0" Grid.Column="0" Text="Add answer" BackgroundColor="MediumVioletRed" Command="{Binding GoToAnswerEditCommand}" />
+            <Button Grid.Row="0" Grid.Column="1" Text="Add answer" BackgroundColor="Green" Command="{Binding GoToAnswerEditCommand}" />
+            <Button Grid.Row="1" Grid.Column="0" Text="Add answer" BackgroundColor="Blue" Command="{Binding GoToAnswerEditCommand}" />
+            <Button Grid.Row="1" Grid.Column="1" Text="Add answer" BackgroundColor="YellowGreen" Command="{Binding GoToAnswerEditCommand}" />
+        </Grid>
+    </VerticalStackLayout>
+</views:ContentPageBase>

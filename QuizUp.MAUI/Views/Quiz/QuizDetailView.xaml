@@ -2,9 +2,8 @@
 <views:ContentPageBase xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:views="clr-namespace:QuizUp.MAUI.Views"
-             x:Class="QuizUp.MAUI.Views.NextQuestionView"
-             Title="NextQuestion">
-    <VerticalStackLayout>
-        <Button Text="Next Question" />
-    </VerticalStackLayout>
+             xmlns:view_models="clr-namespace:QuizUp.MAUI.ViewModels"
+             x:Class="QuizUp.MAUI.Views.QuizDetailView"
+             x:DataType="view_models:QuizDetailViewModel"
+             Shell.TabBarIsVisible="False">
 </views:ContentPageBase>

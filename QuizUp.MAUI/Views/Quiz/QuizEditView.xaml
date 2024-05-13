@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<views:ContentPageBase xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:views="clr-namespace:QuizUp.MAUI.Views"
+             xmlns:view_models="clr-namespace:QuizUp.MAUI.ViewModels"
+             x:Class="QuizUp.MAUI.Views.QuizEditView"
+             x:DataType="view_models:QuizEditViewModel"
+             Shell.TabBarIsVisible="False">
+    <Grid RowDefinitions="Auto, Auto, *">
+        <Grid Grid.Row="0"
+              Style="{StaticResource PageHeaderStyle}">
+            <Button Grid.Column="0"
+                    Text="Cancel"
+                    Style="{StaticResource SecondaryButtonStyle}"
+                    Command="{Binding GoBackCommand}" />
+            <Label Grid.Column="1"
+                    Text="Create quiz"
+                    Style="{StaticResource PageHeaderLabelStyle}" />
+            <Button Grid.Column="2"
+                    Text="Save"
+                    Style="{StaticResource SecondaryButtonStyle}" />
+        </Grid>
+
+        <VerticalStackLayout Grid.Row="1"
+                             Padding="15, 20, 15, 0">
+            <Label Text="Title:"
+                   Style="{StaticResource TitleStyle}" />
+            <Entry Placeholder="Enter quiz name"
+                   Style="{StaticResource EntryStyle}" />
+        </VerticalStackLayout>
+
+        <Grid Grid.Row="2" 
+              RowDefinitions="Auto, *, Auto"
+              Padding="15, 15, 15, 20">
+            <Label Grid.Row="0" 
+                   Text="Questions:"
+                   Style="{StaticResource TitleStyle}" />
+            <ScrollView Grid.Row="1">
+            </ScrollView>
+            <Button Grid.Row="2" 
+                    Text="Add question"
+                    Style="{StaticResource PrimaryButtonStyle}"
+                    HorizontalOptions="End"
+                    Padding="25, 10"
+                    Command="{Binding GoToCreateQuestionCommand}"/>
+        </Grid>
+    </Grid>
+</views:ContentPageBase>

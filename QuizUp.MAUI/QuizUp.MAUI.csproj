@@ -40,20 +40,25 @@
 
 	<ItemGroup>
 		<!-- App Icon -->
-		<MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#512BD4" />
 
 		<!-- Splash Screen -->
 		<MauiSplashScreen Include="Resources\Splash\splash.svg" Color="#512BD4" BaseSize="128,128" />
 
 		<!-- Images -->
 		<MauiImage Include="Resources\Images\*" />
-		<MauiImage Update="Resources\Images\dotnet_bot.png" Resize="True" BaseSize="300,185" />
 
 		<!-- Custom Fonts -->
 		<MauiFont Include="Resources\Fonts\*" />
 
 		<!-- Raw Assets (also remove the "Resources\Raw" prefix) -->
 		<MauiAsset Include="Resources\Raw\**" LogicalName="%(RecursiveDir)%(Filename)%(Extension)" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <None Remove="Resources\Fonts\FontAwesome-Solid.ttf" />
+	  <None Remove="Resources\Fonts\Montserrat-Bold.ttf" />
+	  <None Remove="Resources\Fonts\Montserrat-Medium.ttf" />
+	  <None Remove="Resources\Fonts\Montserrat-Regular.ttf" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -71,33 +76,64 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Compile Update="Views\JoinGameView.xaml.cs">
+	  <Compile Update="Views\Game\JoinGameView.xaml.cs">
 	    <DependentUpon>JoinGameView.xaml</DependentUpon>
 	  </Compile>
-	  <Compile Update="Views\NextQuestionView.xaml.cs">
-	    <DependentUpon>NextQuestionView.xaml</DependentUpon>
+	  <Compile Update="Views\Quiz\QuizDetailView.xaml.cs">
+	    <DependentUpon>QuizDetailView.xaml</DependentUpon>
 	  </Compile>
-	  <Compile Update="Views\SignalRView.xaml.cs">
-	    <DependentUpon>SignalRView.xaml</DependentUpon>
+	  <Compile Update="Views\Quiz\QuizEditView.xaml.cs">
+	    <DependentUpon>QuizEditView.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="Views\Quiz\QuizQuestionAnswerEditView.xaml.cs">
+	    <DependentUpon>QuizQuestionAnswerEditView.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="Views\Quiz\QuizQuestionEditView.xaml.cs">
+	    <DependentUpon>QuizQuestionEditView.xaml</DependentUpon>
 	  </Compile>
 	</ItemGroup>
 
 	<ItemGroup>
-	  <MauiXaml Update="Views\ContentPageBase.xaml">
+	  <MauiXaml Update="Resources\Styles\ButtonStyle.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Views\JoinGameView.xaml">
+	  <MauiXaml Update="Resources\Styles\EntryStyle.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Views\NextQuestionView.xaml">
+	  <MauiXaml Update="Resources\Styles\LabelStyle.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Resources\Styles\PageHeaderStyle.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\Base\ContentPageBase.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\Game\JoinGameView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\QuestionView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Views\SignalRView.xaml">
+	  <MauiXaml Update="Views\Quiz\QuizDetailView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Views\Quiz\QuizEditView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\Quiz\QuizQuestionAnswerEditView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\Quiz\QuizQuestionEditView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\Quiz\QuizListView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="Resources\Images\" />
 	</ItemGroup>
 
 </Project>

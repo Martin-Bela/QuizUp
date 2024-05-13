@@ -1,6 +1,7 @@
-﻿using Autofac;
-using Autofac.Extensions.DependencyInjection;
+﻿using Autofac.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using QuizUp.MAUI.Resources.Constants;
+using QuizUp.MAUI.Services;
 
 namespace QuizUp.MAUI;
 
@@ -14,10 +15,11 @@ public static class MauiProgram
             .UseMauiApp<App>()
             .ConfigureFonts(fonts =>
             {
-                fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
-                fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
+                fonts.AddFont("FontAwesome-Solid.ttf", Fonts.FontAwesome);
+                fonts.AddFont("Montserrat-Bold.ttf", Fonts.Bold);
+                fonts.AddFont("Montserrat-Medium.ttf", Fonts.Medium);
+                fonts.AddFont("Montserrat-Regular.ttf", Fonts.Regular);
             });
-
 
         builder.ConfigureContainer(new AutofacServiceProviderFactory(), builder =>
         {
@@ -26,12 +28,26 @@ public static class MauiProgram
             DependencyInjection.RegisterViews(builder);
         });
 
-
 #if DEBUG
         builder.Logging.SetMinimumLevel(LogLevel.Trace);
         builder.Logging.AddDebug();
 #endif
 
-        return builder.Build();
+        var app = builder.Build();
+        RegisterRoutes(app);
+        return app;
+    }
+
+    private static void RegisterRoutes(MauiApp app)
+    {
+        var routingService = app.Services.GetRequiredService<IRoutingService>();
+
+        foreach (var routeModel in routingService.Routes)
+        {
+            if (routeModel.Route.Count(ch => ch == '/') != 2)
+            {
+                Routing.RegisterRoute(routeModel.Route, routeModel.ViewType);
+            }
+        }
     }
 }

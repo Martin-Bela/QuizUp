@@ -1,11 +1,4 @@
-﻿using Autofac;
-using Autofac.Core.Lifetime;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Diagnostics;
 
 namespace QuizUp.MAUI.Services;
 public class GameManager()

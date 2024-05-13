@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<views:ContentPageBase xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:views="clr-namespace:QuizUp.MAUI.Views"
+             xmlns:view_models="clr-namespace:QuizUp.MAUI.ViewModels"
+             x:Class="QuizUp.MAUI.Views.QuizQuestionAnswerEditView"
+             x:DataType="view_models:QuizQuestionAnswerEditViewModel"
+             Shell.PresentationMode="ModalNotAnimated"
+             BackgroundColor="{StaticResource ModalBackgroundColor}"
+             Shell.TabBarIsVisible="False">
+    <Grid Padding="20">
+        <Grid.GestureRecognizers>
+            <TapGestureRecognizer Command="{Binding SaveAnswerCommand}" />
+        </Grid.GestureRecognizers>
+        
+        <VerticalStackLayout VerticalOptions="Center">
+            <Label Text="Add answer"
+                   TextColor="White" />
+            <Frame BackgroundColor="MediumVioletRed"
+                   Margin="0, 5, 0, 0">
+                <Entry Placeholder="Enter answer"
+                       Style="{StaticResource EntryStyle}"
+                       TextColor="Black"
+                       PlaceholderColor="Black" />
+            </Frame>
+            <Frame BackgroundColor="{StaticResource Gray600}"
+               Padding="20, 5"
+               Margin="0, 10, 0, 0">
+                <FlexLayout Direction="Row"
+                        JustifyContent="SpaceBetween">
+                    <Label Text="Correct answer"
+                       TextColor="White"
+                       VerticalOptions="Center" />
+                    <Switch OnColor="LightGreen" />
+                </FlexLayout>
+            </Frame>
+        </VerticalStackLayout>
+    </Grid>
+</views:ContentPageBase>

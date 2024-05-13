@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<views:ContentPageBase xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="QuizUp.MAUI.Views.JoinGameView"
+             xmlns:constants="clr-namespace:QuizUp.MAUI.Resources.Constants"
+             xmlns:fonts="clr-namespace:QuizUp.MAUI.Resources.Fonts"
+             xmlns:views="clr-namespace:QuizUp.MAUI.Views"
+             xmlns:view_models="clr-namespace:QuizUp.MAUI.ViewModels"
+             x:DataType="view_models:JoinGameViewModel"
+             Shell.TabBarIsVisible="False">
+    <Grid RowDefinitions="Auto, *, Auto">
+        <Grid Grid.Row="0"
+              Style="{StaticResource PageHeaderStyle}">
+            <Button Grid.Column="0"
+                    Style="{StaticResource SecondaryButtonStyle}"
+                    Command="{Binding GoBackCommand}">
+                <Button.ImageSource>
+                    <FontImageSource Size="22" FontFamily="{x:Static constants:Fonts.FontAwesome}"
+                                     Glyph="{x:Static fonts:FontAwesomeIcons.ChevronLeft}"/>
+                </Button.ImageSource>
+            </Button>
+            <Label Grid.Column="1"
+                    Text="Join game"
+                    Style="{StaticResource PageHeaderLabelStyle}" />
+        </Grid>
+        
+        <Entry Grid.Row="1"
+               Text="{Binding GameId}"
+               Placeholder="Game Code"
+               Style="{StaticResource EntryStyle}"
+               HorizontalOptions="Center"
+               VerticalOptions="Center"
+               HorizontalTextAlignment="Center"
+               FontSize="36" />
+        
+        <Button Grid.Row="2" Text="Enter"
+                Style="{StaticResource PrimaryButtonStyle}"
+                Command="{Binding JoinGameCommand}"
+                Margin="15, 0, 15, 20" />
+    </Grid>
+</views:ContentPageBase>

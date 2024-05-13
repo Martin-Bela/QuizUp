@@ -1,12 +1,5 @@
 ﻿using Microsoft.AspNetCore.SignalR.Client;
 using QuizUp.Common.Models;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 
 namespace QuizUp.MAUI.Services;
 public class SignalR : ISignalR

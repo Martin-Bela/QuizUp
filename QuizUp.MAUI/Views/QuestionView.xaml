@@ -8,6 +8,7 @@
                        x:Class="QuizUp.MAUI.Views.QuestionView"
                        x:DataType="vm:QuestionViewModel"
                        Title="QuestionView"
+                       Shell.TabBarIsVisible="False"
 >
     <ContentPage.Resources>
         <ResourceDictionary>

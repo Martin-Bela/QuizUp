@@ -8,4 +8,9 @@ public partial class JoinGameView : ContentPageBase
     {
         InitializeComponent();
     }
+
+    protected override bool OnBackButtonPressed()
+    {
+        return true;
+    }
 }
