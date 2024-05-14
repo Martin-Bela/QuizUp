@@ -1,9 +1,6 @@
 ﻿using Microsoft.AspNetCore.SignalR;
-using QuizUp.Common.Models;
 using QuizUp.Server.Services;
 using System.Diagnostics;
-using System.Numerics;
-using System.Reflection;
 
 namespace QuizUp.Server.Hubs;
 
@@ -43,6 +40,4 @@ public class QuizHub(IQuizService quizService) : Hub
     {
         await Clients.All.SendAsync("ReceiveMessage", user, message);
     }
-
-
 }
