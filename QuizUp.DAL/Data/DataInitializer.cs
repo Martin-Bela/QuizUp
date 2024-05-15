@@ -72,14 +72,14 @@ public static class DataInitializer
 
         int quizIndex = 0;
 
-        for (int i = 0; i < applicationUsers.Count; i++)
+        for (int userIndex = 0; userIndex < applicationUsers.Count; userIndex++)
         {
-            for (int j = 0; j < quizzesCounts[i]; j++)
+            for (int i = 0; i < quizzesCounts[userIndex]; i++)
             {
                 var quiz = new Quiz()
                 {
                     Title = RandomData.QuizzesData[quizIndex].Title,
-                    ApplicationUserId = applicationUsers[i].Id,
+                    ApplicationUserId = applicationUsers[userIndex].Id,
                 };
 
                 quizzes.Add(quiz);
@@ -95,11 +95,10 @@ public static class DataInitializer
         Debug.Assert(quizzes.Count == RandomData.QuizzesData.Length);
 
         var questions = new List<Question>();
-        var quizIndex = 0;
 
-        foreach (var quizData in RandomData.QuizzesData)
+        for (int quizIndex = 0; quizIndex < quizzes.Count; quizIndex++)
         {
-            foreach (var questionData in quizData.Questions)
+            foreach (var questionData in RandomData.QuizzesData[quizIndex].Questions)
             {
                 var question = new Question()
                 {
@@ -109,7 +108,6 @@ public static class DataInitializer
                 };
 
                 questions.Add(question);
-                quizIndex++;
             }
         }
 
@@ -135,8 +133,9 @@ public static class DataInitializer
                     };
 
                     answers.Add(answer);
-                    questionIndex++;
                 }
+
+                questionIndex++;
             }
         }
 
@@ -151,13 +150,13 @@ public static class DataInitializer
         // random number of games for each quiz
         int[] gamesCounts = GetRandomArrayWithSum(quizzes.Count, numOfGames);
 
-        for (int i = 0; i < quizzes.Count; i++)
+        for (int quizIndex = 0; quizIndex < quizzes.Count; quizIndex++)
         {
-            for (int j = 0; j < gamesCounts[i]; j++)
+            for (int i = 0; i < gamesCounts[quizIndex]; i++)
             {
                 var game = new Game()
                 {
-                    QuizId = quizzes[i].Id
+                    QuizId = quizzes[quizIndex].Id
                 };
 
                 games.Add(game);
@@ -185,14 +184,16 @@ public static class DataInitializer
             int numOfPlayers = random.Next(minPlayersPerGame, applicationUsers.Count);
             var shuffledUsers = applicationUsers.OrderBy(_ => random.Next()).ToList();
 
-            for (int i = 0; i < numOfPlayers; i++)
+            for (int playerIndex = 0; playerIndex < numOfPlayers; playerIndex++)
             {
                 var gameApplicationUser = new GameApplicationUser()
                 {
                     GameId = game.Id,
-                    ApplicationUserId = shuffledUsers[i].Id,
+                    ApplicationUserId = shuffledUsers[playerIndex].Id,
                     Score = random.Next(0, maxScore + 1)
                 };
+
+                gameApplicationUsers.Add(gameApplicationUser);
             }
         }
 

@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace QuizUp.DAL.Data;
 
-public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : IdentityDbContext(options)
+public class ApplicationDbContext : IdentityDbContext
 {
     public DbSet<Game> Games { get; set; }
     public DbSet<GameAnswer> GameAnswers { get; set; }
@@ -13,6 +13,19 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
     public DbSet<Question> Questions { get; set; }
     public DbSet<Quiz> Quizes { get; set; }
     public DbSet<ApplicationUser> ApplicationUsers { get; set; }
+
+    public ApplicationDbContext()
+    {
+    }
+
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    {
+        var folder = Environment.SpecialFolder.LocalApplicationData;
+        var dbPath = Path.Join(Environment.GetFolderPath(folder), "quizup.db");
+
+        optionsBuilder
+            .UseSqlite($"Data Source={dbPath}");
+    }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
