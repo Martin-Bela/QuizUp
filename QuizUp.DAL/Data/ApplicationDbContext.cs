@@ -11,7 +11,7 @@ public class ApplicationDbContext : IdentityDbContext
     public DbSet<GameApplicationUser> GameApplicationUsers { get; set; }
     public DbSet<Answer> Answers { get; set; }
     public DbSet<Question> Questions { get; set; }
-    public DbSet<Quiz> Quizes { get; set; }
+    public DbSet<Quiz> Quizzes { get; set; }
     public DbSet<ApplicationUser> ApplicationUsers { get; set; }
 
     public ApplicationDbContext()
