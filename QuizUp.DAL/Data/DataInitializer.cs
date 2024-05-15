@@ -7,36 +7,36 @@ namespace QuizUp.DAL.Data;
 
 public static class DataInitializer
 {
-    public static class DataConstants
-    {
-        public static readonly (string, string, string)[] UsersData =
-        [
-            ("bookworm123", "pavel.novak@seznam.cz", "someRandomPassword123"),
-            ("techgeek99", "jane.doe@gmail.com", "TechGeek*456"),
-            ("traveler7", "john.smith@outlook.com", "Travel@789"),
-            ("foodie256", "mary.jones@gmail.com", "FoodLover!321")
-        ];
-
-        public static readonly string[] QuizTitles =
-        [
-            "Intro to Quantum Physics", "Advanced JavaScript Techniques", "History of the Roman Empire", "Mastering Python",
-            "Basics of Digital Marketing", "Art of Storytelling", "World Geography Challenge", "Cybersecurity Fundamentals",
-            "Shakespeare's Greatest Works", "Astronomy for Beginners", "Modern Art Movements", "Philosophy 101",
-            "Ultimate Cooking Quiz", "Music Theory Essentials", "Environmental Science Facts", "Space Exploration Trivia",
-            "Literary Classics Quiz", "Cryptography and Security", "Essential Business Strategies", "Medical Terminology Basics"
-        ];
-    }
-
     public static void Seed(this ModelBuilder modelBuilder)
     {
         var applicationUsers = PrepareApplicationUsers();
         var quizzes = PrepareQuizzes(applicationUsers);
+        var questions = PrepareQuestions(quizzes);
+        var answers = PrepareAnswers(questions);
+        var games = PrepareGames(quizzes);
+        var gameApplicationUsers = PrepareGameApplicationUsers(games, applicationUsers);
+        var gameAnswers = PrepareGameAnswers(games, gameApplicationUsers, questions, answers);
 
         modelBuilder.Entity<ApplicationUser>()
             .HasData(applicationUsers);
 
         modelBuilder.Entity<Quiz>()
             .HasData(quizzes);
+
+        modelBuilder.Entity<Question>()
+            .HasData(questions);
+
+        modelBuilder.Entity<Answer>()
+            .HasData(answers);
+
+        modelBuilder.Entity<Game>()
+            .HasData(games);
+
+        modelBuilder.Entity<GameApplicationUser>()
+            .HasData(gameApplicationUsers);
+
+        modelBuilder.Entity<GameAnswer>()
+            .HasData(gameAnswers);
     }
 
     public static List<ApplicationUser> PrepareApplicationUsers()
@@ -44,19 +44,19 @@ public static class DataInitializer
         var applicationUsers = new List<ApplicationUser>();
         PasswordHasher<ApplicationUser> passwordHasher = new PasswordHasher<ApplicationUser>();
 
-        foreach (var userData in DataConstants.UsersData)
+        foreach (var userData in RandomData.UsersData)
         {
-            var user = new ApplicationUser()
+            var applicationUser = new ApplicationUser()
             {
                 Id = Guid.NewGuid(),
-                UserName = userData.Item1,
-                NormalizedUserName = userData.Item1.ToUpper(),
-                Email = userData.Item2,
-                NormalizedEmail = userData.Item2.ToUpper(),
+                UserName = userData.Username,
+                NormalizedUserName = userData.Username.ToUpper(),
+                Email = userData.Email,
+                NormalizedEmail = userData.Email.ToUpper(),
             };
-
-            user.PasswordHash = passwordHasher.HashPassword(user, userData.Item3);
-            applicationUsers.Add(user);
+            applicationUser.PasswordHash = passwordHasher.HashPassword(applicationUser, userData.Password);
+            
+            applicationUsers.Add(applicationUser);
         }
 
         return applicationUsers;
@@ -64,36 +64,195 @@ public static class DataInitializer
 
     public static List<Quiz> PrepareQuizzes(List<ApplicationUser> applicationUsers)
     {
-        int numOfUsers = applicationUsers.Count;
-        int numOfTitles = DataConstants.QuizTitles.Length;
-
         var quizzes = new List<Quiz>();
-        // number of quizzes for each user
-        int[] quizzesCounts = getRandomArrayWithSum(numOfUsers, numOfTitles);
+        // random number of quizzes for each user
+        int[] quizzesCounts = GetRandomArrayWithSum(applicationUsers.Count, RandomData.QuizzesData.Length);
 
-        Debug.Assert(quizzesCounts.Sum() == numOfTitles);
+        Debug.Assert(quizzesCounts.Sum() == RandomData.QuizzesData.Length);
 
-        int titleIndex = 0;
+        int quizIndex = 0;
 
-        for (int i = 0; i < numOfUsers; i++)
+        for (int i = 0; i < applicationUsers.Count; i++)
         {
             for (int j = 0; j < quizzesCounts[i]; j++)
             {
                 var quiz = new Quiz()
                 {
-                    Title = DataConstants.QuizTitles[titleIndex],
+                    Title = RandomData.QuizzesData[quizIndex].Title,
                     ApplicationUserId = applicationUsers[i].Id,
                 };
 
                 quizzes.Add(quiz);
-                titleIndex++;
+                quizIndex++;
             }
         }
 
         return quizzes;
     }
 
-    private static int[] getRandomArrayWithSum(int arrayLength, int arraySum)
+    public static List<Question> PrepareQuestions(List<Quiz> quizzes)
+    {
+        Debug.Assert(quizzes.Count == RandomData.QuizzesData.Length);
+
+        var questions = new List<Question>();
+        var quizIndex = 0;
+
+        foreach (var quizData in RandomData.QuizzesData)
+        {
+            foreach (var questionData in quizData.Questions)
+            {
+                var question = new Question()
+                {
+                    QuestionText = questionData.QuestionText,
+                    TimeLimit = questionData.TimeLimit,
+                    QuizId = quizzes[quizIndex].Id
+                };
+
+                questions.Add(question);
+                quizIndex++;
+            }
+        }
+
+        return questions;
+    }
+
+    public static List<Answer> PrepareAnswers(List<Question> questions)
+    {
+        var answers = new List<Answer>();
+        int questionIndex = 0;
+
+        foreach (var quizData in RandomData.QuizzesData)
+        {
+            foreach (var questionData in quizData.Questions)
+            {
+                foreach (var answerData in questionData.Answers)
+                {
+                    var answer = new Answer()
+                    {
+                        AnswerText = answerData.AnswerText,
+                        IsCorrect = answerData.IsCorrect,
+                        QuestionId = questions[questionIndex].Id
+                    };
+
+                    answers.Add(answer);
+                    questionIndex++;
+                }
+            }
+        }
+
+        return answers;
+    }
+
+    public static List<Game> PrepareGames(List<Quiz> quizzes)
+    {
+        int numOfGames = quizzes.Count * 2;
+
+        var games = new List<Game>();
+        // random number of games for each quiz
+        int[] gamesCounts = GetRandomArrayWithSum(quizzes.Count, numOfGames);
+
+        for (int i = 0; i < quizzes.Count; i++)
+        {
+            for (int j = 0; j < gamesCounts[i]; j++)
+            {
+                var game = new Game()
+                {
+                    QuizId = quizzes[i].Id
+                };
+
+                games.Add(game);
+            }
+        }
+
+        return games;
+    }
+
+    public static List<GameApplicationUser> PrepareGameApplicationUsers(
+        List<Game> games,
+        List<ApplicationUser> applicationUsers
+    )
+    {
+        const int minPlayersPerGame = 2;
+        Debug.Assert(applicationUsers.Count >= minPlayersPerGame);
+
+        const int maxScore = 1000;
+
+        var gameApplicationUsers = new List<GameApplicationUser>();
+        var random = new Random();
+
+        foreach (var game in games)
+        {
+            int numOfPlayers = random.Next(minPlayersPerGame, applicationUsers.Count);
+            var shuffledUsers = applicationUsers.OrderBy(_ => random.Next()).ToList();
+
+            for (int i = 0; i < numOfPlayers; i++)
+            {
+                var gameApplicationUser = new GameApplicationUser()
+                {
+                    GameId = game.Id,
+                    ApplicationUserId = shuffledUsers[i].Id,
+                    Score = random.Next(0, maxScore + 1)
+                };
+            }
+        }
+
+        return gameApplicationUsers;
+    }
+
+    public static List<GameAnswer> PrepareGameAnswers(
+        List<Game> games,
+        List<GameApplicationUser> gameApplicationUsers,
+        List<Question> questions,
+        List<Answer> answers
+    )
+    {
+        var gameAnswers = new List<GameAnswer>();
+
+        var gamesQuestionIds = games
+            .Join(questions, g => g.QuizId, q => q.QuizId, (g, q) => new { GameId = g.Id, QuestionId = q.Id })
+            .GroupBy(joinItem => joinItem.GameId)
+            .ToDictionary(group => group.Key, group => group.Select(item => item.QuestionId).ToList());
+
+        var questionsAnswerIds = answers
+            .GroupBy(a => a.QuestionId)
+            .ToDictionary(group => group.Key, group => group.Select(a => a.Id).ToList());
+
+        var gamesPlayerCounts = gameApplicationUsers
+            .GroupBy(gau => gau.GameId)
+            .ToDictionary(group => group.Key, group => group.Count());
+
+        var random = new Random();
+
+        foreach (var game in games)
+        {
+            var gameQuestionIds = gamesQuestionIds[game.Id];
+            var gamePlayerCount = gamesPlayerCounts[game.Id];
+            
+            foreach (var questionId in gameQuestionIds)
+            {
+                var questionAnswerIds = questionsAnswerIds[questionId];
+
+                // randomly distribute player choices between answers
+                var playerChoiceCounts = GetRandomArrayWithSum(questionAnswerIds.Count, gamePlayerCount);
+
+                for (int i = 0; i < playerChoiceCounts.Length; i++)
+                {
+                    var gameAnswer = new GameAnswer()
+                    {
+                        GameId = game.Id,
+                        AnswerId = questionAnswerIds[i],
+                        AnsweredCount = playerChoiceCounts[i]
+                    };
+
+                    gameAnswers.Add(gameAnswer);
+                }
+            }
+        }
+
+        return gameAnswers;
+    }
+
+    private static int[] GetRandomArrayWithSum(int arrayLength, int arraySum)
     {
         int[] array = new int[arrayLength];
         var random = new Random();
