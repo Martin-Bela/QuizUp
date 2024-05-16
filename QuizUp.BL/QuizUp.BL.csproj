@@ -6,4 +6,13 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Riok.Mapperly" Version="3.5.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\QuizUp.Common\QuizUp.Common.csproj" />
+    <ProjectReference Include="..\QuizUp.DAL\QuizUp.DAL.csproj" />
+  </ItemGroup>
+
 </Project>

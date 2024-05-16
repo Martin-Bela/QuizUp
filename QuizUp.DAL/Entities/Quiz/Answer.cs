@@ -4,7 +4,7 @@ public class Answer : BaseEntity
 {
     public required string AnswerText { get; set; }
 
-    public Boolean IsCorrect { get; set; } = false;
+    public bool IsCorrect { get; set; } = false;
 
     public Guid QuestionId { get; set; }
 

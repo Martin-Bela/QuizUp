@@ -1,5 +1,16 @@
-﻿namespace QuizUp.BL.Services;
+﻿using QuizUp.Common.Models;
 
-public class IQuizService
+namespace QuizUp.BL.Services;
+
+public interface IQuizService
 {
+    public Task<List<QuizSummaryModel>> GetQuizzessByUserIdAsync(Guid userId);
+
+    public Task<QuizDetailModel> GetQuizByIdAsync(Guid quizId);
+
+    public Task<QuizDetailModel?> CreateQuizAsync(QuizDetailModel quizDetailModel);
+
+    public Task<QuizDetailModel?> EditQuizAsync(QuizDetailModel quizDetailModel);
+
+    public Task<bool> DeleteQuizByIdAsync(Guid quizId);
 }
