@@ -38,7 +38,7 @@ public class QuizService(ApplicationDbContext dbContext) : IQuizService
         return quiz.MapToQuizDetailModel();
     }
 
-    public async Task<QuizDetailModel?> CreateQuizAsync(QuizDetailModel quizDetailModel)
+    public async Task<QuizDetailModel> CreateQuizAsync(QuizDetailModel quizDetailModel)
     {
         var newQuiz = quizDetailModel.MapToQuiz();
         await dbContext.Quizzes.AddAsync(newQuiz);
@@ -48,7 +48,7 @@ public class QuizService(ApplicationDbContext dbContext) : IQuizService
         return newQuiz.MapToQuizDetailModel();
     }
 
-    public async Task<QuizDetailModel?> EditQuizAsync(QuizDetailModel quizDetailModel)
+    public async Task<QuizDetailModel> EditQuizAsync(QuizDetailModel quizDetailModel)
     {
         if (quizDetailModel.Id == null)
         {
@@ -140,7 +140,7 @@ public class QuizService(ApplicationDbContext dbContext) : IQuizService
         }
     }
 
-    public async Task<bool> DeleteQuizByIdAsync(Guid quizId)
+    public async Task DeleteQuizByIdAsync(Guid quizId)
     {
         var quiz = await dbContext.Quizzes.FindAsync(quizId);
         if (quiz == null)
@@ -150,7 +150,5 @@ public class QuizService(ApplicationDbContext dbContext) : IQuizService
 
         dbContext.Quizzes.Remove(quiz);
         await dbContext.SaveChangesAsync();
-
-        return true;
     }
 }

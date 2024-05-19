@@ -8,9 +8,9 @@ public interface IQuizService
 
     public Task<QuizDetailModel> GetQuizByIdAsync(Guid quizId);
 
-    public Task<QuizDetailModel?> CreateQuizAsync(QuizDetailModel quizDetailModel);
+    public Task<QuizDetailModel> CreateQuizAsync(QuizDetailModel quizDetailModel);
 
-    public Task<QuizDetailModel?> EditQuizAsync(QuizDetailModel quizDetailModel);
+    public Task<QuizDetailModel> EditQuizAsync(QuizDetailModel quizDetailModel);
 
-    public Task<bool> DeleteQuizByIdAsync(Guid quizId);
+    public Task DeleteQuizByIdAsync(Guid quizId);
 }
