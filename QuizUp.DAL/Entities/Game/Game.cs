@@ -2,6 +2,10 @@
 
 public class Game : BaseEntity
 {
+    public int Code { get; set; }
+
+    public bool IsFinished { get; set; } = false;
+
     public Guid QuizId { get; set; }
 
     public Quiz Quiz { get; set; } = null!;

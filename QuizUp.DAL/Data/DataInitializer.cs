@@ -150,16 +150,24 @@ public static class DataInitializer
         // random number of games for each quiz
         int[] gamesCounts = GetRandomArrayWithSum(quizzes.Count, numOfGames);
 
+        // code is a six digit number
+        var randomCodes = GetUniqueRandomNumbers(numOfGames, 0, 999999);
+        var randomCodeIndex = 0;
+
         for (int quizIndex = 0; quizIndex < quizzes.Count; quizIndex++)
         {
             for (int i = 0; i < gamesCounts[quizIndex]; i++)
             {
                 var game = new Game()
                 {
+                    // game code is a six digits number
+                    Code = randomCodes[randomCodeIndex],
+                    IsFinished = false,
                     QuizId = quizzes[quizIndex].Id
                 };
 
                 games.Add(game);
+                randomCodeIndex++;
             }
         }
 
@@ -264,5 +272,18 @@ public static class DataInitializer
         }
 
         return array;
+    }
+
+    private static List<int> GetUniqueRandomNumbers(int resultLength, int minNumber, int maxNumber)
+    {
+        var uniqueRandomNumbers = new HashSet<int>();
+        var random = new Random();
+
+        while (uniqueRandomNumbers.Count != resultLength)
+        {
+            uniqueRandomNumbers.Add(random.Next(minNumber, maxNumber));
+        }
+
+        return uniqueRandomNumbers.ToList();
     }
 }
