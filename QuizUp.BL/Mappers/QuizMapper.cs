@@ -7,17 +7,14 @@ namespace QuizUp.BL.Mappers;
 [Mapper]
 public static partial class QuizMapper
 {
-    public static partial Quiz MapToQuiz(this QuizDetailModel quizDetail);
+    public static partial QuizSummaryModel MapToQuizSummaryModel(this Quiz quiz);
 
     public static partial QuizDetailModel MapToQuizDetailModel(this Quiz quiz);
 
-    public static partial QuizSummaryModel MapToQuizSummaryModel(this Quiz quiz);
+    [MapProperty(nameof(CreateQuizModel.UserId), nameof(Quiz.ApplicationUserId))]
+    public static partial Quiz MapToQuiz(this CreateQuizModel quizDetail);
 
-    public static partial Question MapToQuestion(this QuestionDetailModel questionDetailModel);
+    public static partial Question MapToQuestion(this EditQuestionModel question);
 
-    public static partial QuestionDetailModel MapToQuestionDetailModel(this Question question);
-
-    public static partial Answer MapToAnswer(this AnswerDetailModel answerDetailModel);
-
-    public static partial AnswerDetailModel MapToAnswerDetailModel(this Answer answer);
+    public static partial Answer MapToAnswer(this EditAnswerModel editAnswerModel);
 }

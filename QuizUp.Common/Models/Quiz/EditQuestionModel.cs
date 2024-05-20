@@ -1,6 +1,6 @@
 ﻿namespace QuizUp.Common.Models;
 
-public class QuestionDetailModel : ModelBase
+public class EditQuestionModel
 {
     public Guid Id { get; set; }
 
@@ -8,5 +8,5 @@ public class QuestionDetailModel : ModelBase
 
     public int TimeLimit { get; set; }
 
-    public ICollection<AnswerDetailModel> Answers = new List<AnswerDetailModel>();
+    public ICollection<EditAnswerModel> Answers = new List<EditAnswerModel>();
 }

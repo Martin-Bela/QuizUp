@@ -1,6 +1,6 @@
 ﻿namespace QuizUp.Common.Models;
 
-public class AnswerDetailModel : ModelBase
+public class EditAnswerModel
 {
     public Guid Id { get; set; }
 

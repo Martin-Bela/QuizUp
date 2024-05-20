@@ -1,6 +1,6 @@
 ﻿namespace QuizUp.Common.Models;
 
-public class GameCreateResultModel
+public class CreateGameResultModel
 {
     public Guid Id { get; set; }
 

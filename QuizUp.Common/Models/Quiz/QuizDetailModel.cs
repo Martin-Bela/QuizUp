@@ -2,7 +2,7 @@
 
 public class QuizDetailModel : ModelBase
 {
-    public Guid? Id { get; set; }
+    public Guid Id { get; set; }
 
     public required string Title { get; set; }
 

@@ -6,7 +6,7 @@ public interface IGameService
 {
     public Task<List<GameSummaryModel>> GetGamesByUserIdAsync(Guid userId);
 
-    public Task<GameCreateResultModel> CreateGameAsync(GameCreateModel gameCreateModel);
+    public Task<CreateGameResultModel> CreateGameAsync(CreateGameModel gameCreateModel);
 
     public Task SaveGameResultsAsync(SaveGameResultsModel gameResultsModel);
 
