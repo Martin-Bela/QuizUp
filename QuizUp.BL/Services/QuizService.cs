@@ -29,7 +29,12 @@ public class QuizService(ApplicationDbContext dbContext) : IQuizService
 
     public async Task<QuizDetailModel> GetQuizByIdAsync(Guid quizId)
     {
-        var quiz = await dbContext.Quizzes.FindAsync(quizId);
+        var quiz = await dbContext.Quizzes
+            .Where(q => q.Id == quizId)
+            .Include(q => q.Questions)
+            .ThenInclude(q => q.Answers)
+            .FirstOrDefaultAsync();
+
         if (quiz == null)
         {
             throw new NotFoundException($"Quiz with id ${quizId} not found.");
