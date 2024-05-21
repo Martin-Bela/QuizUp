@@ -1,14 +1,14 @@
 ﻿using System.Diagnostics;
 
 namespace QuizUp.MAUI.Services;
-public class GameManager()
+public class GameService(IRoutingService routing) : IGameService
 {
-    public ISignalR? SignalR { get; set; } = null;
-    public string GameId { get; set; } = string.Empty;
+    public ISignalR? SignalR { get; private set; } = null;
+    public string GameId { get; private set; } = string.Empty;
 
     async public Task StartGameAsync(string gameId)
     {
-        SignalR = new SignalR();
+        SignalR = new SignalR(routing);
         GameId = gameId;
         await SignalR.StartAsync();
         await SignalR.JoinGameAsync(gameId);

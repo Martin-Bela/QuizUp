@@ -6,7 +6,7 @@ using QuizUp.MAUI.Services;
 namespace QuizUp.MAUI.ViewModels;
 
 [QueryProperty(nameof(QuizQuestion), nameof(QuizQuestion))]
-public partial class QuestionViewModel(ViewModelBase.Dependencies dependencies, GameManager gameManager, IDispatcher dispatcher) : ViewModelBase(dependencies)
+public partial class QuestionViewModel(ViewModelBase.Dependencies dependencies, GameService gameManager, IDispatcher dispatcher) : ViewModelBase(dependencies)
 {
     QuizQuestion quizQuestion = new() { GameId = "-1", QuestionId = 0, Answer1 = "1", Answer2 = "2", Answer3 = "3", Answer4 = "4", Question = "QuestionPlaceholder" };
 
@@ -38,7 +38,7 @@ public partial class QuestionViewModel(ViewModelBase.Dependencies dependencies, 
             return;
         }
         SelectedAnswer = int.Parse(number);
-        gameManager.AnswerQuestionAsync(quizQuestion.QuestionId, number);
+        await gameManager.AnswerQuestionAsync(quizQuestion.QuestionId, number);
     }
 
     public void CreateTimer()

@@ -28,7 +28,7 @@
         <Button Margin="20" Grid.Row="2" Grid.Column="0" Text="{Binding QuizQuestion.Answer3}" Command="{Binding AnswerCommand}" CommandParameter="2"
                 BackgroundColor="{Binding SelectedAnswer, Converter={StaticResource ButtonColorConverter}, ConverterParameter=2}"/>
         <Button Margin="20" Grid.Row="2" Grid.Column="1" Text="{Binding QuizQuestion.Answer4}" Command="{Binding AnswerCommand}" CommandParameter="3"
-                />
+                BackgroundColor="{Binding SelectedAnswer, Converter={StaticResource ButtonColorConverter}, ConverterParameter=3}"/>
     </Grid>
 
 </views:ContentPageBase>

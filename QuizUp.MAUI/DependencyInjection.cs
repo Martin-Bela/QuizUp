@@ -7,7 +7,7 @@ public class DependencyInjection
     public static void RegisterServices(ContainerBuilder builder)
     {
         builder.RegisterType<Services.RoutingService>().As<Services.IRoutingService>();
-        builder.RegisterType<Services.GameManager>().SingleInstance();
+        builder.RegisterType<Services.GameService>().SingleInstance();
     }
 
     public static void RegisterViewModels(ContainerBuilder builder)

@@ -1,14 +1,18 @@
 ﻿using Microsoft.AspNetCore.SignalR.Client;
 using QuizUp.Common.Models;
+using QuizUp.MAUI.ViewModels;
 
 namespace QuizUp.MAUI.Services;
 public class SignalR : ISignalR
 {
     readonly HubConnection hubConnection;
     public event Action<string, string>? OnMessageReceived;
+    private readonly IRoutingService routingService;
 
-    public SignalR()
+    public SignalR(IRoutingService routingService)
     {
+        this.routingService = routingService;
+
         var baseUrl = "https://localhost";
         hubConnection = new HubConnectionBuilder()
                 .WithUrl($"{baseUrl}:7126/quizHub")
@@ -16,18 +20,11 @@ public class SignalR : ISignalR
                 .Build()
                 ?? throw new Exception("Unable to connect to SignalR server!");
 
-        hubConnection.On<string, string>("ReceiveMessage", (user, message) =>
-            {
-                if (OnMessageReceived is not null)
-                {
-                    OnMessageReceived(user, message);
-                }
-            });
-
         hubConnection.On<QuizQuestion>("NextQuestion", question =>
         {
+            var questionRoute = routingService.GetRouteByViewModel<QuestionViewModel>();
             Application.Current?.Dispatcher.Dispatch(
-                async () => { await Shell.Current.GoToAsync("///Question", new Dictionary<string, object> { { "QuizQuestion", question } }); }
+                async () => { await Shell.Current.GoToAsync(questionRoute, new Dictionary<string, object> { { "QuizQuestion", question } }); }
                 );
         });
     }
@@ -40,11 +37,6 @@ public class SignalR : ISignalR
     public async Task StopAsync()
     {
         await hubConnection.StopAsync();
-    }
-
-    public async Task SendMessageAsync(string user, string message)
-    {
-        await hubConnection.InvokeAsync("SendMessageToAll", user, message);
     }
 
     public async Task JoinGameAsync(string gameId)
