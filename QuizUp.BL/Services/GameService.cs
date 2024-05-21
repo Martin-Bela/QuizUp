@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using QuizUp.BL.Exceptions;
 using QuizUp.BL.Mappers;
-using QuizUp.BL.Services.Interfaces;
+using QuizUp.BL.Services;
 using QuizUp.Common.Models;
 using QuizUp.DAL.Data;
 using QuizUp.DAL.Entities;
@@ -10,8 +10,6 @@ namespace QuizUp.BL.Services;
 
 public class GameService(ApplicationDbContext dbContext) : IGameService
 {
-    private readonly ApplicationDbContext dbContext = dbContext;
-
     public async Task<List<GameSummaryModel>> GetGamesByUserIdAsync(Guid userId)
     {
         var user = await dbContext.ApplicationUsers.FindAsync(userId);
@@ -68,7 +66,7 @@ public class GameService(ApplicationDbContext dbContext) : IGameService
                         }).ToList()
                 }).ToList()
         };
-        
+
         return gameResults;
     }
 
@@ -122,7 +120,7 @@ public class GameService(ApplicationDbContext dbContext) : IGameService
                 await dbContext.GameAnswers.AddAsync(newGameAnswer);
             }
         }
- 
+
         await dbContext.SaveChangesAsync();
     }
 

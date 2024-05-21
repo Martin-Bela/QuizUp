@@ -13,6 +13,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<ProjectReference Include="..\QuizUp.BL\QuizUp.BL.csproj" />
 		<ProjectReference Include="..\QuizUp.Common\QuizUp.Common.csproj" />
 	</ItemGroup>
 

@@ -15,6 +15,7 @@ public class RoutingService : IRoutingService
         new("//quizes/detail/edit/question/answer", typeof(QuizQuestionAnswerEditView), typeof(QuizQuestionAnswerEditViewModel)),
 
         new("//game/join-game", typeof(JoinGameView), typeof(JoinGameViewModel)),
+        new("//game/question", typeof(QuestionView), typeof(QuestionViewModel)),
         //new("//game/detail", typeof(GameDetailView), typeof(GameDetailViewModel)),
         //new("//game/question", typeof(GameQuestionView), typeof(GameQuestionViewModel)),
         //new("//game/leaderboard", typeof(GameLeaderboardView), typeof(GameLeaderboardViewModel)),

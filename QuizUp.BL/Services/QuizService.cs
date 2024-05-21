@@ -9,8 +9,6 @@ namespace QuizUp.BL.Services;
 
 public class QuizService(ApplicationDbContext dbContext) : IQuizService
 {
-    private readonly ApplicationDbContext dbContext = dbContext;
-
     public async Task<List<QuizSummaryModel>> GetQuizzessByUserIdAsync(Guid userId)
     {
         var user = await dbContext.ApplicationUsers.FindAsync(userId);

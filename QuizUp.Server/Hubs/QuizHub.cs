@@ -1,14 +1,16 @@
 ﻿using Microsoft.AspNetCore.SignalR;
 using QuizUp.Server.Services;
+//using QuizUp.BL.Services;
 using System.Diagnostics;
 
 namespace QuizUp.Server.Hubs;
 
 public class QuizHub(IQuizService quizService) : Hub
 {
-    public async Task StartQuiz(string gameId)
+    public Task StartQuiz(string gameId)
     {
         //await Clients.Group(gameId).SendAsync("QuizStarted", quizService.getQuizQuestion(gameId, 0));
+        throw new NotImplementedException();
     }
 
     public async Task JoinQuiz(string gameId)
@@ -33,11 +35,5 @@ public class QuizHub(IQuizService quizService) : Hub
         Debug.WriteLine($"Player {player} answered {answer}");
         await Task.Delay(2000);
         await Clients.Client(player).SendAsync("NextQuestion", quizService.getQuizQuestion("0", question + 1));
-    }
-
-    //todo remove
-    public async Task SendMessageToAll(string user, string message)
-    {
-        await Clients.All.SendAsync("ReceiveMessage", user, message);
     }
 }

@@ -1,6 +1,6 @@
 ﻿using QuizUp.Common.Models;
 
-namespace QuizUp.BL.Services.Interfaces;
+namespace QuizUp.BL.Services;
 
 public interface IGameService
 {
