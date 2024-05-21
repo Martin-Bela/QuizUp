@@ -1,7 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using QuizUp.BL.Exceptions;
 using QuizUp.BL.Mappers;
-using QuizUp.BL.Services;
 using QuizUp.Common.Models;
 using QuizUp.DAL.Data;
 using QuizUp.DAL.Entities;
@@ -70,11 +69,11 @@ public class GameService(ApplicationDbContext dbContext) : IGameService
         return gameResults;
     }
 
-    public async Task<CreateGameResultModel> CreateGameAsync(CreateGameModel gameCreateModel)
+    public async Task<CreateGameResultModel> CreateGameAsync(Guid quizId)
     {
         var newGame = new Game()
         {
-            QuizId = gameCreateModel.QuizId,
+            QuizId = quizId,
             IsFinished = false,
             Code = await GenerateNewGameCode()
         };

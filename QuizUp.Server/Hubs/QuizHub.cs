@@ -1,39 +1,40 @@
 ﻿using Microsoft.AspNetCore.SignalR;
+using QuizUp.BL.Services;
 using QuizUp.Server.Services;
 //using QuizUp.BL.Services;
 using System.Diagnostics;
 
 namespace QuizUp.Server.Hubs;
 
-public class QuizHub(IQuizService quizService) : Hub
+public class QuizHub(IGameManager gameManager) : Hub
 {
-    public Task StartQuiz(string gameId)
-    {
-        //await Clients.Group(gameId).SendAsync("QuizStarted", quizService.getQuizQuestion(gameId, 0));
-        throw new NotImplementedException();
-    }
-
-    public async Task JoinQuiz(string gameId)
+    public async Task JoinQuiz(string gameId, string playerName)
     {
         await Groups.AddToGroupAsync(Context.ConnectionId, gameId);
-
         var player = Context.ConnectionId;
-        Debug.WriteLine($"Player {player} joined game {gameId}");
-        await Clients.Client(player).SendAsync("NextQuestion", quizService.getQuizQuestion("0", 0));
+        Debug.WriteLine($"Player {playerName}({player}) joined game {gameId}");
+        await gameManager.AddPlayer(gameId, player, playerName);
+        await Clients.Client(player).SendAsync("GameJoined");
     }
-
-    public async Task LeaveQuiz(string gameId)
+    public async Task NextQuestion(string gameId)
     {
-        await Groups.RemoveFromGroupAsync(Context.ConnectionId, gameId);
+        var question = gameManager.NextQuestion(gameId, Context.ConnectionId);
+        await Clients.Group(gameId).SendAsync("NextQuestion", question);
     }
 
     public async Task Answer(string gameId, int question, string answer)
     {
         var player = Context.ConnectionId;
+        var allAnswered = await gameManager.Answer(gameId, question, answer, Context.ConnectionId);
+        if (allAnswered)
+        {
+            await Clients.Group(gameId).SendAsync("Score");
+        }
+        await Clients.User(player).SendAsync("AnserAccepted");
+    }
 
-        //todo check answer
-        Debug.WriteLine($"Player {player} answered {answer}");
-        await Task.Delay(2000);
-        await Clients.Client(player).SendAsync("NextQuestion", quizService.getQuizQuestion("0", question + 1));
+    public async Task LeaveQuiz(string gameId)
+    {
+        await Groups.RemoveFromGroupAsync(Context.ConnectionId, gameId);
     }
 }

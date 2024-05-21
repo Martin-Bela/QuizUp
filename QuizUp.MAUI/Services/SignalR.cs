@@ -1,18 +1,14 @@
 ﻿using Microsoft.AspNetCore.SignalR.Client;
-using QuizUp.Common.Models;
+using QuizUp.Common.Dtos;
 using QuizUp.MAUI.ViewModels;
 
 namespace QuizUp.MAUI.Services;
 public class SignalR : ISignalR
 {
     readonly HubConnection hubConnection;
-    public event Action<string, string>? OnMessageReceived;
-    private readonly IRoutingService routingService;
 
     public SignalR(IRoutingService routingService)
     {
-        this.routingService = routingService;
-
         var baseUrl = "https://localhost";
         hubConnection = new HubConnectionBuilder()
                 .WithUrl($"{baseUrl}:7126/quizHub")

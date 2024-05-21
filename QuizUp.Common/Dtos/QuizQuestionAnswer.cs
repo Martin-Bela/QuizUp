@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace QuizUp.Common.Models;
+namespace QuizUp.Common.Dtos;
 public class QuizQuestionAnswer
 {
     public required QuizQuestion question;

@@ -1,4 +1,5 @@
-﻿using QuizUp.Common.Models;
+﻿using QuizUp.BL.Services;
+using QuizUp.Common.Dtos;
 
 namespace QuizUp.Server.Services;
 

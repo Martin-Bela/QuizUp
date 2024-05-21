@@ -5,11 +5,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace QuizUp.Common.Models;
+namespace QuizUp.Common.Dtos;
 public class QuizQuestion
 {
     public required string GameId { get; set; }
     public required int QuestionId { get; set; }
+
+    public int TimeLimit { get; set; }
 
     public required string Question { get; set; }
     public required string Answer1 { get; set; }
