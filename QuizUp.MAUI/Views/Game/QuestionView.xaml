@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<views:ContentPageBase xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+<views:ViewBase xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
                        xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                        xmlns:views="clr-namespace:QuizUp.MAUI.Views"
                        xmlns:v="clr-namespace:QuizUp.MAUI.Views"
@@ -7,7 +7,7 @@
                        xmlns:converters="clr-namespace:QuizUp.MAUI.Converters"
                        x:Class="QuizUp.MAUI.Views.QuestionView"
                        x:DataType="vm:QuestionViewModel"
-                       Title="QuestionView"
+                       Title="Question"
                        Shell.TabBarIsVisible="False"
 >
     <ContentPage.Resources>
@@ -31,4 +31,4 @@
                 BackgroundColor="{Binding SelectedAnswer, Converter={StaticResource ButtonColorConverter}, ConverterParameter=3}"/>
     </Grid>
 
-</views:ContentPageBase>
+</views:ViewBase>

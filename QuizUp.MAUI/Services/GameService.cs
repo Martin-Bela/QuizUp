@@ -4,14 +4,12 @@ namespace QuizUp.MAUI.Services;
 public class GameService(IRoutingService routing) : IGameService
 {
     public ISignalR? SignalR { get; private set; } = null;
-    public string GameId { get; private set; } = string.Empty;
 
-    async public Task StartGameAsync(string gameId)
+    async public Task JoinGameAsync(int gameCode, string playerName)
     {
         SignalR = new SignalR(routing);
-        GameId = gameId;
         await SignalR.StartAsync();
-        await SignalR.JoinGameAsync(gameId);
+        await SignalR.JoinGameAsync(gameCode, playerName);
     }
 
     async public Task EndGameAsync()
@@ -23,9 +21,15 @@ public class GameService(IRoutingService routing) : IGameService
         }
     }
 
-    async public Task AnswerQuestionAsync(int question, string answer)
+    async public Task AnswerQuestionAsync(string gameID, int question, string answer)
     {
         Debug.Assert(SignalR != null);
-        await SignalR.AnswerQuestionAsync(GameId, question, answer);
+        await SignalR.AnswerQuestionAsync(gameID, question, answer);
+    }
+
+    async public Task StartGameAsync(string gameId)
+    {
+        Debug.Assert(SignalR != null);
+        await SignalR.NextQuestionAsync(gameId);
     }
 }

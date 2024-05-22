@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<views:ViewBase xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="QuizUp.MAUI.Views.GameIntroView"
+             xmlns:constants="clr-namespace:QuizUp.MAUI.Resources.Constants"
+             xmlns:fonts="clr-namespace:QuizUp.MAUI.Resources.Fonts"
+             xmlns:views="clr-namespace:QuizUp.MAUI.Views"
+             xmlns:view_models="clr-namespace:QuizUp.MAUI.ViewModels"
+             x:DataType="view_models:GameIntroViewModel"
+             Shell.TabBarIsVisible="False">
+    <VerticalStackLayout>
+        <Label 
+            Text="Wait fot the game to start"
+            VerticalOptions="Center" 
+            HorizontalOptions="Center" />
+    </VerticalStackLayout>
+</views:ViewBase>

@@ -8,8 +8,8 @@ using System.Threading.Tasks;
 namespace QuizUp.MAUI.Services;
 internal interface IGameService
 {
-    public string GameId { get; }
-    Task StartGameAsync(string gameId);
+    Task JoinGameAsync(int gameCode, string playerName);
     Task EndGameAsync();
-    Task AnswerQuestionAsync(int question, string answer);
+    Task AnswerQuestionAsync(string gameId, int question, string answer);
+    Task StartGameAsync(string gameId);
 }

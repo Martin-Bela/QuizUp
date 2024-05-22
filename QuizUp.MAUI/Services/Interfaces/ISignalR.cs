@@ -2,9 +2,10 @@
 
 public interface ISignalR
 {
-    event Action<string, string>? OnMessageReceived;
     Task StartAsync();
     Task StopAsync();
-    Task JoinGameAsync(string gameId);
+    Task JoinGameAsync(int gameCode, string playerName);
     Task AnswerQuestionAsync(string gameId, int question, string answer);
+    Task NextQuestionAsync(string gameId);
+    Task LeaveQuiz(string gameId);
 }

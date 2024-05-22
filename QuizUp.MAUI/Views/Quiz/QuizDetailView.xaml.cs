@@ -2,7 +2,7 @@ using QuizUp.MAUI.ViewModels;
 
 namespace QuizUp.MAUI.Views;
 
-public partial class QuizDetailView : ContentPageBase
+public partial class QuizDetailView : ViewBase
 {
 	public QuizDetailView(QuizDetailViewModel quizDetailViewModel) : base(quizDetailViewModel)
 	{

@@ -8,7 +8,7 @@ public interface IGameService
 
     public Task<GameResultsModel> GetGameResultsByIdAsync(Guid gameId);
 
-    public Task<CreateGameResultModel> CreateGameAsync(CreateGameModel gameCreateModel);
+    public Task<CreateGameResultModel> CreateGameAsync(Guid quizId);
 
     public Task SaveGameResultsAsync(SaveGameResultsModel gameResultsModel);
 

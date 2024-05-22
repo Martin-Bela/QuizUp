@@ -1,7 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using QuizUp.BL.Exceptions;
 using QuizUp.BL.Mappers;
-using QuizUp.BL.Services;
 using QuizUp.Common.Models;
 using QuizUp.DAL.Data;
 using QuizUp.DAL.Entities;
@@ -12,12 +11,7 @@ public class GameService(ApplicationDbContext dbContext) : IGameService
 {
     public async Task<List<GameSummaryModel>> GetGamesByUserIdAsync(Guid userId)
     {
-        var user = await dbContext.ApplicationUsers.FindAsync(userId);
-        if (user == null)
-        {
-            throw new NotFoundException($"Application user with id {userId} not found.");
-        }
-
+        var user = await dbContext.ApplicationUsers.FindAsync(userId) ?? throw new NotFoundException($"Application user with id {userId} not found.");
         var games = await dbContext.Games
             .Where(g => g.Quiz.ApplicationUserId == userId)
             .Select(g => g.MapToGameSummaryModel())
@@ -70,11 +64,11 @@ public class GameService(ApplicationDbContext dbContext) : IGameService
         return gameResults;
     }
 
-    public async Task<CreateGameResultModel> CreateGameAsync(CreateGameModel gameCreateModel)
+    public async Task<CreateGameResultModel> CreateGameAsync(Guid quizId)
     {
         var newGame = new Game()
         {
-            QuizId = gameCreateModel.QuizId,
+            QuizId = quizId,
             IsFinished = false,
             Code = await GenerateNewGameCode()
         };

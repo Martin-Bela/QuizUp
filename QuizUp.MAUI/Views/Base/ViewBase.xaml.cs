@@ -2,11 +2,11 @@ using QuizUp.MAUI.ViewModels;
 
 namespace QuizUp.MAUI.Views;
 
-public abstract partial class ContentPageBase : ContentPage
+public abstract partial class ViewBase : ContentPage
 {
     protected IViewModel ViewModel { get; }
 
-    protected ContentPageBase(IViewModel viewModel)
+    protected ViewBase(IViewModel viewModel)
     {
         ViewModel = viewModel;
         BindingContext = viewModel;
