@@ -10,7 +10,7 @@ public interface IGameService
 
     public Task<CreateGameResultModel> CreateGameAsync(Guid quizId);
 
-    public Task SaveGameResultsAsync(SaveGameResultsModel gameResultsModel);
+    public Task SaveGameResultsAsync(Guid gameId, SaveGameResultsModel gameResultsModel);
 
     public Task DeleteGameByIdAsync(Guid gameId);
 }

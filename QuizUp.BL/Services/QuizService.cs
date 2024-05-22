@@ -52,17 +52,17 @@ public class QuizService(ApplicationDbContext dbContext) : IQuizService
         return newQuiz.MapToQuizDetailModel();
     }
 
-    public async Task EditQuizAsync(EditQuizModel editQuizModel)
+    public async Task EditQuizAsync(Guid quizId, EditQuizModel editQuizModel)
     {
         var quiz = await dbContext.Quizzes
-            .Where(q => q.Id == editQuizModel.Id)
+            .Where(q => q.Id == quizId)
             .Include(q => q.Questions)
             .ThenInclude(q => q.Answers)
             .FirstOrDefaultAsync();
 
         if (quiz == null)
         {
-            throw new NotFoundException($"Quiz with id {editQuizModel.Id} not found.");
+            throw new NotFoundException($"Quiz with id {quizId} not found.");
         }
 
         // Update existing quiz
