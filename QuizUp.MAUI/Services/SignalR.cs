@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.SignalR.Client;
-using QuizUp.Common.Dtos;
+using QuizUp.Common.Models;
 using QuizUp.MAUI.ViewModels;
 
 namespace QuizUp.MAUI.Services;
@@ -16,7 +16,7 @@ public class SignalR : ISignalR
                 .Build()
                 ?? throw new Exception("Unable to connect to SignalR server!");
 
-        hubConnection.On<QuizQuestion>("NextQuestion", question =>
+        hubConnection.On<QuizQuestionModel>("NextQuestion", question =>
         {
             var questionRoute = routingService.GetRouteByViewModel<QuestionViewModel>();
             Application.Current?.Dispatcher.Dispatch(
@@ -43,5 +43,15 @@ public class SignalR : ISignalR
     public async Task AnswerQuestionAsync(string gameId, int questionId, string answer)
     {
         await hubConnection.InvokeAsync("Answer", gameId, questionId, answer);
+    }
+
+    public async Task NextQuestionAsync(string gameId)
+    {
+        await hubConnection.InvokeAsync("NextQuestion", gameId);
+    }
+
+    public async Task LeaveQuiz(string gameId)
+    {
+        await hubConnection.InvokeAsync("LeaveQuiz", gameId);
     }
 }

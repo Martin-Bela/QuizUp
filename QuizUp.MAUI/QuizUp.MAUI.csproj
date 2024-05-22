@@ -76,6 +76,15 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Compile Update="Views\Base\ViewBase.xaml.cs">
+	    <DependentUpon>ViewBase.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="Views\Game\GameIntroView.xaml.cs">
+	    <DependentUpon>GameIntroView.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="Views\Game\GameResultsView.xaml.cs">
+	    <DependentUpon>GameResultsView.xaml</DependentUpon>
+	  </Compile>
 	  <Compile Update="Views\Game\JoinGameView.xaml.cs">
 	    <DependentUpon>JoinGameView.xaml</DependentUpon>
 	  </Compile>
@@ -106,10 +115,19 @@
 	  <MauiXaml Update="Resources\Styles\PageHeaderStyle.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Views\Base\ContentPageBase.xaml">
+	  <MauiXaml Update="Views\Base\ViewBase.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\Game\GameIntroView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\Game\GameResultsView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\Game\JoinGameView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\Game\StartGameView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\Quiz\QuizDetailView.xaml">

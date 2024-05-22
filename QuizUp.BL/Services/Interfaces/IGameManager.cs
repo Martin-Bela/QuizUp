@@ -1,4 +1,4 @@
-﻿using QuizUp.Common.Dtos;
+﻿using QuizUp.Common.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,8 +8,8 @@ using System.Threading.Tasks;
 namespace QuizUp.BL.Services;
 public interface IGameManager
 {
-    Task StartGame(Guid quizId, string hostId);
-    Task<string> AddPlayer(int gameCode, string playerID, string playerName);
-    Task<bool> Answer(string gameId, int question, string answer, string connectionId);
-    Task<QuizQuestion?> NextQuestion(string gameId, string connectionId);
+    Task StartGameAsync(Guid quizId, string hostId);
+    Task<string> AddPlayerAsync(int gameCode, string playerID, string playerName);
+    Task<bool> AnswerAsync(string gameId, int question, string answer, string connectionId);
+    Task<QuizQuestionModel?> NextQuestionAsync(string gameId, string connectionId);
 }

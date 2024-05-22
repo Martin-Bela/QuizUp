@@ -11,4 +11,5 @@ internal interface IGameService
     Task JoinGameAsync(int gameCode, string playerName);
     Task EndGameAsync();
     Task AnswerQuestionAsync(string gameId, int question, string answer);
+    Task StartGameAsync(string gameId);
 }

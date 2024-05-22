@@ -5,8 +5,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace QuizUp.Common.Dtos;
-public class QuizQuestion
+namespace QuizUp.Common.Models;
+public class QuizQuestionModel
 {
     public required string GameId { get; set; }
     public required int QuestionId { get; set; }

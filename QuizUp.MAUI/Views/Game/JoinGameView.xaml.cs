@@ -2,7 +2,7 @@ using QuizUp.MAUI.ViewModels;
 
 namespace QuizUp.MAUI.Views;
 
-public partial class JoinGameView : ContentPageBase
+public partial class JoinGameView : ViewBase
 {
     public JoinGameView(JoinGameViewModel joinGameViewModel) : base(joinGameViewModel)
     {

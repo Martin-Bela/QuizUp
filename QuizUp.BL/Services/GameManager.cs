@@ -1,5 +1,5 @@
 ﻿using QuizUp.BL.Mappers;
-using QuizUp.Common.Dtos;
+using QuizUp.Common.Models;
 using QuizUp.DAL.Entities;
 using System;
 using System.Collections.Generic;
@@ -10,31 +10,13 @@ using System.Threading.Tasks;
 
 namespace QuizUp.BL.Services;
 
-class Player
-{
-    public required string ID { get; set; }
-    public required string Name { get; set; }
-    public int Score { get; set; } = 0;
-    public int LastAnsweredQuestion { get; set; } = -1;
-}
-class RunningGame
-{
-    public required int GameCode { get; set; }
-    public required Guid QuizID { get; set; }
-    public required string HostID { get; set; }
-    public required Guid GameID { get; set; }
-    public List<Player> players { get; } = [];
-    public int CurrentQuestion { get; set; } = 0;
-    public bool ActiveQuestion { get => TimerCancellation != null; }
-    public int Answers { get; set; } = 0;
-    public CancellationTokenSource? TimerCancellation { get; set; } = null;
-}
+
 
 internal class GameManager(IGameService gameService, IQuizService quizService) : IGameManager
 {
     private readonly List<RunningGame> games = [];
 
-    public async Task StartGame(Guid quizId, string hostId)
+    public async Task StartGameAsync(Guid quizId, string hostId)
     {
         var result = await gameService.CreateGameAsync(quizId);
         Debug.Assert(games.All(g => g.GameID != result.Id && g.GameCode != result.Code));
@@ -48,7 +30,7 @@ internal class GameManager(IGameService gameService, IQuizService quizService) :
         });
     }
 
-    public Task<string> AddPlayer(int gameCode, string playerID, string playerName)
+    public Task<string> AddPlayerAsync(int gameCode, string playerID, string playerName)
     {
         var newPlayer = new Player
         {
@@ -56,14 +38,14 @@ internal class GameManager(IGameService gameService, IQuizService quizService) :
             Name = playerName
         };
         var game = games.First(g => g.GameCode == gameCode);
-        game.players.Add(newPlayer);
+        game.Players.Add(newPlayer);
         return Task.FromResult(game.GameID.ToString());
     }
 
-    public async Task<bool> Answer(string gameId, int question, string answer, string connectionId)
+    public async Task<bool> AnswerAsync(string gameId, int question, string answer, string connectionId)
     {
         var game = games.First(g => g.GameID.ToString() == gameId);
-        var player = game.players.First(p => p.ID == connectionId);
+        var player = game.Players.First(p => p.ID == connectionId);
         if (player.LastAnsweredQuestion < question && question == game.CurrentQuestion && game.ActiveQuestion)
         {
             player.LastAnsweredQuestion = question;
@@ -73,7 +55,7 @@ internal class GameManager(IGameService gameService, IQuizService quizService) :
                 player.Score += 1;
             }
             game.Answers += 1;
-            if (game.Answers == game.players.Count)
+            if (game.Answers == game.Players.Count)
             {
                 game.TimerCancellation?.Cancel();
                 game.TimerCancellation = null;
@@ -83,7 +65,7 @@ internal class GameManager(IGameService gameService, IQuizService quizService) :
         return false;
     }
 
-    public async Task<QuizQuestion?> NextQuestion(string gameId, string connectionId)
+    public async Task<QuizQuestionModel?> NextQuestionAsync(string gameId, string connectionId)
     {
         var game = games.First(g => g.GameID.ToString() == gameId);
         if (game.HostID != connectionId)
@@ -106,5 +88,25 @@ internal class GameManager(IGameService gameService, IQuizService quizService) :
             game.TimerCancellation = null;
         });
         return QuizQuestionMapper.MapToQuizQuestion(gameId, game.CurrentQuestion, question);
+    }
+
+    private class Player
+    {
+        public required string ID { get; set; }
+        public required string Name { get; set; }
+        public int Score { get; set; } = 0;
+        public int LastAnsweredQuestion { get; set; } = -1;
+    }
+    private class RunningGame
+    {
+        public required int GameCode { get; set; }
+        public required Guid QuizID { get; set; }
+        public required string HostID { get; set; }
+        public required Guid GameID { get; set; }
+        public List<Player> Players { get; } = [];
+        public int CurrentQuestion { get; set; } = 0;
+        public bool ActiveQuestion { get => TimerCancellation != null; }
+        public int Answers { get; set; } = 0;
+        public CancellationTokenSource? TimerCancellation { get; set; } = null;
     }
 }

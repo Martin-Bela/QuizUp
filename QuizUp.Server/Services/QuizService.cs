@@ -1,5 +1,5 @@
 ﻿using QuizUp.BL.Services;
-using QuizUp.Common.Dtos;
+using QuizUp.Common.Models;
 
 namespace QuizUp.Server.Services;
 
@@ -18,9 +18,9 @@ public class QuizService : IQuizService
     //    }
     //];
 
-    public QuizQuestion getQuizQuestion(string quizId, int questionId)
+    public QuizQuestionModel getQuizQuestion(string quizId, int questionId)
     {
         //return quizes[int.Parse(quizId)].questions[questionId].question;
-        return new QuizQuestion { GameId = "0", QuestionId = 0, Question = "What is 2 + 2?", Answer1 = "1", Answer2 = "2", Answer3 = "3", Answer4 = "4" };
+        return new QuizQuestionModel { GameId = "0", QuestionId = 0, Question = "What is 2 + 2?", Answer1 = "1", Answer2 = "2", Answer3 = "3", Answer4 = "4" };
     }
 }

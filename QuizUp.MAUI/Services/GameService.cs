@@ -26,4 +26,10 @@ public class GameService(IRoutingService routing) : IGameService
         Debug.Assert(SignalR != null);
         await SignalR.AnswerQuestionAsync(gameID, question, answer);
     }
+
+    async public Task StartGameAsync(string gameId)
+    {
+        Debug.Assert(SignalR != null);
+        await SignalR.NextQuestionAsync(gameId);
+    }
 }

@@ -11,12 +11,7 @@ public class GameService(ApplicationDbContext dbContext) : IGameService
 {
     public async Task<List<GameSummaryModel>> GetGamesByUserIdAsync(Guid userId)
     {
-        var user = await dbContext.ApplicationUsers.FindAsync(userId);
-        if (user == null)
-        {
-            throw new NotFoundException($"Application user with id {userId} not found.");
-        }
-
+        var user = await dbContext.ApplicationUsers.FindAsync(userId) ?? throw new NotFoundException($"Application user with id {userId} not found.");
         var games = await dbContext.Games
             .Where(g => g.Quiz.ApplicationUserId == userId)
             .Select(g => g.MapToGameSummaryModel())

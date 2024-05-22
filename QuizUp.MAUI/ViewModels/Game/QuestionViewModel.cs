@@ -1,6 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using QuizUp.Common.Dtos;
+using QuizUp.Common.Models;
 using QuizUp.MAUI.Services;
 
 namespace QuizUp.MAUI.ViewModels;
@@ -8,9 +8,9 @@ namespace QuizUp.MAUI.ViewModels;
 [QueryProperty(nameof(QuizQuestion), nameof(QuizQuestion))]
 public partial class QuestionViewModel(ViewModelBase.Dependencies dependencies, GameService gameManager, IDispatcher dispatcher) : ViewModelBase(dependencies)
 {
-    QuizQuestion quizQuestion = new() { GameId = "-1", QuestionId = 0, Answer1 = "1", Answer2 = "2", Answer3 = "3", Answer4 = "4", Question = "QuestionPlaceholder" };
+    QuizQuestionModel quizQuestion = new() { GameId = "-1", QuestionId = 0, Answer1 = "1", Answer2 = "2", Answer3 = "3", Answer4 = "4", Question = "QuestionPlaceholder" };
 
-    public QuizQuestion QuizQuestion
+    public QuizQuestionModel QuizQuestion
     {
         get => quizQuestion;
         set

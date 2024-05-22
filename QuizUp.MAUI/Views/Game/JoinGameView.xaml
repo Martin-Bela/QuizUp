@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<views:ContentPageBase xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+<views:ViewBase xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="QuizUp.MAUI.Views.JoinGameView"
              xmlns:constants="clr-namespace:QuizUp.MAUI.Resources.Constants"
@@ -23,7 +23,7 @@
                     Text="Join game"
                     Style="{StaticResource PageHeaderLabelStyle}" />
         </Grid>
-        
+
         <Entry Grid.Row="1"
                Text="{Binding GameId}"
                Placeholder="Game Code"
@@ -32,10 +32,10 @@
                VerticalOptions="Center"
                HorizontalTextAlignment="Center"
                FontSize="36" />
-        
+
         <Button Grid.Row="2" Text="Enter"
                 Style="{StaticResource PrimaryButtonStyle}"
                 Command="{Binding JoinGameCommand}"
                 Margin="15, 0, 15, 20" />
     </Grid>
-</views:ContentPageBase>
+</views:ViewBase>
