@@ -9,6 +9,9 @@ namespace QuizUp.Server.Controllers;
 [ApiController]
 public class SessionController(ISessionService sessionService) : ControllerBase
 {
+    private IActionResult InternalServerError =>
+        StatusCode(StatusCodes.Status500InternalServerError, "Internal server error happened.");
+
     [HttpPost]
     public async Task<IActionResult> LoginUser([FromBody] LoginUserModel loginUserModel)
     {
@@ -24,7 +27,7 @@ public class SessionController(ISessionService sessionService) : ControllerBase
             return new UnauthorizedObjectResult(e.Message);
         } catch
         {
-            return StatusCode(StatusCodes.Status500InternalServerError, "Internal server error happened.");
+            return InternalServerError;
         }
     }
 

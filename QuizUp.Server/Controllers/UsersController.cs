@@ -11,6 +11,9 @@ namespace QuizUp.Server.Controllers;
 [Authorize]
 public class UsersController(IUserService userService) : ControllerBase
 {
+    private IActionResult InternalServerError =>
+        StatusCode(StatusCodes.Status500InternalServerError, "Internal server error happened.");
+
     [HttpPost]
     public async Task<IActionResult> RegisterUser([FromBody] CreateUserModel createUserModel)
     {
@@ -23,7 +26,7 @@ public class UsersController(IUserService userService) : ControllerBase
             return BadRequest(e.Message);
         } catch
         {
-            return StatusCode(StatusCodes.Status500InternalServerError, "Internal server error happened.");
+            return InternalServerError;
         }
     }
 }
