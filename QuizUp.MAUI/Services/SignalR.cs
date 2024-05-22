@@ -35,9 +35,9 @@ public class SignalR : ISignalR
         await hubConnection.StopAsync();
     }
 
-    public async Task JoinGameAsync(string gameId)
+    public async Task JoinGameAsync(int gameCode, string playerName)
     {
-        await hubConnection.InvokeAsync("JoinQuiz", gameId);
+        await hubConnection.InvokeAsync("JoinQuiz", gameCode, playerName);
     }
 
     public async Task AnswerQuestionAsync(string gameId, int questionId, string answer)

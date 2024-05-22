@@ -8,12 +8,13 @@ namespace QuizUp.Server.Hubs;
 
 public class QuizHub(IGameManager gameManager) : Hub
 {
-    public async Task JoinQuiz(string gameId, string playerName)
+    public async Task JoinQuiz(int gameCode, string playerName)
     {
-        await Groups.AddToGroupAsync(Context.ConnectionId, gameId);
         var player = Context.ConnectionId;
-        Debug.WriteLine($"Player {playerName}({player}) joined game {gameId}");
-        await gameManager.AddPlayer(gameId, player, playerName);
+        string gameId = await gameManager.AddPlayer(gameCode, player, playerName);
+
+        await Groups.AddToGroupAsync(Context.ConnectionId, gameId);
+        Debug.WriteLine($"Player {playerName}({player}) joined game {gameCode}");
         await Clients.Client(player).SendAsync("GameJoined");
     }
     public async Task NextQuestion(string gameId)

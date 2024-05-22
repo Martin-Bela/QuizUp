@@ -17,10 +17,15 @@ public partial class JoinGameViewModel(ViewModelBase.Dependencies dependencies, 
             return;
         }
 
+        if (!int.TryParse(GameId, out var gameCode))
+        {
+            return;
+        }
+
         Task.Run(
             async () =>
             {
-                await gameManager.StartGameAsync(GameId);
+                await gameManager.JoinGameAsync(gameCode, "Player");
             }
         );
     }

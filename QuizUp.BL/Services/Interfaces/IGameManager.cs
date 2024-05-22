@@ -9,7 +9,7 @@ namespace QuizUp.BL.Services;
 public interface IGameManager
 {
     Task StartGame(Guid quizId, string hostId);
-    Task AddPlayer(string gameId, string player, string playerName);
+    Task<string> AddPlayer(int gameCode, string playerID, string playerName);
     Task<bool> Answer(string gameId, int question, string answer, string connectionId);
     Task<QuizQuestion?> NextQuestion(string gameId, string connectionId);
 }

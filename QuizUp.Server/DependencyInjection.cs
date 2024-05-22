@@ -10,5 +10,7 @@ public static class DependencyInjection
     {
         builder.RegisterType<QuizService>().As<IQuizService>().SingleInstance();
         builder.RegisterType<QuizHub>().SingleInstance();
+
+        BL.DependencyInjection.RegisterServices(builder);
     }
 }

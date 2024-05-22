@@ -48,15 +48,16 @@ internal class GameManager(IGameService gameService, IQuizService quizService) :
         });
     }
 
-    public Task AddPlayer(string gameId, string playerID, string playerName)
+    public Task<string> AddPlayer(int gameCode, string playerID, string playerName)
     {
         var newPlayer = new Player
         {
             ID = playerID,
             Name = playerName
         };
-        games.First(g => g.GameID.ToString() == gameId).players.Add(newPlayer);
-        return Task.CompletedTask;
+        var game = games.First(g => g.GameCode == gameCode);
+        game.players.Add(newPlayer);
+        return Task.FromResult(game.GameID.ToString());
     }
 
     public async Task<bool> Answer(string gameId, int question, string answer, string connectionId)

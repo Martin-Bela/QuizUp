@@ -38,7 +38,7 @@ public partial class QuestionViewModel(ViewModelBase.Dependencies dependencies, 
             return;
         }
         SelectedAnswer = int.Parse(number);
-        await gameManager.AnswerQuestionAsync(quizQuestion.QuestionId, number);
+        await gameManager.AnswerQuestionAsync(quizQuestion.GameId, quizQuestion.QuestionId, number);
     }
 
     public void CreateTimer()

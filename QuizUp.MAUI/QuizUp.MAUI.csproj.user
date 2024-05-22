@@ -28,7 +28,7 @@
     <MauiXaml Update="Views\Game\JoinGameView.xaml">
       <SubType>Designer</SubType>
     </MauiXaml>
-    <MauiXaml Update="Views\QuestionView.xaml">
+    <MauiXaml Update="Views\Game\QuestionView.xaml">
       <SubType>Designer</SubType>
     </MauiXaml>
     <MauiXaml Update="Views\Quiz\QuizDetailView.xaml">
