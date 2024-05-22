@@ -1,6 +1,0 @@
-@QuizUp_Server_HostAddress = http://localhost:5034
-
-GET {{QuizUp_Server_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###
