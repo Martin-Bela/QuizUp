@@ -8,7 +8,6 @@ using QuizUp.DAL.Entities;
 using QuizUp.Server;
 using QuizUp.Server.Hubs;
 using Microsoft.IdentityModel.Tokens;
-using System.Text;
 using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -39,22 +38,38 @@ builder.Services.AddAuthentication(options =>
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
     options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
 })
+<<<<<<< Updated upstream
 .AddJwtBearer(options =>
 {
         var key = builder.Configuration["Jwt:Key"] ?? "";
         var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(key));
 
+=======
+    .AddJwtBearer(options =>
+    {
+        options.Authority = builder.Configuration["Jwt:Authority"];
+>>>>>>> Stashed changes
         options.TokenValidationParameters = new TokenValidationParameters()
         {
-            ValidateActor = true,
             ValidateIssuer = true,
-            ValidateAudience = true,
+            ValidateAudience = false,
             RequireExpirationTime = true,
+<<<<<<< Updated upstream
             ValidateIssuerSigningKey = true,
             ValidIssuer = builder.Configuration["Jwt:Issuer"],
             ValidAudience = builder.Configuration["Jwt:Audience"],
             IssuerSigningKey = securityKey,
+=======
+            ValidIssuer = builder.Configuration["Jwt:Issuer"],
+>>>>>>> Stashed changes
         };
+    });
+
+builder.Services.AddAuthorizationBuilder()
+    .AddPolicy("ApiScope", policy =>
+    {
+        policy.RequireAuthenticatedUser();
+        policy.RequireClaim("scope", builder.Configuration["Jwt:ApiScope"]!);
     });
 
 builder.Services.AddControllers();
@@ -89,6 +104,44 @@ builder.Services.AddSwaggerGen(options =>
     });
 });
 
+// to-do: make this work
+//builder.Services.AddSwaggerGen(options =>
+//{
+//    options.SwaggerDoc("v1", new OpenApiInfo { Title = "QuizUp API", Version = "v1" });
+
+//    options.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
+//    {
+//        Type = SecuritySchemeType.OAuth2,
+//        Flows = new OpenApiOAuthFlows
+//        {
+//            AuthorizationCode = new OpenApiOAuthFlow
+//            {
+//                AuthorizationUrl = new Uri("https://localhost:5001/connect/authorize"),
+//                TokenUrl = new Uri("https://localhost:5001/connect/token"),
+//                Scopes = new Dictionary<string, string>
+//                {
+//                    { builder.Configuration["Jwt:ApiScope"]!, "Access to QuizUp API" }
+//                }
+//            }
+//        }
+//    });
+
+//    options.AddSecurityRequirement(new OpenApiSecurityRequirement
+//    {
+//        {
+//            new OpenApiSecurityScheme
+//            {
+//                Reference = new OpenApiReference
+//                {
+//                    Type = ReferenceType.SecurityScheme,
+//                    Id = "oauth2"
+//                }
+//            },
+//            new[] { builder.Configuration["Jwt:ApiScope"]! }
+//        }
+//    });
+//});
+
 builder.Services.AddSignalR().AddJsonProtocol();
 
 builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
@@ -105,11 +158,24 @@ builder.Logging.AddFilter("Microsoft.AspNetCore.Http.Connections", LogLevel.Trac
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+
+    // to-do: make this work
+    //app.UseSwaggerUI(options =>
+    //{
+    //    options.OAuthClientId("quizup-mobile");
+    //    options.OAuthClientSecret("49C1A7E1-0C79-4A89-A3D6-A37998FB86B0");
+    //    options.OAuthUsePkce();
+    //    options.OAuthAppName("QuizUp Mobile");
+    //    options.OAuthScopeSeparator(" ");
+    //    options.OAuthAdditionalQueryStringParams(new Dictionary<string, string>
+    //    {
+    //        { "redirect_uri", "https://localhost:44300/signin-oidc" }
+    //    });
+    //});
 }
 
 // Configure the HTTP request pipeline.
