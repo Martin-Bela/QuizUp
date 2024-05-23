@@ -12,7 +12,6 @@ public static class DependencyInjection
         builder.RegisterType<GameService>().As<IGameService>().InstancePerDependency();
         builder.RegisterType<QuizService>().As<IQuizService>().InstancePerDependency();
         builder.RegisterType<UserService>().As<IUserService>().InstancePerDependency();
-        builder.RegisterType<SessionService>().As<ISessionService>().InstancePerDependency();
         builder.RegisterType<ApplicationDbContext>().InstancePerDependency();
     }
 }

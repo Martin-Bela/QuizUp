@@ -53,6 +53,8 @@ public static class DataInitializer
                 NormalizedUserName = userData.Username.ToUpper(),
                 Email = userData.Email,
                 NormalizedEmail = userData.Email.ToUpper(),
+                LockoutEnabled = true,
+                SecurityStamp = Guid.NewGuid().ToString(),
             };
             applicationUser.PasswordHash = passwordHasher.HashPassword(applicationUser, userData.Password);
             
