@@ -38,30 +38,16 @@ builder.Services.AddAuthentication(options =>
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
     options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
 })
-<<<<<<< Updated upstream
-.AddJwtBearer(options =>
-{
-        var key = builder.Configuration["Jwt:Key"] ?? "";
-        var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(key));
-
-=======
     .AddJwtBearer(options =>
     {
         options.Authority = builder.Configuration["Jwt:Authority"];
->>>>>>> Stashed changes
         options.TokenValidationParameters = new TokenValidationParameters()
         {
             ValidateIssuer = true,
             ValidateAudience = false,
             RequireExpirationTime = true,
-<<<<<<< Updated upstream
             ValidateIssuerSigningKey = true,
             ValidIssuer = builder.Configuration["Jwt:Issuer"],
-            ValidAudience = builder.Configuration["Jwt:Audience"],
-            IssuerSigningKey = securityKey,
-=======
-            ValidIssuer = builder.Configuration["Jwt:Issuer"],
->>>>>>> Stashed changes
         };
     });
 

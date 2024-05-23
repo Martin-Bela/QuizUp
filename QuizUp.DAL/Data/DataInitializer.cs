@@ -2,7 +2,6 @@
 using Microsoft.EntityFrameworkCore;
 using QuizUp.DAL.Entities;
 using System.Diagnostics;
-using static System.Formats.Asn1.AsnWriter;
 
 namespace QuizUp.DAL.Data;
 
