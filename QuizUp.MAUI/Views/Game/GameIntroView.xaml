@@ -8,10 +8,12 @@
              xmlns:view_models="clr-namespace:QuizUp.MAUI.ViewModels"
              x:DataType="view_models:GameIntroViewModel"
              Shell.TabBarIsVisible="False">
-    <VerticalStackLayout>
-        <Label 
-            Text="Wait fot the game to start"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-    </VerticalStackLayout>
+    <Grid RowDefinitions="*">
+        <Label
+               Text="Wait for the game to start"
+               HorizontalOptions="Center"
+               VerticalOptions="Center"
+               HorizontalTextAlignment="Center"
+               FontSize="36" />
+    </Grid>
 </views:ViewBase>

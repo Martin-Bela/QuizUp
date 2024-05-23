@@ -6,10 +6,14 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace QuizUp.MAUI.Services;
-internal interface IGameService
+public interface IGameService
 {
+    string GameId { get; set; }
+    bool IsHost { get; }
+    Task CreateGame(Guid quizId);
+    Task StartGameAsync();
     Task JoinGameAsync(int gameCode, string playerName);
     Task EndGameAsync();
-    Task AnswerQuestionAsync(string gameId, int question, string answer);
-    Task StartGameAsync(string gameId);
+    Task AnswerQuestionAsync(int question, int answer);
+    Task NextQuestion();
 }

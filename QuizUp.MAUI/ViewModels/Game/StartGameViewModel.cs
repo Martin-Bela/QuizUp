@@ -1,22 +1,35 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using QuizUp.MAUI.Services;
+using System.Diagnostics;
 
 namespace QuizUp.MAUI.ViewModels;
 
 [QueryProperty(nameof(GameId), nameof(GameId))]
-internal partial class StartGameViewModel(ViewModelBase.Dependencies dependencies, IGameService gameService) : ViewModelBase(dependencies)
+[QueryProperty(nameof(PassCode), nameof(PassCode))]
+public partial class StartGameViewModel(ViewModelBase.Dependencies dependencies, IGameService gameService) : ViewModelBase(dependencies)
 {
-    private readonly IGameService gameService = gameService;
+    private string? gameId;
+    public string? GameId
+    {
+        get => gameId;
+        set
+        {
+            if (value == null)
+            {
+                return;
+            }
+            gameService.GameId = value;
+            gameId = value;
+        }
+    }
 
-    private readonly string GameId = string.Empty;
+    [ObservableProperty]
+    public int passCode;
 
     [RelayCommand]
     private async Task StartGameAsync()
     {
-        if (GameId != string.Empty)
-        {
-            await gameService.StartGameAsync(GameId);
-        }
+        await gameService.StartGameAsync();
     }
 }

@@ -70,7 +70,8 @@ public class GameService(ApplicationDbContext dbContext) : IGameService
         {
             QuizId = quizId,
             IsFinished = false,
-            Code = await GenerateNewGameCode()
+            Code = await GenerateNewGameCode(),
+            Quiz = await dbContext.Quizzes.FindAsync(quizId) ?? throw new ArgumentException("quizId is not valied!"),
         };
 
         await dbContext.Games.AddAsync(newGame);

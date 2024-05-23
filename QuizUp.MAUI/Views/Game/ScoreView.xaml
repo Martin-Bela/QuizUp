@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<views:ViewBase xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="QuizUp.MAUI.Views.ScoreView"
+             xmlns:constants="clr-namespace:QuizUp.MAUI.Resources.Constants"
+             xmlns:fonts="clr-namespace:QuizUp.MAUI.Resources.Fonts"
+             xmlns:views="clr-namespace:QuizUp.MAUI.Views"
+             xmlns:view_models="clr-namespace:QuizUp.MAUI.ViewModels"
+             xmlns:common_models="clr-namespace:QuizUp.Common.Models;assembly=QuizUp.Common"
+             x:DataType="view_models:ScoreViewModel"
+             Shell.TabBarIsVisible="True">
+    <VerticalStackLayout>
+        <Button IsEnabled="{Binding NextButtonEnabled}" IsVisible="{Binding NextButtonEnabled}" Command="{Binding NextCommand}" Text="Next" />
+        <ListView ItemsSource="{Binding BestPlayers}">
+            <ListView.ItemTemplate>
+                <DataTemplate x:DataType="common_models:ScoreModel">
+                    <ViewCell>
+                        <Grid Padding="10" ColumnDefinitions="*,*">
+                            <Label Grid.Column="0" Text="{Binding PlayerNickname}"/>
+                            <Label Grid.Column="1" Text="{Binding Score}" HorizontalOptions="End" />
+                        </Grid>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </VerticalStackLayout>
+</views:ViewBase>

@@ -5,4 +5,7 @@
              xmlns:view_models="clr-namespace:QuizUp.MAUI.ViewModels"
              x:Class="QuizUp.MAUI.Views.QuizListView"
              x:DataType="view_models:QuizListViewModel">
+    <Grid>
+        <Button VerticalOptions="Center" HorizontalOptions="Center" Command="{Binding StartQuizCommand}" Text="Create Game!" />
+    </Grid>
 </views:ViewBase>

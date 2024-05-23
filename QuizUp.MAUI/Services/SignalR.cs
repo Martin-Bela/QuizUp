@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.SignalR.Client;
+using QuizUp.Common;
 using QuizUp.Common.Models;
 using QuizUp.MAUI.ViewModels;
+using QuizUp.MAUI.Views;
 
 namespace QuizUp.MAUI.Services;
 public class SignalR : ISignalR
@@ -16,12 +18,44 @@ public class SignalR : ISignalR
                 .Build()
                 ?? throw new Exception("Unable to connect to SignalR server!");
 
-        hubConnection.On<QuizQuestionModel>("NextQuestion", question =>
+        hubConnection.On<QuizQuestionModel>(SignalRHubCommands.NextQuestion, question =>
         {
             var questionRoute = routingService.GetRouteByViewModel<QuestionViewModel>();
             Application.Current?.Dispatcher.Dispatch(
                 async () => { await Shell.Current.GoToAsync(questionRoute, new Dictionary<string, object> { { "QuizQuestion", question } }); }
                 );
+        });
+
+        hubConnection.On<int, string>(SignalRHubCommands.GameCreated, (passCode, gameId) =>
+        {
+            var startGameRoute = routingService.GetRouteByViewModel<StartGameViewModel>();
+            Application.Current?.Dispatcher.Dispatch(
+                async () =>
+                {
+                    await Shell.Current.GoToAsync(startGameRoute, new Dictionary<string, object> {
+                        { "PassCode", passCode }, { "GameId", gameId }
+                    });
+                }
+                );
+        });
+
+        hubConnection.On<string>(SignalRHubCommands.GameJoined, (gameId) =>
+        {
+            var gameRoute = routingService.GetRouteByView<GameIntroView>();
+            Application.Current?.Dispatcher.Dispatch(
+                async () => { await Shell.Current.GoToAsync(gameRoute, new Dictionary<string, object> { { "GameId", gameId } }); }
+            );
+        });
+
+        hubConnection.On(SignalRHubCommands.Score, (bool quizOver, List<ScoreModel> bestPlayers) =>
+        {
+            var scoreRoute = routingService.GetRouteByViewModel<ScoreViewModel>();
+            Application.Current?.Dispatcher.Dispatch(
+                async () =>
+                {
+                    await Shell.Current.GoToAsync(scoreRoute, new Dictionary<string, object> { { "QuizOver", quizOver }, { "BestPlayers", bestPlayers } });
+                }
+            );
         });
     }
 
@@ -35,12 +69,22 @@ public class SignalR : ISignalR
         await hubConnection.StopAsync();
     }
 
-    public async Task JoinGameAsync(int gameCode, string playerName)
+    public async Task CreateGameAsync(Guid quizId)
     {
-        await hubConnection.InvokeAsync("JoinQuiz", gameCode, playerName);
+        await hubConnection.InvokeAsync("CreateGame", quizId);
     }
 
-    public async Task AnswerQuestionAsync(string gameId, int questionId, string answer)
+    public async Task StartGameAsync(string gameId)
+    {
+        await hubConnection.InvokeAsync("NextQuestion", gameId);
+    }
+
+    public async Task JoinGameAsync(int gameCode, string playerName)
+    {
+        await hubConnection.InvokeAsync("JoinGame", gameCode, playerName);
+    }
+
+    public async Task AnswerQuestionAsync(string gameId, int questionId, int answer)
     {
         await hubConnection.InvokeAsync("Answer", gameId, questionId, answer);
     }

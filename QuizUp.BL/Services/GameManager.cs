@@ -15,9 +15,13 @@ namespace QuizUp.BL.Services;
 internal class GameManager(IGameService gameService, IQuizService quizService) : IGameManager
 {
     private readonly List<RunningGame> games = [];
+    public Func<string, bool, List<ScoreModel>, Task>? OnRoundEnded { get; set; } = null;
 
-    public async Task StartGameAsync(Guid quizId, string hostId)
+    public async Task<(int passCode, string gameId)> CreateGameAsync(Guid quizId, string hostId)
     {
+        //todo: Remove for production
+        quizId = await quizService.GetFirstQuizID();
+
         var result = await gameService.CreateGameAsync(quizId);
         Debug.Assert(games.All(g => g.GameID != result.Id && g.GameCode != result.Code));
 
@@ -28,6 +32,8 @@ internal class GameManager(IGameService gameService, IQuizService quizService) :
             GameCode = result.Code,
             GameID = result.Id
         });
+
+        return (result.Code, result.Id.ToString());
     }
 
     public Task<string> AddPlayerAsync(int gameCode, string playerID, string playerName)
@@ -42,7 +48,25 @@ internal class GameManager(IGameService gameService, IQuizService quizService) :
         return Task.FromResult(game.GameID.ToString());
     }
 
-    public async Task<bool> AnswerAsync(string gameId, int question, string answer, string connectionId)
+    private async Task endRound(string gameId, RunningGame game, QuizDetailModel quiz)
+    {
+        game.TimerCancellation = null;
+        List<ScoreModel> bestPlayers = game.Players.OrderByDescending(p => p.Score).Take(5).Select(p => new ScoreModel { PlayerNickname = p.Name, Score = p.Score }).ToList() ?? [];
+        var quizOver = game.CurrentQuestion + 1 == quiz.Questions.Count;
+        if (quizOver)
+        {
+            await gameService.SaveGameResultsAsync(new SaveGameResultsModel
+            {
+                GameId = game.GameID,
+                PlayersResults = [],
+                QuestionsStatistics = []
+            });
+            games.Remove(game);
+        }
+        OnRoundEnded?.Invoke(gameId, quizOver, bestPlayers);
+    }
+
+    public async Task<bool> AnswerAsync(string gameId, int question, int answer, string connectionId)
     {
         var game = games.First(g => g.GameID.ToString() == gameId);
         var player = game.Players.First(p => p.ID == connectionId);
@@ -50,7 +74,7 @@ internal class GameManager(IGameService gameService, IQuizService quizService) :
         {
             player.LastAnsweredQuestion = question;
             var quiz = await quizService.GetQuizByIdAsync(game.QuizID);
-            if (quiz.Questions[question].Answers.Any(a => a.AnswerText == answer && a.IsCorrect))
+            if (quiz.Questions[question].Answers[answer].IsCorrect)
             {
                 player.Score += 1;
             }
@@ -58,11 +82,16 @@ internal class GameManager(IGameService gameService, IQuizService quizService) :
             if (game.Answers == game.Players.Count)
             {
                 game.TimerCancellation?.Cancel();
-                game.TimerCancellation = null;
+                await endRound(gameId, game, quiz);
                 return true;
             }
         }
         return false;
+    }
+
+    public string GetHostID(string gameId)
+    {
+        return games.First(g => g.GameID.ToString() == gameId).HostID;
     }
 
     public async Task<QuizQuestionModel?> NextQuestionAsync(string gameId, string connectionId)
@@ -72,20 +101,21 @@ internal class GameManager(IGameService gameService, IQuizService quizService) :
         {
             throw new UnauthorizedAccessException("Only the host change questions");
         }
-        game.CurrentQuestion += 1;
         var quiz = await quizService.GetQuizByIdAsync(game.QuizID);
+        game.CurrentQuestion += 1;
         if (quiz.Questions.Count == game.CurrentQuestion)
         {
             return null;
         }
         var question = quiz.Questions[game.CurrentQuestion];
+        game.Answers = 0;
 
         game.TimerCancellation = new CancellationTokenSource();
         var cancellationToken = game.TimerCancellation.Token;
         var _ = Task.Run(async () =>
         {
             await Task.Delay(question.TimeLimit * 1000, cancellationToken);
-            game.TimerCancellation = null;
+            await endRound(gameId, game, quiz);
         });
         return QuizQuestionMapper.MapToQuizQuestion(gameId, game.CurrentQuestion, question);
     }
@@ -104,7 +134,7 @@ internal class GameManager(IGameService gameService, IQuizService quizService) :
         public required string HostID { get; set; }
         public required Guid GameID { get; set; }
         public List<Player> Players { get; } = [];
-        public int CurrentQuestion { get; set; } = 0;
+        public int CurrentQuestion { get; set; } = -1;
         public bool ActiveQuestion { get => TimerCancellation != null; }
         public int Answers { get; set; } = 0;
         public CancellationTokenSource? TimerCancellation { get; set; } = null;
