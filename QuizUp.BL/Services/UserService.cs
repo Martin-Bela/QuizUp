@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using QuizUp.BL.Exceptions;
 using QuizUp.BL.Mappers;
-using QuizUp.Common.Models;
+using QuizUp.BL.Models;
 using QuizUp.DAL.Entities;
 
 namespace QuizUp.BL.Services;

@@ -1,8 +1,9 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using NSwag.Annotations;
 using QuizUp.BL.Exceptions;
 using QuizUp.BL.Services;
-using QuizUp.Common.Models;
+using QuizUp.BL.Models;
 
 namespace QuizUp.Server.Controllers;
 
@@ -11,11 +12,11 @@ namespace QuizUp.Server.Controllers;
 [Authorize]
 public class GamesController(IGameService gameService) : ControllerBase
 {
-    private IActionResult InternalServerError =>
+    private ActionResult InternalServerError =>
         StatusCode(StatusCodes.Status500InternalServerError, "Internal server error happened.");
 
     [HttpGet]
-    public async Task<IActionResult> GetGamesByUserIdAsync([FromQuery] Guid userId)
+    public async Task<ActionResult<List<GameSummaryModel>>> GetGamesByUserIdAsync([FromQuery] Guid userId)
     {
         try
         {
@@ -33,7 +34,7 @@ public class GamesController(IGameService gameService) : ControllerBase
     }
 
     [HttpGet("{id:Guid}")]
-    public async Task<IActionResult> GetGameResultsById(Guid id)
+    public async Task<ActionResult<GameResultsModel>> GetGameResultsByIdAsync(Guid id)
     {
         try
         {
@@ -52,7 +53,7 @@ public class GamesController(IGameService gameService) : ControllerBase
 
     //todo remove
     [HttpPost]
-    public async Task<IActionResult> CreateGame([FromBody] Guid quizId)
+    public async Task<ActionResult<CreateGameResultModel>> CreateGameAsync([FromBody] Guid quizId)
     {
         try
         {
@@ -67,7 +68,7 @@ public class GamesController(IGameService gameService) : ControllerBase
 
     //todo remove
     [HttpPut("{id:Guid}")]
-    public async Task<IActionResult> SaveGameResults(Guid id, SaveGameResultsModel saveGameResultsModel)
+    public async Task<ActionResult<SaveGameResultsModel>> SaveGameResultsAsync(Guid id, SaveGameResultsModel saveGameResultsModel)
     {
         try
         {
@@ -85,7 +86,7 @@ public class GamesController(IGameService gameService) : ControllerBase
     }
 
     [HttpDelete("{id:Guid}")]
-    public async Task<IActionResult> DeleteGame(Guid id)
+    public async Task<ActionResult> DeleteGameAsync(Guid id)
     {
         try
         {

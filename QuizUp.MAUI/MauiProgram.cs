@@ -40,7 +40,7 @@ public static class MauiProgram
 
     private static void RegisterRoutes(MauiApp app)
     {
-        var routingService = app.Services.GetRequiredService<IRoutingService>();
+        var routingService = app.Services.GetRequiredService<IViewRoutingService>();
 
         foreach (var routeModel in routingService.Routes)
         {

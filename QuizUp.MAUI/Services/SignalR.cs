@@ -9,7 +9,7 @@ public class SignalR : ISignalR
 {
     readonly HubConnection hubConnection;
 
-    public SignalR(IRoutingService routingService)
+    public SignalR(IViewRoutingService routingService)
     {
         var baseUrl = "https://localhost";
         hubConnection = new HubConnectionBuilder()

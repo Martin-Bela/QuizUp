@@ -1,6 +1,6 @@
 ﻿using QuizUp.DAL.Entities;
 using Riok.Mapperly.Abstractions;
-using QuizUp.Common.Models;
+using QuizUp.BL.Models;
 
 namespace QuizUp.BL.Mappers;
 

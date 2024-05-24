@@ -1,4 +1,4 @@
-﻿using QuizUp.Common.Models;
+﻿using QuizUp.BL.Models;
 
 namespace QuizUp.BL.Services;
 

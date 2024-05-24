@@ -8,7 +8,7 @@ namespace QuizUp.MAUI.ViewModels;
 [QueryProperty(nameof(GameId), nameof(GameId))]
 [QueryProperty(nameof(PassCode), nameof(PassCode))]
 [QueryProperty(nameof(QuizName), nameof(QuizName))]
-public partial class StartGameViewModel(ViewModelBase.Dependencies dependencies, IGameService gameService) : ViewModelBase(dependencies)
+public partial class StartGameViewModel(ViewModelBase.Dependencies dependencies, IRunningGameService gameService) : ViewModelBase(dependencies)
 {
     private string? gameId;
     public string? GameId
