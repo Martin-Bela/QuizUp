@@ -14,7 +14,7 @@ namespace QuizUp.MAUI.ViewModels;
 [QueryProperty(nameof(BestPlayers), nameof(BestPlayers))]
 public partial class ScoreViewModel : ViewModelBase
 {
-    IGameService gameService;
+    IRunningGameService gameService;
 
     [ObservableProperty]
     public bool nextButtonEnabled;
@@ -36,7 +36,7 @@ public partial class ScoreViewModel : ViewModelBase
         }
     }
 
-    public ScoreViewModel(ViewModelBase.Dependencies dependencies, IGameService gameService) : base(dependencies)
+    public ScoreViewModel(ViewModelBase.Dependencies dependencies, IRunningGameService gameService) : base(dependencies)
     {
         this.gameService = gameService;
 

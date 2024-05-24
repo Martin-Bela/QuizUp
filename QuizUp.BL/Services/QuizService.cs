@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using QuizUp.BL.Mappers;
-using QuizUp.Common.Models;
+using QuizUp.BL.Models;
 using QuizUp.DAL.Data;
 using QuizUp.DAL.Entities;
 using QuizUp.BL.Exceptions;

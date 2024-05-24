@@ -1,13 +1,22 @@
 ﻿using Autofac;
+using QuizUp.MAUI.Services;
+using QuizUp.MAUI.Services.Rest;
 
 namespace QuizUp.MAUI;
 
 public class DependencyInjection
 {
+    private const string restUrl = "https://localhost:7126/";
     public static void RegisterServices(ContainerBuilder builder)
     {
-        builder.RegisterType<Services.RoutingService>().As<Services.IRoutingService>().InstancePerDependency();
-        builder.RegisterType<Services.GameService>().As<Services.IGameService>().SingleInstance(); ;
+        builder.RegisterType<HttpClient>().As<HttpClient>().InstancePerDependency();
+
+        builder.RegisterType<ViewRoutingService>().As<IViewRoutingService>().InstancePerDependency();
+        builder.RegisterType<RunningGameService>().As<IRunningGameService>().SingleInstance();
+
+        builder.RegisterType<UsersClient>().WithParameter("baseUrl", restUrl).As<IUsersClient>().InstancePerDependency();
+        builder.RegisterType<QuizzesClient>().WithParameter("baseUrl", restUrl).As<IQuizzesClient>().InstancePerDependency();
+        builder.RegisterType<GamesClient>().WithParameter("baseUrl", restUrl).As<IGamesClient>().InstancePerDependency();
     }
 
     public static void RegisterViewModels(ContainerBuilder builder)

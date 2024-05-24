@@ -2,36 +2,38 @@
 using Microsoft.AspNetCore.Mvc;
 using QuizUp.BL.Exceptions;
 using QuizUp.BL.Services;
-using QuizUp.Common.Models;
+using QuizUp.BL.Models;
 
 namespace QuizUp.Server.Controllers;
 
 [Route("api/quizzes")]
 [ApiController]
-[Authorize]
+//[Authorize]
 public class QuizzesController(IQuizService quizService) : ControllerBase
 {
-    private IActionResult InternalServerError =>
+    private ActionResult InternalServerError =>
         StatusCode(StatusCodes.Status500InternalServerError, "Internal server error happened.");
 
     [HttpGet]
-    public async Task<IActionResult> GetQuizzesByUserId([FromQuery] Guid userId)
+    public async Task<ActionResult<List<QuizSummaryModel>>> GetQuizzesByUserIdAsync([FromQuery] Guid userId)
     {
         try
         {
             var quizSummaryModels = await quizService.GetQuizzessByUserIdAsync(userId);
             return Ok(quizSummaryModels);
-        } catch (NotFoundException e)
+        }
+        catch (NotFoundException e)
         {
             return NotFound(e.Message);
-        } catch
+        }
+        catch
         {
             return InternalServerError;
         }
     }
 
     [HttpGet("{id:Guid}")]
-    public async Task<IActionResult> GetQuizById(Guid id)
+    public async Task<ActionResult<QuizDetailModel>> GetQuizByIdAsync(Guid id)
     {
         try
         {
@@ -49,20 +51,21 @@ public class QuizzesController(IQuizService quizService) : ControllerBase
     }
 
     [HttpPost]
-    public async Task<IActionResult> CreateQuiz([FromBody] CreateQuizModel createQuizModel)
+    public async Task<ActionResult<QuizDetailModel>> CreateQuizAsync([FromBody] CreateQuizModel createQuizModel)
     {
         try
         {
             var quizDetailModel = await quizService.CreateQuizAsync(createQuizModel);
             return Ok(quizDetailModel);
-        } catch
+        }
+        catch
         {
             return InternalServerError;
         }
     }
 
     [HttpPut("{id:Guid}")]
-    public async Task<IActionResult> EditQuiz(Guid id, [FromBody] EditQuizModel editQuizModel)
+    public async Task<ActionResult> EditQuizAsync(Guid id, [FromBody] EditQuizModel editQuizModel)
     {
         try
         {
@@ -72,14 +75,15 @@ public class QuizzesController(IQuizService quizService) : ControllerBase
         catch (NotFoundException e)
         {
             return NotFound(e.Message);
-        } catch
+        }
+        catch
         {
             return InternalServerError;
         }
     }
 
     [HttpDelete("{id:Guid}")]
-    public async Task<IActionResult> DeleteQuiz(Guid id)
+    public async Task<ActionResult> DeleteQuizAsync(Guid id)
     {
         try
         {

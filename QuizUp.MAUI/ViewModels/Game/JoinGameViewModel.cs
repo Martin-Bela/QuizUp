@@ -4,7 +4,7 @@ using QuizUp.MAUI.Services;
 
 namespace QuizUp.MAUI.ViewModels;
 
-public partial class JoinGameViewModel(ViewModelBase.Dependencies dependencies, IGameService gameManager) : ViewModelBase(dependencies)
+public partial class JoinGameViewModel(ViewModelBase.Dependencies dependencies, IRunningGameService gameManager) : ViewModelBase(dependencies)
 {
     [ObservableProperty]
     public string? gameId;

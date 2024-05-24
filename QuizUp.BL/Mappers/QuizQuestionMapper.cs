@@ -1,4 +1,5 @@
-﻿using QuizUp.Common.Models;
+﻿using QuizUp.BL.Models;
+using QuizUp.Common.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
