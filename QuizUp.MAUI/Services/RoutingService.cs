@@ -14,8 +14,13 @@ public class RoutingService : IRoutingService
         new("//quizes/detail/edit/question", typeof(QuizQuestionEditView), typeof(QuizQuestionEditViewModel)),
         new("//quizes/detail/edit/question/answer", typeof(QuizQuestionAnswerEditView), typeof(QuizQuestionAnswerEditViewModel)),
 
+        new("//game/start-game", typeof(StartGameView), typeof(StartGameViewModel)),
         new("//game/join-game", typeof(JoinGameView), typeof(JoinGameViewModel)),
         new("//game/question", typeof(QuestionView), typeof(QuestionViewModel)),
+        new("//game/game-intro", typeof(GameIntroView), typeof(GameIntroViewModel)),
+        new("//gmae/game-results", typeof(ScoreView), typeof(ScoreViewModel)),
+
+
         //new("//game/detail", typeof(GameDetailView), typeof(GameDetailViewModel)),
         //new("//game/question", typeof(GameQuestionView), typeof(GameQuestionViewModel)),
         //new("//game/leaderboard", typeof(GameLeaderboardView), typeof(GameLeaderboardViewModel)),
@@ -31,4 +36,8 @@ public class RoutingService : IRoutingService
     public string GetRouteByViewModel<TViewModel>()
         where TViewModel : IViewModel
         => Routes.First(route => route.ViewModelType == typeof(TViewModel)).Route;
+
+    public string GetRouteByView<TView>()
+        where TView : ViewBase
+        => Routes.First(route => route.ViewType == typeof(TView)).Route;
 }

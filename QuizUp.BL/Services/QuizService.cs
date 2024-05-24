@@ -9,6 +9,14 @@ namespace QuizUp.BL.Services;
 
 public class QuizService(ApplicationDbContext dbContext) : IQuizService
 {
+    //todo: Remove
+    public async Task<Guid> GetFirstQuizID()
+    {
+        dbContext.Database.EnsureCreated();
+        var quiz = await dbContext.Quizzes.FirstAsync();
+        return quiz.Id;
+    }
+
     public async Task<List<QuizSummaryModel>> GetQuizzessByUserIdAsync(Guid userId)
     {
         var user = await dbContext.ApplicationUsers.FindAsync(userId);

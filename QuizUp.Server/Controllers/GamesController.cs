@@ -50,6 +50,7 @@ public class GamesController(IGameService gameService) : ControllerBase
         }
     }
 
+    //todo remove
     [HttpPost]
     public async Task<IActionResult> CreateGame([FromBody] Guid quizId)
     {
@@ -64,12 +65,13 @@ public class GamesController(IGameService gameService) : ControllerBase
         }
     }
 
+    //todo remove
     [HttpPut("{id:Guid}")]
     public async Task<IActionResult> SaveGameResults(Guid id, SaveGameResultsModel saveGameResultsModel)
     {
         try
         {
-            await gameService.SaveGameResultsAsync(id, saveGameResultsModel);
+            await gameService.SaveGameResultsAsync(saveGameResultsModel);
             return Ok();
         }
         catch (NotFoundException e)

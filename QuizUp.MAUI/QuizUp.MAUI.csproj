@@ -82,8 +82,8 @@
 	  <Compile Update="Views\Game\GameIntroView.xaml.cs">
 	    <DependentUpon>GameIntroView.xaml</DependentUpon>
 	  </Compile>
-	  <Compile Update="Views\Game\GameResultsView.xaml.cs">
-	    <DependentUpon>GameResultsView.xaml</DependentUpon>
+	  <Compile Update="Views\Game\ScoreView.xaml.cs">
+	    <DependentUpon>ScoreView.xaml</DependentUpon>
 	  </Compile>
 	  <Compile Update="Views\Game\JoinGameView.xaml.cs">
 	    <DependentUpon>JoinGameView.xaml</DependentUpon>
@@ -121,7 +121,7 @@
 	  <MauiXaml Update="Views\Game\GameIntroView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Views\Game\GameResultsView.xaml">
+	  <MauiXaml Update="Views\Game\ScoreView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\Game\JoinGameView.xaml">

@@ -71,7 +71,8 @@ public class GameService(ApplicationDbContext dbContext) : IGameService
         {
             QuizId = quizId,
             IsFinished = false,
-            Code = await GenerateNewGameCode()
+            Code = await GenerateNewGameCode(),
+            Quiz = await dbContext.Quizzes.FindAsync(quizId) ?? throw new ArgumentException("quizId is not valied!"),
         };
 
         await dbContext.Games.AddAsync(newGame);
@@ -81,8 +82,9 @@ public class GameService(ApplicationDbContext dbContext) : IGameService
         return newGame.MapToGameCreateResultModel();
     }
 
-    public async Task SaveGameResultsAsync(Guid gameId, SaveGameResultsModel saveGameResultsModel)
+    public async Task SaveGameResultsAsync(SaveGameResultsModel saveGameResultsModel)
     {
+        var gameId = saveGameResultsModel.GameId;
         var game = await dbContext.Games.FindAsync(gameId);
         if (game == null)
         {

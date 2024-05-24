@@ -1,5 +1,13 @@
-﻿namespace QuizUp.MAUI.ViewModels;
+﻿using CommunityToolkit.Mvvm.Input;
+using QuizUp.MAUI.Services;
 
-public class QuizListViewModel(ViewModelBase.Dependencies dependencies) : ViewModelBase(dependencies)
+namespace QuizUp.MAUI.ViewModels;
+
+public partial class QuizListViewModel(ViewModelBase.Dependencies dependencies, IGameService gameService) : ViewModelBase(dependencies)
 {
+    [RelayCommand]
+    private async Task StartQuiz()
+    {
+        await gameService.CreateGame(Guid.Empty);
+    }
 }
