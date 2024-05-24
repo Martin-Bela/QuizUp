@@ -21,13 +21,13 @@ public class QuizHub : Hub
 
     public async Task CreateGame(Guid quizId)
     {
-        var (passCode, gameId) = await gameManager.CreateGameAsync(quizId, Context.ConnectionId);
-        await Clients.Caller.SendAsync(SignalRHubCommands.GameCreated, passCode, gameId);
+        var (passCode, gameId, quizName) = await gameManager.CreateGameAsync(quizId, Context.ConnectionId);
+        await Clients.Caller.SendAsync(SignalRHubCommands.GameCreated, passCode, gameId, quizName);
     }
-    public async Task JoinGame(int gameCode, string playerName)
+    public async Task JoinGame(int gameCode, string playerName, Guid? playerId)
     {
         var player = Context.ConnectionId;
-        string gameId = await gameManager.AddPlayerAsync(gameCode, player, playerName);
+        string gameId = await gameManager.AddPlayerAsync(gameCode, player, playerName, playerId);
 
         await Groups.AddToGroupAsync(Context.ConnectionId, gameId);
         Debug.WriteLine($"Player {playerName}({player}) joined game {gameCode}");

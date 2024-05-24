@@ -26,14 +26,14 @@ public class SignalR : ISignalR
                 );
         });
 
-        hubConnection.On<int, string>(SignalRHubCommands.GameCreated, (passCode, gameId) =>
+        hubConnection.On<int, string, string>(SignalRHubCommands.GameCreated, (passCode, gameId, quizName) =>
         {
             var startGameRoute = routingService.GetRouteByViewModel<StartGameViewModel>();
             Application.Current?.Dispatcher.Dispatch(
                 async () =>
                 {
                     await Shell.Current.GoToAsync(startGameRoute, new Dictionary<string, object> {
-                        { "PassCode", passCode }, { "GameId", gameId }
+                        { "PassCode", passCode }, { "GameId", gameId }, { "QuizName", quizName }
                     });
                 }
                 );
@@ -79,9 +79,9 @@ public class SignalR : ISignalR
         await hubConnection.InvokeAsync("NextQuestion", gameId);
     }
 
-    public async Task JoinGameAsync(int gameCode, string playerName)
+    public async Task JoinGameAsync(int gameCode, string playerName, Guid? playerId)
     {
-        await hubConnection.InvokeAsync("JoinGame", gameCode, playerName);
+        await hubConnection.InvokeAsync("JoinGame", gameCode, playerName, playerId);
     }
 
     public async Task AnswerQuestionAsync(string gameId, int questionId, int answer)

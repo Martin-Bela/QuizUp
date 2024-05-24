@@ -10,7 +10,10 @@ public partial class JoinGameViewModel(ViewModelBase.Dependencies dependencies, 
     public string? gameId;
 
     [ObservableProperty]
-    public string? nickName;
+    public string? nickName = null;
+
+    [ObservableProperty]
+    public string quizName = "Quiz";
 
     [RelayCommand]
     void JoinGame()
@@ -30,10 +33,13 @@ public partial class JoinGameViewModel(ViewModelBase.Dependencies dependencies, 
             NickName = "Player";
         }
 
+        // todo: get playerId from somewhere
+        Guid? playerId = null;
+
         Task.Run(
             async () =>
             {
-                await gameManager.JoinGameAsync(gameCode, NickName);
+                await gameManager.JoinGameAsync(gameCode, NickName, playerId);
             }
         );
     }

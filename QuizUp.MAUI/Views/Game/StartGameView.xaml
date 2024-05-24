@@ -7,10 +7,12 @@
                        x:Class="QuizUp.MAUI.Views.StartGameView"
                        x:DataType="vm:StartGameViewModel"
                        Shell.TabBarIsVisible="False">
-    <FlexLayout AlignContent="Center" Direction="Column" JustifyContent="SpaceEvenly">
-        <Label Text="Welcome to QuizUp!" />
-        <Label Text="Passcode:" />
-        <Label Text="{Binding PassCode}"/>
-        <Button Text="Start Game" Command="{Binding StartGameCommand}" />
+    <FlexLayout AlignContent="Center" Direction="Column" JustifyContent="SpaceEvenly" Margin="10">
+        <Label Text="{Binding QuizName}" HorizontalTextAlignment="Center" FontSize="36"/>
+        <VerticalStackLayout>
+            <Label Text="Passcode:" HorizontalTextAlignment="Center" FontSize="30"/>
+            <Label Text="{Binding PassCode}" HorizontalTextAlignment="Center" FontSize="36"/>
+        </VerticalStackLayout>
+        <Button Text="Start Game" Command="{Binding StartGameCommand}" FontSize="36"/>
     </FlexLayout>
 </v:ViewBase>

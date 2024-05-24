@@ -9,8 +9,7 @@
              xmlns:common_models="clr-namespace:QuizUp.Common.Models;assembly=QuizUp.Common"
              x:DataType="view_models:ScoreViewModel"
              Shell.TabBarIsVisible="True">
-    <VerticalStackLayout>
-        <Button IsEnabled="{Binding NextButtonEnabled}" IsVisible="{Binding NextButtonEnabled}" Command="{Binding NextCommand}" Text="Next" />
+    <Grid RowDefinitions="*, Auto" Padding="10">
         <ListView ItemsSource="{Binding BestPlayers}">
             <ListView.ItemTemplate>
                 <DataTemplate x:DataType="common_models:ScoreModel">
@@ -23,5 +22,6 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
-    </VerticalStackLayout>
+        <Button IsEnabled="{Binding NextButtonEnabled}" IsVisible="{Binding NextButtonEnabled}" Command="{Binding NextCommand}" Text="Next" />
+    </Grid>
 </views:ViewBase>

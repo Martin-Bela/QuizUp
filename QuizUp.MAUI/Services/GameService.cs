@@ -7,12 +7,12 @@ public class GameService(IRoutingService routing) : IGameService
     public string GameId { get; set; } = string.Empty;
     public bool IsHost { get; set; }
 
-    async public Task JoinGameAsync(int gameCode, string playerName)
+    async public Task JoinGameAsync(int gameCode, string playerName, Guid? playerId)
     {
         SignalR = new SignalR(routing);
         IsHost = false;
         await SignalR.StartAsync();
-        await SignalR.JoinGameAsync(gameCode, playerName);
+        await SignalR.JoinGameAsync(gameCode, playerName, playerId);
     }
 
     async public Task EndGameAsync()

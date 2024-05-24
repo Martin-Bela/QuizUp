@@ -7,6 +7,7 @@ namespace QuizUp.MAUI.ViewModels;
 
 [QueryProperty(nameof(GameId), nameof(GameId))]
 [QueryProperty(nameof(PassCode), nameof(PassCode))]
+[QueryProperty(nameof(QuizName), nameof(QuizName))]
 public partial class StartGameViewModel(ViewModelBase.Dependencies dependencies, IGameService gameService) : ViewModelBase(dependencies)
 {
     private string? gameId;
@@ -26,6 +27,9 @@ public partial class StartGameViewModel(ViewModelBase.Dependencies dependencies,
 
     [ObservableProperty]
     public int passCode;
+
+    [ObservableProperty]
+    public string? quizName;
 
     [RelayCommand]
     private async Task StartGameAsync()
