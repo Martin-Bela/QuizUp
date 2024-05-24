@@ -26,7 +26,8 @@
             <Label Text="Title:"
                    Style="{StaticResource TitleStyle}" />
             <Entry Placeholder="Enter quiz name"
-                   Style="{StaticResource EntryStyle}" />
+                   Style="{StaticResource EntryStyle}" 
+                   Text="{Binding Quiz.Title}"/>
         </VerticalStackLayout>
 
         <Grid Grid.Row="2" 

@@ -3,18 +3,24 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:views="clr-namespace:QuizUp.MAUI.Views"
              xmlns:view_models="clr-namespace:QuizUp.MAUI.ViewModels"
-             xmlns:common_models="clr-namespace:QuizUp.MAUI.Services.Rest;assembly=QuizUp.MAUI"
+             xmlns:models="clr-namespace:QuizUp.MAUI.Services.Rest;assembly=QuizUp.MAUI"
              x:Class="QuizUp.MAUI.Views.QuizListView"
-             x:DataType="view_models:QuizListViewModel">
+             x:DataType="view_models:QuizListViewModel"
+             x:Name="root">
     <Grid RowDefinitions="Auto, *">
-        <Button VerticalOptions="Center" HorizontalOptions="Center" Command="{Binding StartQuizCommand}" Text="Create Debug Game!" />
         <ListView ItemsSource="{Binding Quizzes}">
             <ListView.ItemTemplate>
-                <DataTemplate x:DataType="common_models:QuizSummaryModel">
+                <DataTemplate x:DataType="models:QuizSummaryModel">
                     <ViewCell>
                         <Grid Padding="10" ColumnDefinitions="*,Auto">
-                            <Label Grid.Column="0" Text="{Binding Title}"/>
-                            <Button Grid.Column="1" Text="Start"/>
+                            <Label Grid.Column="0" Text="{Binding Title}">
+                                <Label.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding Path=BindingContext.OpenQuizCommand, Source={x:Reference root}}"
+                                                      CommandParameter="{Binding Id}"/>
+                                </Label.GestureRecognizers>
+                            </Label>
+                            <Button Grid.Column="1" Text="Start" Command="{Binding Path=BindingContext.StartQuizCommand, Source={x:Reference root}}"
+                                    CommandParameter="{Binding Id}"/>
                         </Grid>
                     </ViewCell>
                 </DataTemplate>

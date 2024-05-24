@@ -5,5 +5,41 @@
              xmlns:view_models="clr-namespace:QuizUp.MAUI.ViewModels"
              x:Class="QuizUp.MAUI.Views.QuizDetailView"
              x:DataType="view_models:QuizDetailViewModel"
+             xmlns:models="clr-namespace:QuizUp.MAUI.Services.Rest;assembly=QuizUp.MAUI"
              Shell.TabBarIsVisible="False">
+    <Grid RowDefinitions="Auto, *, Auto" Padding="10">
+        <Label Text="{Binding Quiz.Title}"
+               HorizontalOptions="Center"
+               VerticalOptions="Center"
+               FontSize="36" 
+               Padding="10"/>
+        <ListView Grid.Row="1"   ItemsSource="{Binding Quiz.Questions}">
+            <ListView.ItemTemplate >
+                <DataTemplate x:DataType="models:QuestionDetailModel">
+                    <ViewCell>
+                        <Label Text="{Binding QuestionText}" Padding="10"/>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+        <Grid ColumnDefinitions="*,*" Grid.Row="2">
+            <Button Command="{Binding StartQuizCommand}" 
+                Grid.Column="1"
+                Text="Start"
+                HorizontalOptions="Center"
+                VerticalOptions="Center"
+                FontSize="30" 
+                Padding="10"/>
+
+            <Button Command="{Binding EditCommand}" 
+                Grid.Column="0"
+                Text="Edit"
+                HorizontalOptions="Center"
+                VerticalOptions="Center"
+                FontSize="30" 
+                Padding="10"/>
+        </Grid>
+
+    </Grid>
+
 </views:ViewBase>

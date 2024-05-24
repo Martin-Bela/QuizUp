@@ -25,8 +25,15 @@ public partial class QuizListViewModel(
     public IList<QuizSummaryModel> quizzes = [];
 
     [RelayCommand]
-    private async Task StartQuiz()
+    public async Task OpenQuiz(Guid quizId)
     {
-        await gameService.CreateGame(Guid.Empty);
+        var route = routingService.GetRouteByViewModel<QuizDetailViewModel>();
+        await Shell.Current.GoToAsync(route, new Dictionary<string, object> { { "QuizId", quizId } });
+    }
+
+    [RelayCommand]
+    public async Task StartQuiz(Guid quizId)
+    {
+        await gameService.CreateGame(quizId);
     }
 }

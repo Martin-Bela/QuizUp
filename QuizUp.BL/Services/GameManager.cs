@@ -59,7 +59,7 @@ internal class GameManager(IGameService gameService, IQuizService quizService) :
         {
             var playersResults = game.Players
                 .Where(p => p.PlayerId is not null)
-                .Select(p => new SavePlayerResultModel { UserId = (Guid)p.PlayerId!, Score = p.Score })
+                .Select(p => new SavePlayerResultModel { UserId = p.PlayerId!.Value, Score = p.Score })
                 .ToList();
 
             await gameService.SaveGameResultsAsync(new SaveGameResultsModel

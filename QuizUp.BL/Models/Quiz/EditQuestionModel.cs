@@ -8,5 +8,5 @@ public class EditQuestionModel
 
     public int TimeLimit { get; set; }
 
-    public ICollection<EditAnswerModel> Answers = new List<EditAnswerModel>();
+    public IList<EditAnswerModel> Answers { get; set; } = new List<EditAnswerModel>();
 }

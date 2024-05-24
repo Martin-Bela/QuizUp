@@ -7,13 +7,12 @@ public partial class QuizQuestionEditViewModel(ViewModelBase.Dependencies depend
     [RelayCommand]
     private async Task GoToAnswerEditAsync()
     {
-        //var route = routingService.GetRouteByViewModel<QuizQuestionAnswerEditViewModel>();
         await Shell.Current.GoToAsync("answer");
     }
 
     [RelayCommand]
     private async Task GoBackAsync()
     {
-        await Shell.Current.GoToAsync("../");
+        await Shell.Current.GoToAsync("..");
     }
 }

@@ -6,5 +6,5 @@ public class EditQuizModel
 
     public required string Title { get; set; }
 
-    public ICollection<EditQuestionModel> Questions { get; set; } = new List<EditQuestionModel>();
+    public IList<EditQuestionModel> Questions { get; set; } = new List<EditQuestionModel>();
 }

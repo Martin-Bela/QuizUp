@@ -6,5 +6,5 @@ public class QuizDetailModel : ModelBase
 
     public required string Title { get; set; }
 
-    public List<QuestionDetailModel> Questions { get; set; } = new List<QuestionDetailModel>();
+    public IList<QuestionDetailModel> Questions { get; set; } = new List<QuestionDetailModel>();
 }
