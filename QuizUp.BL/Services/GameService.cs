@@ -14,6 +14,7 @@ public class GameService(ApplicationDbContext dbContext) : IGameService
         var user = await dbContext.ApplicationUsers.FindAsync(userId) ?? throw new NotFoundException($"Application user with id {userId} not found.");
         var games = await dbContext.Games
             .Where(g => g.Quiz.ApplicationUserId == userId)
+            .Include(g => g.Quiz)
             .Select(g => g.MapToGameSummaryModel())
             .ToListAsync();
 
@@ -81,19 +82,20 @@ public class GameService(ApplicationDbContext dbContext) : IGameService
         return newGame.MapToGameCreateResultModel();
     }
 
-    public async Task SaveGameResultsAsync(SaveGameResultsModel gameResultsModel)
+    public async Task SaveGameResultsAsync(SaveGameResultsModel saveGameResultsModel)
     {
-        var game = await dbContext.Games.FindAsync(gameResultsModel.GameId);
+        var gameId = saveGameResultsModel.GameId;
+        var game = await dbContext.Games.FindAsync(gameId);
         if (game == null)
         {
-            throw new NotFoundException($"Game with id {gameResultsModel.GameId} not found");
+            throw new NotFoundException($"Game with id {gameId} not found");
         }
 
-        foreach (var playerResultModel in gameResultsModel.PlayersResults)
+        foreach (var playerResultModel in saveGameResultsModel.PlayersResults)
         {
             var newGameApplicationUser = new GameApplicationUser()
             {
-                GameId = gameResultsModel.GameId,
+                GameId = gameId,
                 ApplicationUserId = playerResultModel.UserId,
                 Score = playerResultModel.Score
             };
@@ -101,13 +103,13 @@ public class GameService(ApplicationDbContext dbContext) : IGameService
             await dbContext.GameApplicationUsers.AddAsync(newGameApplicationUser);
         }
 
-        foreach (var questionStatisticsModel in gameResultsModel.QuestionsStatistics)
+        foreach (var questionStatisticsModel in saveGameResultsModel.QuestionsStatistics)
         {
             foreach (var answerStatisticsModel in questionStatisticsModel.AnswersStatistics)
             {
                 var newGameAnswer = new GameAnswer()
                 {
-                    GameId = gameResultsModel.GameId,
+                    GameId = gameId,
                     AnswerId = answerStatisticsModel.AnswerId,
                     AnsweredCount = answerStatisticsModel.AnsweredCount
                 };

@@ -13,7 +13,7 @@ public interface IQuizService
 
     public Task<QuizDetailModel> CreateQuizAsync(CreateQuizModel createQuizModel);
 
-    public Task EditQuizAsync(EditQuizModel editQuizModel);
+    public Task EditQuizAsync(Guid quizId, EditQuizModel editQuizModel);
 
     public Task DeleteQuizByIdAsync(Guid quizId);
 }

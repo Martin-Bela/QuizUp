@@ -1,0 +1,24 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+<<<<<<< HEAD
+    <PackageReference Include="Autofac" Version="8.0.0" />
+=======
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.5" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity" Version="2.2.0" />
+>>>>>>> 4dfd759 (feat: add token generation)
+    <PackageReference Include="Riok.Mapperly" Version="3.5.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\QuizUp.Common\QuizUp.Common.csproj" />
+    <ProjectReference Include="..\QuizUp.DAL\QuizUp.DAL.csproj" />
+  </ItemGroup>
+
+</Project>
