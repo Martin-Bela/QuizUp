@@ -8,5 +8,5 @@ public class QuestionDetailModel : ModelBase
 
     public int TimeLimit { get; set; }
 
-    public List<AnswerDetailModel> Answers = new List<AnswerDetailModel>();
+    public IList<AnswerDetailModel> Answers{ get; set; } = new List<AnswerDetailModel>();
 }

@@ -63,8 +63,9 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>
 {
     options.SwaggerDoc("v1", new OpenApiInfo { Title = "QuizUp API", Version = "v1" });
-    options.SwaggerGeneratorOptions.OperationIdSelector = 
-        (apiDesc) => apiDesc.ActionDescriptor.DisplayName.Split(' ').First().Split('.').Last();
+    options.SwaggerGeneratorOptions.OperationIdSelector =
+        (apiDesc) => apiDesc.ActionDescriptor.DisplayName?.Split(' ').First().Split('.').Last();
+
     // Configure Swagger to accept a static token
     options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
     {

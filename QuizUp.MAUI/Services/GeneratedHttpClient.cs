@@ -1587,6 +1587,20 @@ namespace QuizUp.MAUI.Services.Rest
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.0.7.0 (NJsonSchema v11.0.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class AnswerDetailModel
+    {
+        [Newtonsoft.Json.JsonProperty("id", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public System.Guid Id { get; set; }
+
+        [Newtonsoft.Json.JsonProperty("answerText", Required = Newtonsoft.Json.Required.AllowNull)]
+        public string AnswerText { get; set; }
+
+        [Newtonsoft.Json.JsonProperty("isCorrect", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public bool IsCorrect { get; set; }
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.0.7.0 (NJsonSchema v11.0.0.0 (Newtonsoft.Json v13.0.0.0))")]
     public partial class AnswerStatisticsModel
     {
         [Newtonsoft.Json.JsonProperty("answerText", Required = Newtonsoft.Json.Required.AllowNull)]
@@ -1594,6 +1608,17 @@ namespace QuizUp.MAUI.Services.Rest
 
         [Newtonsoft.Json.JsonProperty("answeredCount", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public int AnsweredCount { get; set; }
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.0.7.0 (NJsonSchema v11.0.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class CreateAnswerModel
+    {
+        [Newtonsoft.Json.JsonProperty("answerText", Required = Newtonsoft.Json.Required.AllowNull)]
+        public string AnswerText { get; set; }
+
+        [Newtonsoft.Json.JsonProperty("isCorrect", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public bool IsCorrect { get; set; }
 
     }
 
@@ -1619,6 +1644,9 @@ namespace QuizUp.MAUI.Services.Rest
 
         [Newtonsoft.Json.JsonProperty("timeLimit", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public int TimeLimit { get; set; }
+
+        [Newtonsoft.Json.JsonProperty("answers", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public System.Collections.Generic.IList<CreateAnswerModel> Answers { get; set; }
 
     }
 
@@ -1651,6 +1679,20 @@ namespace QuizUp.MAUI.Services.Rest
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.0.7.0 (NJsonSchema v11.0.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class EditAnswerModel
+    {
+        [Newtonsoft.Json.JsonProperty("id", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public System.Guid Id { get; set; }
+
+        [Newtonsoft.Json.JsonProperty("answerText", Required = Newtonsoft.Json.Required.AllowNull)]
+        public string AnswerText { get; set; }
+
+        [Newtonsoft.Json.JsonProperty("isCorrect", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public bool IsCorrect { get; set; }
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.0.7.0 (NJsonSchema v11.0.0.0 (Newtonsoft.Json v13.0.0.0))")]
     public partial class EditQuestionModel
     {
         [Newtonsoft.Json.JsonProperty("id", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
@@ -1661,6 +1703,9 @@ namespace QuizUp.MAUI.Services.Rest
 
         [Newtonsoft.Json.JsonProperty("timeLimit", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public int TimeLimit { get; set; }
+
+        [Newtonsoft.Json.JsonProperty("answers", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public System.Collections.Generic.IList<EditAnswerModel> Answers { get; set; }
 
     }
 
@@ -1728,6 +1773,9 @@ namespace QuizUp.MAUI.Services.Rest
 
         [Newtonsoft.Json.JsonProperty("timeLimit", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public int TimeLimit { get; set; }
+
+        [Newtonsoft.Json.JsonProperty("answers", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public System.Collections.Generic.IList<AnswerDetailModel> Answers { get; set; }
 
     }
 

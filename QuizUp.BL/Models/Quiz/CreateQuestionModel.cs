@@ -6,6 +6,5 @@ public class CreateQuestionModel
 
     public int TimeLimit { get; set; }
 
-    public ICollection<CreateAnswerModel> Answers = new List<CreateAnswerModel>();
-
+    public IList<CreateAnswerModel> Answers { get; set; } = [];
 }

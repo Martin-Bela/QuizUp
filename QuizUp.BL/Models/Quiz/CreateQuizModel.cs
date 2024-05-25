@@ -6,5 +6,5 @@ public class CreateQuizModel
 
     public required string Title { get; set; }
 
-    public ICollection<CreateQuestionModel> Questions { get; set; } = new List<CreateQuestionModel>();
+    public IList<CreateQuestionModel> Questions { get; set; } = new List<CreateQuestionModel>();
 }

@@ -4,7 +4,7 @@ public class SaveGameResultsModel
 {
     public Guid GameId { get; set; }
 
-    public List<SavePlayerResultModel> PlayersResults { get; set; } = new List<SavePlayerResultModel>();
+    public IList<SavePlayerResultModel> PlayersResults { get; set; } = [];
 
-    public List<SaveQuestionStatisticsModel> QuestionsStatistics { get; set; } = new List<SaveQuestionStatisticsModel>();
+    public IList<SaveQuestionStatisticsModel> QuestionsStatistics { get; set; } = [];
 }
