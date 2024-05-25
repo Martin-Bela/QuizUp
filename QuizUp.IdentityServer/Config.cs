@@ -1,6 +1,6 @@
-﻿using Duende.IdentityServer;
-using Duende.IdentityServer.Models;
+﻿using Duende.IdentityServer.Models;
 using IdentityModel;
+using QuizUp.Common;
 
 namespace QuizUp.IdentityServer;
 
@@ -23,34 +23,56 @@ public static class Config
 
     public static IEnumerable<ApiScope> ApiScopes =>
         [
-            new ApiScope() 
+            new ApiScope()
             {
-                Name = "quizup-api",
-                DisplayName = "QuizUp API"
+                Name = AppConfig.Server.ApiScopeName,
+                DisplayName = AppConfig.Server.ApiScopeDisplayName
             }
         ];
 
     public static IEnumerable<Client> Clients =>
         [
-            // interactive client using code flow + pkce
-            new Client
-            {
-                ClientId = "quizup-mobile",
-                ClientSecrets = { new Secret("49C1A7E1-0C79-4A89-A3D6-A37998FB86B0".Sha256()) },
+            // Swagger client: interactive client using code flow + pkce
+            new Client {
+                ClientId = AppConfig.Server.SwaggerClientId,
+                ClientSecrets = { new Secret(AppConfig.Server.SwaggerClientSecret.Sha256()) },
 
                 AllowedGrantTypes = GrantTypes.Code,
 
-                RedirectUris = { "https://localhost:44300/signin-oidc" },
-                FrontChannelLogoutUri = "https://localhost:44300/signout-oidc",
-                PostLogoutRedirectUris = { "https://localhost:44300/signout-callback-oidc" },
+                RedirectUris = { AppConfig.Server.SwaggerLoginRedirectUri },
 
                 AllowOfflineAccess = true,
-                AllowedScopes = { 
-                    IdentityServerConstants.StandardScopes.OpenId,
-                    IdentityServerConstants.StandardScopes.Profile,
+                AllowedScopes = {
+                    "openid",
+                    "profile",
                     "user-info",
-                    "quizup-api"
-                }
+                    AppConfig.Server.ApiScopeName
+                },
+
+                AllowedCorsOrigins = { AppConfig.Server.BaseUrl }
             },
+            // MAUI client: interactive client using code flow + pkce
+            new Client
+            {
+                ClientId = AppConfig.MAUI.ClientId,
+                ClientSecrets = { new Secret(AppConfig.MAUI.ClientSecret.Sha256()) },
+
+                AllowedGrantTypes = GrantTypes.Code,
+
+                RedirectUris = {
+                    //"https://localhost:44300/signin-oidc",
+                    AppConfig.MAUI.LoginRedirectUri
+                },
+                //FrontChannelLogoutUri = "https://localhost:44300/signout-oidc",
+                //PostLogoutRedirectUris = { "https://localhost:44300/signout-callback-oidc" },
+
+                AllowOfflineAccess = true,
+                AllowedScopes = {
+                    "openid",
+                    "profile",
+                    "user-info",
+                    AppConfig.Server.ApiScopeName
+                },
+            }
         ];
 }

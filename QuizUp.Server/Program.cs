@@ -9,17 +9,15 @@ using QuizUp.Server;
 using QuizUp.Server.Hubs;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using QuizUp.Common;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-var folder = Environment.SpecialFolder.LocalApplicationData;
-var dbPath = Path.Join(Environment.GetFolderPath(folder), "quizup.db");
-
 builder.Services.AddDbContextFactory<ApplicationDbContext>(options =>
     options
-        .UseSqlite($"Data Source={dbPath}")
+        .UseSqlite(AppConfig.Common.DbConnectionString)
         .UseLoggerFactory(LoggerFactory.Create(builder => { }))
 );
 
@@ -40,14 +38,14 @@ builder.Services.AddAuthentication(options =>
 })
     .AddJwtBearer(options =>
     {
-        options.Authority = builder.Configuration["Jwt:Authority"];
+        options.Authority = AppConfig.IdentityServer.BaseUrl;
         options.TokenValidationParameters = new TokenValidationParameters()
         {
             ValidateIssuer = true,
             ValidateAudience = false,
             RequireExpirationTime = true,
             ValidateIssuerSigningKey = true,
-            ValidIssuer = builder.Configuration["Jwt:Issuer"],
+            ValidIssuer = AppConfig.IdentityServer.BaseUrl,
         };
     });
 
@@ -55,7 +53,7 @@ builder.Services.AddAuthorizationBuilder()
     .AddPolicy("ApiScope", policy =>
     {
         policy.RequireAuthenticatedUser();
-        policy.RequireClaim("scope", builder.Configuration["Jwt:ApiScope"]!);
+        policy.RequireClaim("scope", AppConfig.Server.ApiScopeName);
     });
 
 builder.Services.AddControllers();
@@ -63,17 +61,23 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>
 {
     options.SwaggerDoc("v1", new OpenApiInfo { Title = "QuizUp API", Version = "v1" });
-    options.SwaggerGeneratorOptions.OperationIdSelector =
-        (apiDesc) => apiDesc.ActionDescriptor.DisplayName?.Split(' ').First().Split('.').Last();
-
-    // Configure Swagger to accept a static token
-    options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+    options.SwaggerGeneratorOptions.OperationIdSelector = 
+        (apiDesc) => apiDesc.ActionDescriptor.DisplayName!.Split(' ').First().Split('.').Last();
+    options.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
     {
-        Description = "Enter the token as follows: Bearer [token]",
-        Name = "Authorization",
-        In = ParameterLocation.Header,
-        Type = SecuritySchemeType.ApiKey,
-        Scheme = "Bearer",
+        Type = SecuritySchemeType.OAuth2,
+        Flows = new OpenApiOAuthFlows
+        {
+            AuthorizationCode = new OpenApiOAuthFlow
+            {
+                AuthorizationUrl = new Uri(AppConfig.IdentityServer.AuthorizationUrl),
+                TokenUrl = new Uri(AppConfig.IdentityServer.TokenUrl),
+                Scopes = new Dictionary<string, string>
+                {
+                    { AppConfig.Server.ApiScopeName, "Access to QuizUp API" }
+                }
+            }
+        }
     });
 
     options.AddSecurityRequirement(new OpenApiSecurityRequirement
@@ -84,51 +88,13 @@ builder.Services.AddSwaggerGen(options =>
                 Reference = new OpenApiReference
                 {
                     Type = ReferenceType.SecurityScheme,
-                    Id = "Bearer",
-                },
+                    Id = "oauth2"
+                }
             },
-            Array.Empty<string>()
-        },
+            new[] { AppConfig.Server.ApiScopeName }
+        }
     });
 });
-
-// to-do: make this work
-//builder.Services.AddSwaggerGen(options =>
-//{
-//    options.SwaggerDoc("v1", new OpenApiInfo { Title = "QuizUp API", Version = "v1" });
-
-//    options.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
-//    {
-//        Type = SecuritySchemeType.OAuth2,
-//        Flows = new OpenApiOAuthFlows
-//        {
-//            AuthorizationCode = new OpenApiOAuthFlow
-//            {
-//                AuthorizationUrl = new Uri("https://localhost:5001/connect/authorize"),
-//                TokenUrl = new Uri("https://localhost:5001/connect/token"),
-//                Scopes = new Dictionary<string, string>
-//                {
-//                    { builder.Configuration["Jwt:ApiScope"]!, "Access to QuizUp API" }
-//                }
-//            }
-//        }
-//    });
-
-//    options.AddSecurityRequirement(new OpenApiSecurityRequirement
-//    {
-//        {
-//            new OpenApiSecurityScheme
-//            {
-//                Reference = new OpenApiReference
-//                {
-//                    Type = ReferenceType.SecurityScheme,
-//                    Id = "oauth2"
-//                }
-//            },
-//            new[] { builder.Configuration["Jwt:ApiScope"]! }
-//        }
-//    });
-//});
 
 builder.Services.AddSignalR().AddJsonProtocol();
 
@@ -149,21 +115,13 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
-    app.UseSwaggerUI();
-
-    // to-do: make this work
-    //app.UseSwaggerUI(options =>
-    //{
-    //    options.OAuthClientId("quizup-mobile");
-    //    options.OAuthClientSecret("49C1A7E1-0C79-4A89-A3D6-A37998FB86B0");
-    //    options.OAuthUsePkce();
-    //    options.OAuthAppName("QuizUp Mobile");
-    //    options.OAuthScopeSeparator(" ");
-    //    options.OAuthAdditionalQueryStringParams(new Dictionary<string, string>
-    //    {
-    //        { "redirect_uri", "https://localhost:44300/signin-oidc" }
-    //    });
-    //});
+    app.UseSwaggerUI(options =>
+    {
+        options.OAuthClientId(AppConfig.Server.SwaggerClientId);
+        options.OAuthClientSecret(AppConfig.Server.SwaggerClientSecret);
+        options.OAuthUsePkce();
+        options.OAuthScopeSeparator(" ");
+    });
 }
 
 // Configure the HTTP request pipeline.
