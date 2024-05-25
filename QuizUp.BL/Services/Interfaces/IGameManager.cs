@@ -1,10 +1,4 @@
-﻿using QuizUp.BL.Models;
-using QuizUp.Common.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using QuizUp.Common.Models;
 
 namespace QuizUp.BL.Services;
 public interface IGameManager

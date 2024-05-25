@@ -1,7 +1,7 @@
 ﻿using Autofac;
 using IdentityModel.OidcClient;
 using QuizUp.MAUI.Services;
-using QuizUp.MAUI.Services.Rest;
+using QuizUp.MAUI.Api;
 using QuizUp.Common;
 
 namespace QuizUp.MAUI;
@@ -10,8 +10,14 @@ public class DependencyInjection
 {
     public static void RegisterServices(ContainerBuilder builder)
     {
-        builder.RegisterType<HttpClient>().As<HttpClient>().InstancePerDependency();
+        // attach access token headers to http requests
+        builder.RegisterType<AccessTokenDelegatingHandler>().SingleInstance();
+        builder.Register(context =>
+        {
+            return new HttpClient(context.Resolve<AccessTokenDelegatingHandler>());
+        }).InstancePerDependency();
 
+        builder.RegisterType<TokenHandler>().As<ITokenHandler>().InstancePerDependency();
         builder.RegisterType<ViewRoutingService>().As<IViewRoutingService>().InstancePerDependency();
         builder.RegisterType<RunningGameService>().As<IRunningGameService>().SingleInstance();
 

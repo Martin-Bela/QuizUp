@@ -1,5 +1,6 @@
 ﻿using IdentityModel.Client;
 using IdentityModel.OidcClient.Browser;
+using QuizUp.Common;
 
 namespace QuizUp.MAUI.Services;
 
@@ -11,7 +12,7 @@ public class AuthenticationWebBrowser : IdentityModel.OidcClient.Browser.IBrowse
         {
             var webAuthenticatorResult = await WebAuthenticator.AuthenticateAsync(new Uri(options.StartUrl), new Uri(options.EndUrl));
 
-            var responseUrl = new RequestUrl("quizup-app://")
+            var responseUrl = new RequestUrl(AppConfig.MAUI.LoginRedirectUri)
                 .Create(new Parameters(webAuthenticatorResult.Properties));
 
             return new BrowserResult()
