@@ -1,3 +1,4 @@
+using CommunityToolkit.Mvvm.Input;
 using QuizUp.MAUI.ViewModels;
 
 namespace QuizUp.MAUI.Views;

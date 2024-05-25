@@ -3,6 +3,7 @@ using QuizUp.DAL.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
+using QuizUp.Common;
 
 namespace QuizUp.IdentityServer;
 
@@ -12,12 +13,9 @@ public static class HostingExtensions
     {
         builder.Services.AddRazorPages();
 
-        var folder = Environment.SpecialFolder.LocalApplicationData;
-        var dbPath = Path.Join(Environment.GetFolderPath(folder), "quizup.db");
-
         builder.Services.AddDbContextFactory<ApplicationDbContext>(options =>
             options
-                .UseSqlite($"Data Source={dbPath}")
+                .UseSqlite(AppConfig.Common.DbConnectionString)
                 .UseLoggerFactory(LoggerFactory.Create(builder => { }))
         );
 
@@ -56,6 +54,7 @@ public static class HostingExtensions
 
         app.UseStaticFiles();
         app.UseRouting();
+        app.UseCors("AllowSpecificOrigin");
         app.UseIdentityServer();
         app.UseAuthorization();
         

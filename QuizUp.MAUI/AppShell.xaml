@@ -9,6 +9,8 @@
     Shell.NavBarIsVisible="False"
     Shell.TabBarIsVisible="True">
 
+    <!--<ShellContent ContentTemplate="{DataTemplate views:AuthView}" Route="auth" />-->
+
     <Tab Title="Quizes">
         <Tab.Icon>
             <FontImageSource Size="16"

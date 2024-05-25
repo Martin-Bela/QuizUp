@@ -1,12 +1,13 @@
 ﻿using Autofac;
+using IdentityModel.OidcClient;
 using QuizUp.MAUI.Services;
 using QuizUp.MAUI.Services.Rest;
+using QuizUp.Common;
 
 namespace QuizUp.MAUI;
 
 public class DependencyInjection
 {
-    private const string restUrl = "https://localhost:7126/";
     public static void RegisterServices(ContainerBuilder builder)
     {
         builder.RegisterType<HttpClient>().As<HttpClient>().InstancePerDependency();
@@ -14,9 +15,23 @@ public class DependencyInjection
         builder.RegisterType<ViewRoutingService>().As<IViewRoutingService>().InstancePerDependency();
         builder.RegisterType<RunningGameService>().As<IRunningGameService>().SingleInstance();
 
-        builder.RegisterType<UsersClient>().WithParameter("baseUrl", restUrl).As<IUsersClient>().InstancePerDependency();
-        builder.RegisterType<QuizzesClient>().WithParameter("baseUrl", restUrl).As<IQuizzesClient>().InstancePerDependency();
-        builder.RegisterType<GamesClient>().WithParameter("baseUrl", restUrl).As<IGamesClient>().InstancePerDependency();
+        builder.RegisterType<UsersClient>().WithParameter("baseUrl", AppConfig.Server.BaseUrl).As<IUsersClient>().InstancePerDependency();
+        builder.RegisterType<QuizzesClient>().WithParameter("baseUrl", AppConfig.Server.BaseUrl).As<IQuizzesClient>().InstancePerDependency();
+        builder.RegisterType<GamesClient>().WithParameter("baseUrl", AppConfig.Server.BaseUrl).As<IGamesClient>().InstancePerDependency();
+
+        builder.RegisterType<AuthenticationWebBrowser>().InstancePerDependency();
+        builder.Register(context =>
+        {
+            return new OidcClient(new OidcClientOptions
+            {
+                Authority = AppConfig.IdentityServer.BaseUrl,
+                ClientId = AppConfig.MAUI.ClientId,
+                ClientSecret = AppConfig.MAUI.ClientSecret,
+                RedirectUri = AppConfig.MAUI.LoginRedirectUri,
+                Scope = $"{AppConfig.IdentityServer.IdentityScopes} {AppConfig.Server.ApiScopeName} {AppConfig.IdentityServer.OfflineAccessScope}",
+                Browser = context.Resolve<AuthenticationWebBrowser>(),
+            });
+        }).InstancePerDependency();
     }
 
     public static void RegisterViewModels(ContainerBuilder builder)
@@ -37,6 +52,9 @@ public class DependencyInjection
         builder.RegisterType<ViewModels.QuizListViewModel>().InstancePerDependency();
         builder.RegisterType<ViewModels.QuizQuestionAnswerEditViewModel>().InstancePerDependency();
         builder.RegisterType<ViewModels.QuizQuestionEditViewModel>().InstancePerDependency();
+
+        //Auth
+        builder.RegisterType<ViewModels.AuthViewModel>().InstancePerDependency();
     }
 
     public static void RegisterViews(ContainerBuilder builder)
@@ -54,5 +72,8 @@ public class DependencyInjection
         builder.RegisterType<Views.QuizListView>().InstancePerDependency();
         builder.RegisterType<Views.QuizQuestionAnswerEditView>().InstancePerDependency();
         builder.RegisterType<Views.QuizQuestionEditView>().InstancePerDependency();
+
+        //Auth
+        builder.RegisterType<Views.AuthView>().InstancePerDependency();
     }
 }
