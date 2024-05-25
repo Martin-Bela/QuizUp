@@ -32,7 +32,7 @@ public static class AppConfig
 
     public static class IdentityServer
     {
-        public const string BaseUrl = "https://d3d2-109-183-191-100.ngrok-free.app/"; // "https://localhost:5001";
+        public const string BaseUrl = "https://d3d2-109-183-191-100.ngrok-free.app"; // "https://localhost:5001";
 
         public const string AuthorizationUrl = $"{BaseUrl}/connect/authorize";
 

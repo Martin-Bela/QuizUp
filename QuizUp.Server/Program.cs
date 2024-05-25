@@ -62,7 +62,7 @@ builder.Services.AddSwaggerGen(options =>
 {
     options.SwaggerDoc("v1", new OpenApiInfo { Title = "QuizUp API", Version = "v1" });
     options.SwaggerGeneratorOptions.OperationIdSelector = 
-        (apiDesc) => apiDesc.ActionDescriptor.DisplayName.Split(' ').First().Split('.').Last();
+        (apiDesc) => apiDesc.ActionDescriptor.DisplayName!.Split(' ').First().Split('.').Last();
     options.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
     {
         Type = SecuritySchemeType.OAuth2,
@@ -85,17 +85,15 @@ builder.Services.AddSwaggerGen(options =>
         {
             new OpenApiSecurityScheme
             {
-                new OpenApiSecurityScheme
+                Reference = new OpenApiReference
                 {
-                    Reference = new OpenApiReference
-                    {
-                        Type = ReferenceType.SecurityScheme,
-                        Id = "oauth2"
-                    }
-                },
-                new[] { AppConfig.Server.ApiScopeName }
-            }
-        });
+                    Type = ReferenceType.SecurityScheme,
+                    Id = "oauth2"
+                }
+            },
+            new[] { AppConfig.Server.ApiScopeName }
+        }
+    });
 });
 
 builder.Services.AddSignalR().AddJsonProtocol();
