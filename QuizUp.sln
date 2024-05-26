@@ -20,7 +20,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QuizUp.DAL", "QuizUp.DAL\Qu
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QuizUp.BL", "QuizUp.BL\QuizUp.BL.csproj", "{55704D0D-404C-4BDD-BF7F-DF713343831C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuizUp.IdentityServer", "QuizUp.IdentityServer\QuizUp.IdentityServer.csproj", "{2926BABA-2023-431F-9F1F-BD31C735ED9F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QuizUp.IdentityServer", "QuizUp.IdentityServer\QuizUp.IdentityServer.csproj", "{2926BABA-2023-431F-9F1F-BD31C735ED9F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

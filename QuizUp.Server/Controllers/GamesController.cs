@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using NSwag.Annotations;
 using QuizUp.BL.Exceptions;
 using QuizUp.BL.Services;
 using QuizUp.BL.Models;

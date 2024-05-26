@@ -5,7 +5,7 @@
              xmlns:view_models="clr-namespace:QuizUp.MAUI.ViewModels"
              x:Class="QuizUp.MAUI.Views.QuizDetailView"
              x:DataType="view_models:QuizDetailViewModel"
-             xmlns:models="clr-namespace:QuizUp.MAUI.Services.Rest;assembly=QuizUp.MAUI"
+             xmlns:models="clr-namespace:QuizUp.MAUI.Api;assembly=QuizUp.MAUI"
              Shell.TabBarIsVisible="False">
     <Grid RowDefinitions="Auto, *, Auto" Padding="10">
         <Label Text="{Binding Quiz.Title}"

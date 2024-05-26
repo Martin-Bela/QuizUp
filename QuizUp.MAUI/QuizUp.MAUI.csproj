@@ -65,12 +65,15 @@
 		<PackageReference Include="Autofac" Version="8.0.0" />
 		<PackageReference Include="Autofac.Extensions.DependencyInjection" Version="9.0.0" />
 		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2" />
+		<PackageReference Include="IdentityModel.OidcClient" Version="6.0.0" />
 		<PackageReference Include="Microsoft.AspNetCore.SignalR.Client" Version="8.0.3" />
+		<PackageReference Include="Microsoft.Extensions.Logging" Version="8.0.0" />
 		<PackageReference Include="Microsoft.Maui.Controls" Version="$(MauiVersion)" />
 		<PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="$(MauiVersion)" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="8.0.0" />
 		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
 		<PackageReference Include="Riok.Mapperly" Version="3.5.1" />
+		<PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="7.5.2" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -113,6 +116,9 @@
 	  <MauiXaml Update="Resources\Styles\PageHeaderStyle.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Views\Auth\AuthView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Views\Base\ViewBase.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
@@ -126,6 +132,9 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\Game\StartGameView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\LoadingView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\Quiz\QuizDetailView.xaml">

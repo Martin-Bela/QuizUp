@@ -9,13 +9,17 @@
     Shell.NavBarIsVisible="False"
     Shell.TabBarIsVisible="True">
 
-    <Tab Title="Quizes">
+    <ShellContent ContentTemplate="{DataTemplate views:LoadingView}" Route="loading" />
+
+    <ShellContent ContentTemplate="{DataTemplate views:AuthView}" Route="auth" />
+
+    <Tab Title="Quizzes">
         <Tab.Icon>
             <FontImageSource Size="16"
                              FontFamily="{x:Static constants:Fonts.FontAwesome}"
                              Glyph="{x:Static fonts:FontAwesomeIcons.House}"/>
         </Tab.Icon>
-        <ShellContent ContentTemplate="{DataTemplate views:QuizListView}" Route="quizes" />
+        <ShellContent ContentTemplate="{DataTemplate views:QuizListView}" Route="quizzes" />
     </Tab>
 
     <Tab Title="Join">
@@ -33,6 +37,6 @@
                              FontFamily="{x:Static constants:Fonts.FontAwesome}"
                              Glyph="{x:Static fonts:FontAwesomeIcons.SquarePlus}"/>
         </Tab.Icon>
-        <ShellContent ContentTemplate="{DataTemplate views:QuizEditView}" Route="quizes/detail/edit" />
+        <ShellContent ContentTemplate="{DataTemplate views:QuizEditView}" Route="quizzes/detail/edit" />
     </Tab>
 </Shell>

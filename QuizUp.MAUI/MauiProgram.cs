@@ -1,5 +1,6 @@
 ﻿using Autofac.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using QuizUp.MAUI.Api;
 using QuizUp.MAUI.Resources.Constants;
 using QuizUp.MAUI.Services;
 

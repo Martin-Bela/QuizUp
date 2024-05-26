@@ -13,5 +13,6 @@ public static class DependencyInjection
         builder.RegisterType<QuizService>().As<IQuizService>().InstancePerDependency();
         builder.RegisterType<UserService>().As<IUserService>().InstancePerDependency();
         builder.RegisterType<ApplicationDbContext>().InstancePerDependency();
+        builder.RegisterType<DataInitializer>().InstancePerDependency();
     }
 }

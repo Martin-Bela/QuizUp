@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿namespace QuizUp.Common;
 
-namespace QuizUp.Common;
 public static class SignalRHubCommands
 {
     public const string GameCreated = "GameCreated";
