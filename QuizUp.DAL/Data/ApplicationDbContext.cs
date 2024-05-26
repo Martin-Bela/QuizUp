@@ -37,8 +37,6 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser, IdentityR
             .WithMany(a => a.Games)
             .UsingEntity<GameAnswer>();
 
-        modelBuilder.Seed();
-
         base.OnModelCreating(modelBuilder);
     }
 }

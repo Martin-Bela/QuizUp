@@ -17,7 +17,7 @@ public static class AppConfig
 
     public static class Server
     {
-        public const string BaseUrl = "https://localhost:7126";
+        public const string BaseUrl = "https://6315-109-183-191-100.ngrok-free.app"; // "https://localhost:7126";
 
         public const string ApiScopeName = "quizup-api";
 
@@ -32,7 +32,7 @@ public static class AppConfig
 
     public static class IdentityServer
     {
-        public const string BaseUrl = "https://d3d2-109-183-191-100.ngrok-free.app"; // "https://localhost:5001";
+        public const string BaseUrl = "https://cc58-109-183-191-100.ngrok-free.app"; // "https://localhost:5001";
 
         public const string AuthorizationUrl = $"{BaseUrl}/connect/authorize";
 
@@ -41,6 +41,8 @@ public static class AppConfig
         public const string IdentityScopes = "openid profile user-info";
 
         public const string OfflineAccessScope = "offline_access";
+
+        public const string PublicKey = "64B3C08AC507ACF9BAA60B7DA347611D";
     }
 
     public static class MAUI

@@ -3,6 +3,7 @@ using IdentityModel.OidcClient;
 using QuizUp.MAUI.Services;
 using QuizUp.MAUI.Api;
 using QuizUp.Common;
+using QuizUp.MAUI.Storage;
 
 namespace QuizUp.MAUI;
 
@@ -10,14 +11,25 @@ public class DependencyInjection
 {
     public static void RegisterServices(ContainerBuilder builder)
     {
-        // attach access token headers to http requests
-        builder.RegisterType<AccessTokenDelegatingHandler>().SingleInstance();
+        builder.RegisterType<TokenHandler>().As<ITokenHandler>().InstancePerDependency();
+
+        builder.RegisterType<HttpClientHandler>().As<HttpMessageHandler>().InstancePerDependency();
+
         builder.Register(context =>
         {
-            return new HttpClient(context.Resolve<AccessTokenDelegatingHandler>());
+            var tokenHandler = context.Resolve<ITokenHandler>();
+            var httpClientHandler = context.Resolve<HttpMessageHandler>();
+            return new AccessTokenDelegatingHandler(tokenHandler) { InnerHandler = httpClientHandler };
         }).InstancePerDependency();
 
-        builder.RegisterType<TokenHandler>().As<ITokenHandler>().InstancePerDependency();
+        builder.Register(context =>
+        {
+            var handler = context.Resolve<AccessTokenDelegatingHandler>();
+            return new HttpClient(handler);
+        }).InstancePerDependency();
+
+        builder.RegisterType<UserDataStorage>().As<IUserDataStorage>().InstancePerDependency();
+
         builder.RegisterType<ViewRoutingService>().As<IViewRoutingService>().InstancePerDependency();
         builder.RegisterType<RunningGameService>().As<IRunningGameService>().SingleInstance();
 

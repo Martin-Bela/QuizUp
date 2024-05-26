@@ -1,4 +1,6 @@
-﻿using QuizUp.IdentityServer;
+﻿using Microsoft.EntityFrameworkCore;
+using QuizUp.DAL.Data;
+using QuizUp.IdentityServer;
 using Serilog;
 
 Log.Logger = new LoggerConfiguration()
@@ -19,6 +21,16 @@ try
     var app = builder
         .ConfigureServices()
         .ConfigurePipeline();
+
+    using (var scope = app.Services.CreateScope())
+    {
+        var services = scope.ServiceProvider;
+        var applicationDbContext = services.GetRequiredService<ApplicationDbContext>();
+        applicationDbContext.Database.Migrate();
+
+        var dataInitializer = services.GetRequiredService<DataInitializer>();
+        await dataInitializer.Seed();
+    }
 
     app.Run();
 }

@@ -7,13 +7,12 @@
              x:DataType="view_models:AuthViewModel"
              Shell.TabBarIsVisible="False">
     <Grid>
-        <VerticalStackLayout HorizontalOptions="Center"
-                             VerticalOptions="Center">
+        <VerticalStackLayout VerticalOptions="Center">
             <Button Text="Login"
                     Style="{StaticResource PrimaryButtonStyle}"
                     Command="{Binding LoginCommand}" />
-            <Editor HeightRequest="350"
-                    Text="{Binding EditorText}" />
+            <Editor Text="{Binding EditorText}"
+                    HeightRequest="400" />
         </VerticalStackLayout>
     </Grid>
 </views:ViewBase>

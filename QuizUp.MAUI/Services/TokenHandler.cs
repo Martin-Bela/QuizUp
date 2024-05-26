@@ -1,43 +1,38 @@
 ﻿using IdentityModel.OidcClient;
-using System.IdentityModel.Tokens.Jwt;
+using Microsoft.IdentityModel.Tokens;
+using QuizUp.Common;
+using System.Text;
 
 namespace QuizUp.MAUI.Services;
 
-public class TokenHandler(ISecureStorage secureStorage, OidcClient oidcClient) : ITokenHandler
+public class TokenHandler(OidcClient oidcClient) : ITokenHandler
 {
     private static class StorageKeys
     {
         public const string AccessTokenKey = "AccessToken";
 
         public const string RefreshTokenKey = "RefreshToken";
-
-        public const string IdentityTokenKey = "IdentityToken";
     }
 
-    public async Task StoreAccessTokenAsync(string accessToken)
+    public async Task SetAccessTokenAsync(string accessToken)
     {
-        await secureStorage.SetAsync(StorageKeys.AccessTokenKey, accessToken);
+        await SecureStorage.SetAsync(StorageKeys.AccessTokenKey, accessToken);
     }
 
-    public async Task StoreRefreshTokenAsync(string refreshToken)
+    public async Task SetRefreshTokenAsync(string refreshToken)
     {
-        await secureStorage.SetAsync(StorageKeys.RefreshTokenKey, refreshToken);
-    }
-
-    public async Task StoreIdentityTokenAsync(string idToken)
-    {
-        await secureStorage.SetAsync(StorageKeys.IdentityTokenKey, idToken);
+        await SecureStorage.SetAsync(StorageKeys.RefreshTokenKey, refreshToken);
     }
 
     public async Task<string?> TryGetAccessTokenAsync()
     {
-        var accessToken = await secureStorage.GetAsync(StorageKeys.AccessTokenKey);
+        var accessToken = await SecureStorage.GetAsync(StorageKeys.AccessTokenKey);
         if (accessToken != null && IsTokenValid(accessToken))
         {
             return accessToken;
         }
 
-        var refreshToken = await secureStorage.GetAsync(StorageKeys.RefreshTokenKey);
+        var refreshToken = await SecureStorage.GetAsync(StorageKeys.RefreshTokenKey);
         if (refreshToken == null || !IsTokenValid(refreshToken))
         {
             return null;
@@ -50,35 +45,41 @@ public class TokenHandler(ISecureStorage secureStorage, OidcClient oidcClient) :
             return null;
         }
 
-        await StoreAccessTokenAsync(refreshTokenResult.AccessToken);
-        await StoreRefreshTokenAsync(refreshTokenResult.RefreshToken);
-        await StoreIdentityTokenAsync(refreshTokenResult.IdentityToken);
+        await SetAccessTokenAsync(refreshTokenResult.AccessToken);
+        await SetRefreshTokenAsync(refreshTokenResult.RefreshToken);
 
         return refreshTokenResult.AccessToken;
     }
 
-    public Task<string?> TryGetIdentityTokenAsync()
-    {
-        throw new NotImplementedException();
-    }
-
     private static bool IsTokenValid(string token)
     {
-        var tokenInfo = ParseJwtToken(token);
+        //try
+        //{
+        //    var handler = new JwtSecurityTokenHandler();
+        //    var validationParameters = GetTokenValidationParameters();
 
-        var expirationTime = tokenInfo.ValidTo;
-        var currentTime = DateTime.UtcNow;
-        var timeDifference = (expirationTime - currentTime).Seconds;
-
-        // if the token expires in more than 30 seconds
-        return timeDifference > 30;
+        //    handler.ValidateToken(token, validationParameters, out var _);
+        //    return true;
+        //}
+        //catch (Exception ex) {
+        //    Console.WriteLine(ex.Message);
+        //    return false;
+        //}
+        return true;
     }
 
-    private static JwtSecurityToken ParseJwtToken(string token)
+    private static TokenValidationParameters GetTokenValidationParameters()
     {
-        var handler = new JwtSecurityTokenHandler();
-        var tokenInfo = handler.ReadJwtToken(token);
+        var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(AppConfig.IdentityServer.PublicKey));
 
-        return tokenInfo;
+        return new TokenValidationParameters()
+        {
+            ValidateIssuer = true,
+            ValidateAudience = false,
+            RequireExpirationTime = true,
+            ValidateIssuerSigningKey = true,
+            ValidIssuer = AppConfig.IdentityServer.BaseUrl,
+            IssuerSigningKey = securityKey
+        };
     }
 }

@@ -8,11 +8,13 @@ public class ViewRoutingService : IViewRoutingService
 {
     public IList<RouteModel> Routes =>
     [
-        new("//quizes", typeof(QuizListView), typeof(QuizListViewModel)),
-        new("//quizes/detail", typeof(QuizDetailView), typeof(QuizDetailViewModel)),
-        new("//quizes/detail/edit", typeof(QuizEditView), typeof(QuizEditViewModel)),
-        new("//quizes/detail/edit/question", typeof(QuizQuestionEditView), typeof(QuizQuestionEditViewModel)),
-        new("//quizes/detail/edit/question/answer", typeof(QuizQuestionAnswerEditView), typeof(QuizQuestionAnswerEditViewModel)),
+        new("//auth", typeof(AuthView), typeof(AuthViewModel)),
+
+        new("//quizzes", typeof(QuizListView), typeof(QuizListViewModel)),
+        new("//quizzes/detail", typeof(QuizDetailView), typeof(QuizDetailViewModel)),
+        new("//quizzes/detail/edit", typeof(QuizEditView), typeof(QuizEditViewModel)),
+        new("//quizzes/detail/edit/question", typeof(QuizQuestionEditView), typeof(QuizQuestionEditViewModel)),
+        new("//quizzes/detail/edit/question/answer", typeof(QuizQuestionAnswerEditView), typeof(QuizQuestionAnswerEditViewModel)),
 
         new("//game/start-game", typeof(StartGameView), typeof(StartGameViewModel)),
         new("//game/join-game", typeof(JoinGameView), typeof(JoinGameViewModel)),
