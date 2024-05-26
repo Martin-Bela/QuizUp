@@ -128,12 +128,21 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-
 app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
 
 app.MapHub<QuizHub>("/quizHub");
+
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    var applicationDbContext = services.GetRequiredService<ApplicationDbContext>();
+    applicationDbContext.Database.Migrate();
+
+    var dataInitializer = services.GetRequiredService<DataInitializer>();
+    await dataInitializer.Seed();
+}
 
 app.Run();

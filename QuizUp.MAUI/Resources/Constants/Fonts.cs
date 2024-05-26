@@ -1,6 +1,6 @@
 ﻿namespace QuizUp.MAUI.Resources.Constants;
 
-public class Fonts
+public static class Fonts
 {
     public const string FontAwesome = "FontAwesome";
     public const string Regular = "MontserratRegular";

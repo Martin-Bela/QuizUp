@@ -1,11 +1,4 @@
-﻿using QuizUp.Common.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace QuizUp.MAUI.Services;
+﻿namespace QuizUp.MAUI.Services;
 public interface IRunningGameService
 {
     string GameId { get; set; }

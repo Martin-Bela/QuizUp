@@ -19,6 +19,8 @@ public static class HostingExtensions
                 .UseLoggerFactory(LoggerFactory.Create(builder => { }))
         );
 
+        builder.Services.AddTransient<DataInitializer>();
+
         builder.Services.AddIdentity<ApplicationUser, IdentityRole<Guid>>()
             .AddEntityFrameworkStores<ApplicationDbContext>()
             .AddDefaultTokenProviders();

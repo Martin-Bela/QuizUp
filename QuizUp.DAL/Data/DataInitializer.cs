@@ -1,15 +1,22 @@
-﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
+﻿using IdentityModel;
+using Microsoft.AspNetCore.Identity;
 using QuizUp.DAL.Entities;
 using System.Diagnostics;
+using System.Security.Claims;
 
 namespace QuizUp.DAL.Data;
 
-public static class DataInitializer
+public class DataInitializer(ApplicationDbContext applicationDbContext, UserManager<ApplicationUser> userManager)
 {
-    public static void Seed(this ModelBuilder modelBuilder)
+    public async Task Seed()
     {
-        var applicationUsers = PrepareApplicationUsers();
+        // database is already seeded
+        if (applicationDbContext.ApplicationUsers.Any())
+        {
+            return;
+        }
+
+        var applicationUsers = await PrepareApplicationUsers();
         var quizzes = PrepareQuizzes(applicationUsers);
         var questions = PrepareQuestions(quizzes);
         var answers = PrepareAnswers(questions);
@@ -17,32 +24,26 @@ public static class DataInitializer
         var gameApplicationUsers = PrepareGameApplicationUsers(games, applicationUsers);
         var gameAnswers = PrepareGameAnswers(games, gameApplicationUsers, questions, answers);
 
-        modelBuilder.Entity<ApplicationUser>()
-            .HasData(applicationUsers);
+        //applicationDbContext.ApplicationUsers.AddRange(applicationUsers);
 
-        modelBuilder.Entity<Quiz>()
-            .HasData(quizzes);
+        applicationDbContext.Quizzes.AddRange(quizzes);
 
-        modelBuilder.Entity<Question>()
-            .HasData(questions);
+        applicationDbContext.Questions.AddRange(questions);
 
-        modelBuilder.Entity<Answer>()
-            .HasData(answers);
+        applicationDbContext.Answers.AddRange(answers);
 
-        modelBuilder.Entity<Game>()
-            .HasData(games);
+        applicationDbContext.Games.AddRange(games);
 
-        modelBuilder.Entity<GameApplicationUser>()
-            .HasData(gameApplicationUsers);
+        applicationDbContext.GameApplicationUsers.AddRange(gameApplicationUsers);
 
-        modelBuilder.Entity<GameAnswer>()
-            .HasData(gameAnswers);
+        applicationDbContext.GameAnswers.AddRange(gameAnswers);
+
+        await applicationDbContext.SaveChangesAsync();
     }
 
-    public static List<ApplicationUser> PrepareApplicationUsers()
+    public async Task<List<ApplicationUser>> PrepareApplicationUsers()
     {
         var applicationUsers = new List<ApplicationUser>();
-        PasswordHasher<ApplicationUser> passwordHasher = new PasswordHasher<ApplicationUser>();
 
         foreach (var userData in RandomData.UsersData)
         {
@@ -50,15 +51,27 @@ public static class DataInitializer
             {
                 Id = Guid.NewGuid(),
                 UserName = userData.Username,
-                NormalizedUserName = userData.Username.ToUpper(),
                 Email = userData.Email,
-                NormalizedEmail = userData.Email.ToUpper(),
-                LockoutEnabled = true,
-                SecurityStamp = Guid.NewGuid().ToString(),
+                EmailConfirmed = true
             };
-            applicationUser.PasswordHash = passwordHasher.HashPassword(applicationUser, userData.Password);
-            
-            applicationUsers.Add(applicationUser);
+
+            var result = await userManager.CreateAsync(applicationUser, userData.Password);
+            if (!result.Succeeded)
+            {
+                continue;
+            }
+
+            var claims = new List<Claim>
+            {
+                new(JwtClaimTypes.Name, userData.Username),
+                new(JwtClaimTypes.Email, userData.Email)
+            };
+
+            result = await userManager.AddClaimsAsync(applicationUser, claims);
+            if (result.Succeeded)
+            {
+                applicationUsers.Add(applicationUser);
+            }
         }
 
         return applicationUsers;
