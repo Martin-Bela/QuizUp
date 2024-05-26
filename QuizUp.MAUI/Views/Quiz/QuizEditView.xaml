@@ -3,8 +3,10 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:views="clr-namespace:QuizUp.MAUI.Views"
              xmlns:view_models="clr-namespace:QuizUp.MAUI.ViewModels"
+             xmlns:models="clr-namespace:QuizUp.MAUI.Services.Rest;assembly=QuizUp.MAUI"
              x:Class="QuizUp.MAUI.Views.QuizEditView"
              x:DataType="view_models:QuizEditViewModel"
+             x:Name="root"
              Shell.TabBarIsVisible="False">
     <Grid RowDefinitions="Auto, Auto, *">
         <Grid Grid.Row="0"
@@ -18,7 +20,8 @@
                     Style="{StaticResource PageHeaderLabelStyle}" />
             <Button Grid.Column="2"
                     Text="Save"
-                    Style="{StaticResource SecondaryButtonStyle}" />
+                    Style="{StaticResource SecondaryButtonStyle}" 
+                    Command="{Binding SaveQuizCommand}"/>
         </Grid>
 
         <VerticalStackLayout Grid.Row="1"
@@ -37,13 +40,28 @@
                    Text="Questions:"
                    Style="{StaticResource TitleStyle}" />
             <ScrollView Grid.Row="1">
+                <ListView ItemsSource="{Binding Quiz.Questions}">
+                    <ListView.ItemTemplate>
+                        <DataTemplate x:DataType="models:QuestionDetailModel">
+                            <ViewCell>
+                                <Grid Padding="10" ColumnDefinitions="*">
+                                    <Grid.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding Path=BindingContext.EditQuestionCommand, Source={x:Reference root}}"
+                                                      CommandParameter="{Binding Id}"/>
+                                    </Grid.GestureRecognizers>
+                                    <Label Grid.Column="0" Text="{Binding QuestionText}"/>
+                                </Grid>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
             </ScrollView>
             <Button Grid.Row="2" 
                     Text="Add question"
                     Style="{StaticResource PrimaryButtonStyle}"
                     HorizontalOptions="End"
                     Padding="25, 10"
-                    Command="{Binding GoToCreateQuestionCommand}"/>
+                    Command="{Binding CreateQuestionCommand}"/>
         </Grid>
     </Grid>
 </views:ViewBase>
