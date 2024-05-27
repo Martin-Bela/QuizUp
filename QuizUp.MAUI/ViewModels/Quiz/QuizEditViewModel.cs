@@ -6,10 +6,11 @@ using System.Diagnostics;
 
 namespace QuizUp.MAUI.ViewModels;
 
-[QueryProperty(nameof(QuizId), "QuizId")]
+[QueryProperty(nameof(QuizId), nameof(QuizId))]
+[QueryProperty(nameof(Quiz), nameof(Quiz))]
 public partial class QuizEditViewModel(ViewModelBase.Dependencies dependencies, IQuizzesClient quizzesClient) : ViewModelBase(dependencies)
 {
-    public Guid QuizId { get; set; }
+    public Guid QuizId { get; set; } = Guid.Empty;
 
     [ObservableProperty]
     public QuizDetailModel? quiz = null;
@@ -17,21 +18,54 @@ public partial class QuizEditViewModel(ViewModelBase.Dependencies dependencies, 
     public override async Task OnAppearingAsync()
     {
         await base.OnAppearingAsync();
-        if (QuizId is Guid id)
+        if (Quiz != null)
         {
-            Quiz = await quizzesClient.GetQuizByIdAsync(id);
+            return;
+        }
+
+        if (QuizId != Guid.Empty)
+        {
+            Quiz = await quizzesClient.GetQuizByIdAsync(QuizId);
         }
         else
         {
-            Quiz = new QuizDetailModel();
+            Quiz = new QuizDetailModel { Title = "", Questions = [] };
         }
     }
 
     [RelayCommand]
-    private async Task GoToCreateQuestionAsync()
+    private async Task CreateQuestionAsync()
     {
+        Debug.Assert(Quiz is not null);
+
+        List<AnswerDetailModel> answers = [];
+        for (int i = 0; i < 4; i++)
+        {
+            answers.Add(new AnswerDetailModel { AnswerText = "", IsCorrect = false });
+        }
+
+        Quiz!.Questions.Add(new QuestionDetailModel { TimeLimit = 30, QuestionText = "", Answers = answers });
         var route = routingService.GetRouteByViewModel<QuizQuestionEditViewModel>();
-        await Shell.Current.GoToAsync(route);
+
+        await Shell.Current.GoToAsync(route, new Dictionary<string, object> { { "Quiz", Quiz! }, { "QuestionPos", Quiz.Questions.Count - 1 } });
+        reloadQuiz();
+    }
+
+    private void reloadQuiz()
+    {
+        var quiz = Quiz;
+        Quiz = null;
+        Quiz = quiz;
+    }
+
+    [RelayCommand]
+    private async Task EditQuestionAsync(Guid id)
+    {
+        Debug.Assert(Quiz is not null);
+        var questionPos = Quiz!.Questions.FindIndex(q => q.Id == id);
+        var route = routingService.GetRouteByViewModel<QuizQuestionEditViewModel>();
+        await Shell.Current.GoToAsync(route, new Dictionary<string, object> { { "Quiz", Quiz! }, { "QuestionPos", questionPos } });
+        reloadQuiz();
     }
 
     [RelayCommand]
@@ -39,7 +73,11 @@ public partial class QuizEditViewModel(ViewModelBase.Dependencies dependencies, 
     {
         Debug.Assert(Quiz is not null);
 
-        if (QuizId == Guid.Empty)
+        if (QuizId is Guid id)
+        {
+            await quizzesClient.EditQuizAsync(id, Quiz!.MapToEditQuizModel());
+        }
+        else
         {
             await quizzesClient.CreateQuizAsync(new CreateQuizModel
             {
@@ -47,10 +85,6 @@ public partial class QuizEditViewModel(ViewModelBase.Dependencies dependencies, 
                 Title = Quiz!.Title,
                 Questions = Quiz.Questions.Select(q => q.MapToCreateQuestionModel()).ToList()
             });
-        }
-        else
-        {
-            await quizzesClient.EditQuizAsync(QuizId, Quiz!.MapToEditQuizModel());
         }
         await GoBackAsync();
     }

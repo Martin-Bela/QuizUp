@@ -23,7 +23,7 @@ public partial class QuizDetailViewModel(ViewModelBase.Dependencies dependencies
     public async Task Edit()
     {
         var route = routingService.GetRouteByViewModel<QuizEditViewModel>();
-        await Shell.Current.GoToAsync(route, new Dictionary<string, object> { { "QuizId", (Guid)QuizId } });
+        await Shell.Current.GoToAsync(route, new Dictionary<string, object> { { "QuizId", QuizId } });
     }
 
     [RelayCommand]

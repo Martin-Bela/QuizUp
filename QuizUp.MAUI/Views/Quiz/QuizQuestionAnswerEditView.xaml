@@ -21,7 +21,8 @@
                 <Entry Placeholder="Enter answer"
                        Style="{StaticResource EntryStyle}"
                        TextColor="Black"
-                       PlaceholderColor="Black" />
+                       PlaceholderColor="Black" 
+                       Text="{Binding Answer.AnswerText}"/>
             </Frame>
             <Frame BackgroundColor="{StaticResource Gray600}"
                Padding="20, 5"
@@ -31,7 +32,7 @@
                     <Label Text="Correct answer"
                        TextColor="White"
                        VerticalOptions="Center" />
-                    <Switch OnColor="LightGreen" />
+                    <Switch OnColor="LightGreen" IsToggled="{Binding Answer.IsCorrect}" />
                 </FlexLayout>
             </Frame>
         </VerticalStackLayout>
