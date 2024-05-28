@@ -163,6 +163,9 @@
 		<MauiXaml Update="Views\LoadingView.xaml">
 			<Generator>MSBuild:Compile</Generator>
 		</MauiXaml>
+		<MauiXaml Update="Views\Profile\ProfileView.xaml">
+		  <Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
 		<MauiXaml Update="Views\Quiz\QuizDetailView.xaml">
 			<Generator>MSBuild:Compile</Generator>
 		</MauiXaml>
@@ -196,11 +199,5 @@
 		<PackageReference Include="WinUIEx">
 			<Version>2.3.4</Version>
 		</PackageReference>
-	</ItemGroup>
-
-	<ItemGroup Condition="'$(TargetFramework)' == 'net8.0-windows10.0.19041.0'">
-	  <PackageReference Include="WinUIEx">
-	    <Version>2.3.4</Version>
-	  </PackageReference>
 	</ItemGroup>
 </Project>

@@ -64,7 +64,10 @@ public static class Config
                     AppConfig.MAUI.LoginRedirectUri
                 },
                 //FrontChannelLogoutUri = "https://localhost:44300/signout-oidc",
-                //PostLogoutRedirectUris = { "https://localhost:44300/signout-callback-oidc" },
+                PostLogoutRedirectUris = {
+                    //"https://localhost:44300/signout-callback-oidc",
+                    AppConfig.MAUI.LogoutRedirectUri
+                },
 
                 AllowOfflineAccess = true,
                 AllowedScopes = {

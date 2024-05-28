@@ -59,6 +59,9 @@
     <MauiXaml Update="Views\LoadingView.xaml">
       <SubType>Designer</SubType>
     </MauiXaml>
+    <MauiXaml Update="Views\Profile\ProfileView.xaml">
+      <SubType>Designer</SubType>
+    </MauiXaml>
     <MauiXaml Update="Views\Quiz\QuizDetailView.xaml">
       <SubType>Designer</SubType>
     </MauiXaml>

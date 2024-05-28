@@ -11,7 +11,7 @@ public class AuthenticationWebBrowser : IdentityModel.OidcClient.Browser.IBrowse
         try
         {
 #if WINDOWS
-            var webAuthenticatorResult = await WinUIEx.WebAuthenticator.AuthenticateAsync(new Uri(options.StartUrl), new Uri(options.EndUrl));
+            var webAuthenticatorResult = await WinUIEx.WebAuthenticator.AuthenticateAsync(new Uri(options.StartUrl), new Uri(options.EndUrl), cancellationToken);
 #else
             var webAuthenticatorResult = await WebAuthenticator.AuthenticateAsync(new Uri(options.StartUrl), new Uri(options.EndUrl));
 #endif

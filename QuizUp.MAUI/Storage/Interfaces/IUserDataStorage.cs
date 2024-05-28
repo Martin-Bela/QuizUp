@@ -13,4 +13,10 @@ public interface IUserDataStorage
     Task<string?> TryGetUserNameAsync();
 
     Task<string?> TryGetEmailAsync();
+
+    void RemoveUserId();
+
+    void RemoveUserName();
+
+    void RemoveEmail();
 }

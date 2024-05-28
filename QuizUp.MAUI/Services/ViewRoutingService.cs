@@ -27,6 +27,8 @@ public class ViewRoutingService : IViewRoutingService
         new("//games", typeof(GameListView), typeof(GameListViewModel)),
         new("//games/detail", typeof(GameResultsView), typeof(GameResultsViewModel)),
 
+        new("//profile", typeof(ProfileView), typeof(ProfileViewModel))
+
         //new("//game/detail", typeof(GameDetailView), typeof(GameDetailViewModel)),
         //new("//game/question", typeof(GameQuestionView), typeof(GameQuestionViewModel)),
         //new("//game/leaderboard", typeof(GameLeaderboardView), typeof(GameLeaderboardViewModel)),

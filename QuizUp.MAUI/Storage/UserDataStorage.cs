@@ -43,4 +43,19 @@ public class UserDataStorage : IUserDataStorage
     {
         return await SecureStorage.GetAsync(StorageKeys.EmailKey);
     }
+
+    public void RemoveUserId()
+    {
+        SecureStorage.Remove(StorageKeys.UserIdKey);
+    }
+
+    public void RemoveUserName()
+    {
+        SecureStorage.Remove(StorageKeys.UserNameKey);
+    }
+
+    public void RemoveEmail()
+    {
+        SecureStorage.Remove(StorageKeys.EmailKey);
+    }
 }

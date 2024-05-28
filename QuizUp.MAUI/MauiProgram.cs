@@ -67,10 +67,7 @@ public static class MauiProgram
 
         foreach (var routeModel in routingService.Routes)
         {
-            if (routeModel.Route.Count(ch => ch == '/') != 2)
-            {
-                Routing.RegisterRoute(routeModel.Route, routeModel.ViewType);
-            }
+            Routing.RegisterRoute(routeModel.Route, routeModel.ViewType);
         }
     }
 }

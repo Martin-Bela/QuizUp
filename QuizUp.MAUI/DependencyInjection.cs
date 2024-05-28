@@ -48,6 +48,7 @@ public class DependencyInjection
                 RedirectUri = AppConfig.MAUI.LoginRedirectUri,
                 Scope = $"{AppConfig.IdentityServer.IdentityScopes} {AppConfig.Server.ApiScopeName} {AppConfig.IdentityServer.OfflineAccessScope}",
                 Browser = context.Resolve<AuthenticationWebBrowser>(),
+                PostLogoutRedirectUri = AppConfig.MAUI.LogoutRedirectUri
             };
             return new OidcClient(options);
         }).InstancePerDependency();
@@ -77,6 +78,9 @@ public class DependencyInjection
 
         //Auth
         builder.RegisterType<ViewModels.AuthViewModel>().InstancePerDependency();
+
+        //Profile
+        builder.RegisterType<ViewModels.ProfileViewModel>().InstancePerDependency();
     }
 
     public static void RegisterViews(ContainerBuilder builder)
@@ -100,5 +104,8 @@ public class DependencyInjection
 
         //Auth
         builder.RegisterType<Views.AuthView>().InstancePerDependency();
+
+        //Profile
+        builder.RegisterType<Views.ProfileView>().InstancePerDependency();
     }
 }
