@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<views:ViewBase xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:views="clr-namespace:QuizUp.MAUI.Views"
+             xmlns:view_models="clr-namespace:QuizUp.MAUI.ViewModels"
+             x:Class="QuizUp.MAUI.Views.GameListView"
+             x:DataType="view_models:GameListViewModel"
+             xmlns:models="clr-namespace:QuizUp.MAUI.Api;assembly=QuizUp.MAUI"
+             Shell.TabBarIsVisible="False"
+             x:Name="root">
+    <VerticalStackLayout>
+        <Grid RowDefinitions="Auto, *">
+            <ListView ItemsSource="{Binding Games}">
+                <ListView.ItemTemplate>
+                    <DataTemplate x:DataType="models:GameSummaryModel">
+                        <ViewCell>
+                            <Grid ColumnDefinitions="*,*">
+                                <Grid.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding Path=BindingContext.OpenGameCommand, Source={x:Reference root}}"
+                                                    CommandParameter="{Binding Id}"/>
+                                </Grid.GestureRecognizers>
+
+                                <Label Grid.Column="0" Text="{Binding Title}"/>
+                                <Label Grid.Column="0" Text="{Binding CreatedAt}"/>
+                            </Grid>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </Grid>
+    </VerticalStackLayout>
+</views:ViewBase>

@@ -4,7 +4,6 @@ using System.Diagnostics;
 
 namespace QuizUp.Server.Hubs;
 
-using QuizUp.BL;
 using QuizUp.Common;
 
 public class QuizHub : Hub

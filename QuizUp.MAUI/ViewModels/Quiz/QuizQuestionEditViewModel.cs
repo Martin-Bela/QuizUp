@@ -1,6 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using QuizUp.MAUI.Services.Rest;
+using QuizUp.MAUI.Api;
 using System.Diagnostics;
 
 namespace QuizUp.MAUI.ViewModels;
@@ -55,6 +55,6 @@ public partial class QuizQuestionEditViewModel(ViewModelBase.Dependencies depend
     [RelayCommand]
     private async Task GoBackAsync()
     {
-        await Shell.Current.GoToAsync("..", new Dictionary<string, object> { { "Quiz", Quiz} });
+        await Shell.Current.GoToAsync("..", new Dictionary<string, object> { { "Quiz", Quiz } });
     }
 }

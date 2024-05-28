@@ -16,4 +16,6 @@ public interface IQuizService
     public Task EditQuizAsync(Guid quizId, EditQuizModel editQuizModel);
 
     public Task DeleteQuizByIdAsync(Guid quizId);
+
+    public Task<QuizResultsModel> GetQuizResultsByIdAsync(Guid quiz);
 }

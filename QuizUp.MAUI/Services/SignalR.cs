@@ -7,13 +7,13 @@ using QuizUp.MAUI.Views;
 namespace QuizUp.MAUI.Services;
 public class SignalR : ISignalR
 {
+
     readonly HubConnection hubConnection;
 
     public SignalR(IViewRoutingService routingService)
     {
-        var baseUrl = "https://localhost";
         hubConnection = new HubConnectionBuilder()
-                .WithUrl($"{baseUrl}:7126/quizHub")
+                .WithUrl(AppConfig.Server.SignalRUrl)
                 .AddJsonProtocol()
                 .Build()
                 ?? throw new Exception("Unable to connect to SignalR server!");

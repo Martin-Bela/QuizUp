@@ -40,7 +40,7 @@ public class DependencyInjection
         builder.RegisterType<AuthenticationWebBrowser>().InstancePerDependency();
         builder.Register(context =>
         {
-            return new OidcClient(new OidcClientOptions
+            var options = new OidcClientOptions
             {
                 Authority = AppConfig.IdentityServer.BaseUrl,
                 ClientId = AppConfig.MAUI.ClientId,
@@ -48,7 +48,8 @@ public class DependencyInjection
                 RedirectUri = AppConfig.MAUI.LoginRedirectUri,
                 Scope = $"{AppConfig.IdentityServer.IdentityScopes} {AppConfig.Server.ApiScopeName} {AppConfig.IdentityServer.OfflineAccessScope}",
                 Browser = context.Resolve<AuthenticationWebBrowser>(),
-            });
+            };
+            return new OidcClient(options);
         }).InstancePerDependency();
     }
 
@@ -62,6 +63,8 @@ public class DependencyInjection
         builder.RegisterType<ViewModels.GameIntroViewModel>().InstancePerDependency();
         builder.RegisterType<ViewModels.QuestionViewModel>().InstancePerDependency();
         builder.RegisterType<ViewModels.ScoreViewModel>().InstancePerDependency();
+        builder.RegisterType<ViewModels.GameListViewModel>().InstancePerDependency();
+        builder.RegisterType<ViewModels.GameResultsViewModel>().InstancePerDependency();
 
 
         //Quiz
@@ -83,6 +86,8 @@ public class DependencyInjection
         builder.RegisterType<Views.GameIntroView>().InstancePerDependency();
         builder.RegisterType<Views.QuestionView>().InstancePerDependency();
         builder.RegisterType<Views.ScoreView>().InstancePerDependency();
+        builder.RegisterType<Views.GameListView>().InstancePerDependency();
+        builder.RegisterType<Views.GameResultsView>().InstancePerDependency();
 
         //Quiz
         builder.RegisterType<Views.QuizDetailView>().InstancePerDependency();
