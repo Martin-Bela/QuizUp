@@ -34,4 +34,11 @@ public partial class QuizListViewModel(
     {
         await gameService.CreateGame(quizId);
     }
+
+    [RelayCommand]
+    public async Task CreateQuiz()
+    {
+        var route = routingService.GetRouteByViewModel<QuizEditViewModel>();
+        await Shell.Current.GoToAsync(route);
+    }
 }

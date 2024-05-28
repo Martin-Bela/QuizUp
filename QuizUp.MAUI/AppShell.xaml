@@ -21,7 +21,7 @@
         </Tab.Icon>
         <ShellContent ContentTemplate="{DataTemplate views:QuizListView}" Route="quizzes" />
     </Tab>
-
+    
     <Tab Title="Join">
         <Tab.Icon>
             <FontImageSource Size="18"
@@ -31,12 +31,12 @@
         <ShellContent ContentTemplate="{DataTemplate views:JoinGameView}" Route="game/join-game" />
     </Tab>
 
-    <Tab Title="Create">
+    <Tab Title="Games">
         <Tab.Icon>
             <FontImageSource Size="18" 
                              FontFamily="{x:Static constants:Fonts.FontAwesome}"
-                             Glyph="{x:Static fonts:FontAwesomeIcons.SquarePlus}"/>
+                             Glyph="{x:Static fonts:FontAwesomeIcons.G}"/>
         </Tab.Icon>
-        <ShellContent ContentTemplate="{DataTemplate views:QuizEditView}" Route="quizzes/detail/edit" />
+        <ShellContent ContentTemplate="{DataTemplate views:GameListView}" Route="games" />
     </Tab>
 </Shell>

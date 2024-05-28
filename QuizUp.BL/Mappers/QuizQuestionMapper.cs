@@ -1,10 +1,5 @@
 ﻿using QuizUp.BL.Models;
 using QuizUp.Common.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace QuizUp.BL.Mappers;
 internal class QuizQuestionMapper

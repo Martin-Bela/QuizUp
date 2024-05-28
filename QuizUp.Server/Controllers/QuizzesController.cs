@@ -8,7 +8,7 @@ namespace QuizUp.Server.Controllers;
 
 [Route("api/quizzes")]
 [ApiController]
-[Authorize]
+//[Authorize]
 public class QuizzesController(IQuizService quizService) : ControllerBase
 {
     private ActionResult InternalServerError =>
@@ -89,6 +89,25 @@ public class QuizzesController(IQuizService quizService) : ControllerBase
         {
             await quizService.DeleteQuizByIdAsync(id);
             return Ok();
+        }
+        catch (NotFoundException e)
+        {
+            return NotFound(e.Message);
+        }
+        catch
+        {
+            return InternalServerError;
+        }
+    }
+
+
+    [HttpGet("result/{id:Guid}")]
+    public async Task<ActionResult<QuizDetailModel>> GetQuizResultsByIdAsync(Guid id)
+    {
+        try
+        {
+            var quizDetailModel = await quizService.GetQuizResultsByIdAsync(id);
+            return Ok(quizDetailModel);
         }
         catch (NotFoundException e)
         {

@@ -7,7 +7,7 @@
              x:Class="QuizUp.MAUI.Views.QuizListView"
              x:DataType="view_models:QuizListViewModel"
              x:Name="root">
-    <Grid RowDefinitions="Auto, *">
+    <Grid RowDefinitions="*, Auto">
         <ListView ItemsSource="{Binding Quizzes}">
             <ListView.ItemTemplate>
                 <DataTemplate x:DataType="models:QuizSummaryModel">
@@ -26,5 +26,6 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
+        <Button Text="CreateGame" Command="{Binding CreateQuizCommand}" Grid.Row="1"/>
     </Grid>
 </views:ViewBase>

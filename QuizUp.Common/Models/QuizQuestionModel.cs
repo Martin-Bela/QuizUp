@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace QuizUp.Common.Models;
+﻿namespace QuizUp.Common.Models;
 public class QuizQuestionModel
 {
     public required string GameId { get; set; }

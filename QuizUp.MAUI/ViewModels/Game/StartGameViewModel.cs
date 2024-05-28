@@ -1,7 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using QuizUp.MAUI.Services;
-using System.Diagnostics;
 
 namespace QuizUp.MAUI.ViewModels;
 

@@ -61,7 +61,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>
 {
     options.SwaggerDoc("v1", new OpenApiInfo { Title = "QuizUp API", Version = "v1" });
-    options.SwaggerGeneratorOptions.OperationIdSelector = 
+    options.SwaggerGeneratorOptions.OperationIdSelector =
         (apiDesc) => apiDesc.ActionDescriptor.DisplayName!.Split(' ').First().Split('.').Last();
     options.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
     {

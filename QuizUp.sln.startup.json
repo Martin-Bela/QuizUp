@@ -52,8 +52,9 @@
         }
     */
   "MultiProjectConfigurations": {
-    "Windows MAUI + Server": {
+    "MAUI + Servers": {
       "Projects": {
+        "QuizUp.IdentityServer": {},
         "QuizUp.Server": {},
         "QuizUp.MAUI": {}
       }

@@ -1,15 +1,14 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using QuizUp.BL.Exceptions;
 using QuizUp.BL.Services;
 using QuizUp.BL.Models;
 using QuizUp.DAL.Data;
+using Microsoft.AspNetCore.Authorization;
 
 namespace QuizUp.Server.Controllers;
 
 [Route("api/users")]
 [ApiController]
-//todo remove
 //[Authorize]
 public class UsersController(IUserService userService, ApplicationDbContext dbContext) : ControllerBase
 {

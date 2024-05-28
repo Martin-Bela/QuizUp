@@ -8,7 +8,7 @@ namespace QuizUp.Server.Controllers;
 
 [Route("api/games")]
 [ApiController]
-[Authorize]
+//[Authorize]
 public class GamesController(IGameService gameService) : ControllerBase
 {
     private ActionResult InternalServerError =>

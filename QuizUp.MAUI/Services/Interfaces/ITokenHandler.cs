@@ -1,6 +1,4 @@
-﻿using System.Security.Claims;
-
-namespace QuizUp.MAUI.Services;
+﻿namespace QuizUp.MAUI.Services;
 
 public interface ITokenHandler
 {

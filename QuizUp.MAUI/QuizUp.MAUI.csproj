@@ -1,7 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFrameworks>net8.0-android;net8.0-ios;net8.0-maccatalyst</TargetFrameworks>
+		<!-- <TargetFrameworks>net8.0-android;net8.0-ios;net8.0-maccatalyst</TargetFrameworks> -->
+		<TargetFrameworks>net8.0-android</TargetFrameworks>
 		<TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">$(TargetFrameworks);net8.0-windows10.0.19041.0</TargetFrameworks>
 		<!-- Uncomment to also build the tizen app. You will need to install tizen by following this: https://github.com/Samsung/Tizen.NET -->
 		<!-- <TargetFrameworks>$(TargetFrameworks);net8.0-tizen</TargetFrameworks> -->
@@ -30,12 +31,15 @@
 		<ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>
 		<ApplicationVersion>1</ApplicationVersion>
 
+		<!--
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">11.0</SupportedOSPlatformVersion>
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'maccatalyst'">13.1</SupportedOSPlatformVersion>
+		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'tizen'">6.5</SupportedOSPlatformVersion>
+		-->
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">21.0</SupportedOSPlatformVersion>
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</SupportedOSPlatformVersion>
 		<TargetPlatformMinVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</TargetPlatformMinVersion>
-		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'tizen'">6.5</SupportedOSPlatformVersion>
+
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -55,10 +59,10 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <None Remove="Resources\Fonts\FontAwesome-Solid.ttf" />
-	  <None Remove="Resources\Fonts\Montserrat-Bold.ttf" />
-	  <None Remove="Resources\Fonts\Montserrat-Medium.ttf" />
-	  <None Remove="Resources\Fonts\Montserrat-Regular.ttf" />
+		<None Remove="Resources\Fonts\FontAwesome-Solid.ttf" />
+		<None Remove="Resources\Fonts\Montserrat-Bold.ttf" />
+		<None Remove="Resources\Fonts\Montserrat-Medium.ttf" />
+		<None Remove="Resources\Fonts\Montserrat-Regular.ttf" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -77,89 +81,108 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Compile Update="Views\Base\ViewBase.xaml.cs">
-	    <DependentUpon>ViewBase.xaml</DependentUpon>
-	  </Compile>
-	  <Compile Update="Views\Game\GameIntroView.xaml.cs">
-	    <DependentUpon>GameIntroView.xaml</DependentUpon>
-	  </Compile>
-	  <Compile Update="Views\Game\ScoreView.xaml.cs">
-	    <DependentUpon>ScoreView.xaml</DependentUpon>
-	  </Compile>
-	  <Compile Update="Views\Game\JoinGameView.xaml.cs">
-	    <DependentUpon>JoinGameView.xaml</DependentUpon>
-	  </Compile>
-	  <Compile Update="Views\Quiz\QuizDetailView.xaml.cs">
-	    <DependentUpon>QuizDetailView.xaml</DependentUpon>
-	  </Compile>
-	  <Compile Update="Views\Quiz\QuizEditView.xaml.cs">
-	    <DependentUpon>QuizEditView.xaml</DependentUpon>
-	  </Compile>
-	  <Compile Update="Views\Quiz\QuizQuestionAnswerEditView.xaml.cs">
-	    <DependentUpon>QuizQuestionAnswerEditView.xaml</DependentUpon>
-	  </Compile>
-	  <Compile Update="Views\Quiz\QuizQuestionEditView.xaml.cs">
-	    <DependentUpon>QuizQuestionEditView.xaml</DependentUpon>
-	  </Compile>
+		<Compile Update="Views\Base\ViewBase.xaml.cs">
+			<DependentUpon>ViewBase.xaml</DependentUpon>
+		</Compile>
+		<Compile Update="Views\Game\GameIntroView.xaml.cs">
+			<DependentUpon>GameIntroView.xaml</DependentUpon>
+		</Compile>
+		<Compile Update="Views\Game\GameListView.xaml.cs">
+			<DependentUpon>GameListView.xaml</DependentUpon>
+		</Compile>
+		<Compile Update="Views\Game\ScoreView.xaml.cs">
+			<DependentUpon>ScoreView.xaml</DependentUpon>
+		</Compile>
+		<Compile Update="Views\Game\JoinGameView.xaml.cs">
+			<DependentUpon>JoinGameView.xaml</DependentUpon>
+		</Compile>
+		<Compile Update="Views\Quiz\QuizDetailView.xaml.cs">
+			<DependentUpon>QuizDetailView.xaml</DependentUpon>
+		</Compile>
+		<Compile Update="Views\Quiz\QuizEditView.xaml.cs">
+			<DependentUpon>QuizEditView.xaml</DependentUpon>
+		</Compile>
+		<Compile Update="Views\Quiz\QuizQuestionAnswerEditView.xaml.cs">
+			<DependentUpon>QuizQuestionAnswerEditView.xaml</DependentUpon>
+		</Compile>
+		<Compile Update="Views\Quiz\QuizQuestionEditView.xaml.cs">
+			<DependentUpon>QuizQuestionEditView.xaml</DependentUpon>
+		</Compile>
+		<Compile Update="Views\Game\GameResultsView.xaml.cs">
+			<DependentUpon>GameResultsView.xaml</DependentUpon>
+		</Compile>
 	</ItemGroup>
 
 	<ItemGroup>
-	  <MauiXaml Update="Resources\Styles\ButtonStyle.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Resources\Styles\EntryStyle.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Resources\Styles\LabelStyle.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Resources\Styles\PageHeaderStyle.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Views\Auth\AuthView.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Views\Base\ViewBase.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Views\Game\GameIntroView.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Views\Game\ScoreView.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Views\Game\JoinGameView.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Views\Game\StartGameView.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Views\LoadingView.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Views\Quiz\QuizDetailView.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Views\Quiz\QuizEditView.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Views\Quiz\QuizQuestionAnswerEditView.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Views\Quiz\QuizQuestionEditView.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Views\Quiz\QuizListView.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
+		<MauiXaml Update="Resources\Styles\ButtonStyle.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Resources\Styles\EntryStyle.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Resources\Styles\LabelStyle.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Resources\Styles\PageHeaderStyle.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Views\Auth\AuthView.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Views\Base\ViewBase.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Views\Game\GameIntroView.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Views\Game\GameListView.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Views\Game\ScoreView.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Views\Game\JoinGameView.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Views\Game\StartGameView.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Views\LoadingView.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Views\Quiz\QuizDetailView.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Views\Quiz\QuizEditView.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Views\Quiz\QuizQuestionAnswerEditView.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Views\Quiz\QuizQuestionEditView.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Views\Quiz\QuizListView.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Views\Game\GameResultsView.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Folder Include="Resources\Images\" />
+		<Folder Include="Resources\Images\" />
+		<Folder Include="ViewModels\Results\" />
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\QuizUp.Common\QuizUp.Common.csproj" />
+		<ProjectReference Include="..\QuizUp.Common\QuizUp.Common.csproj" />
+	</ItemGroup>
+
+	<ItemGroup Condition="'$(TargetFramework)' == 'net8.0-windows10.0.19041.0'">
+		<PackageReference Include="WinUIEx">
+			<Version>2.3.4</Version>
+		</PackageReference>
 	</ItemGroup>
 
 </Project>

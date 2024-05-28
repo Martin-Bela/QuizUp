@@ -1,13 +1,7 @@
 ﻿using QuizUp.BL.Mappers;
 using QuizUp.BL.Models;
 using QuizUp.Common.Models;
-using QuizUp.DAL.Entities;
-using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace QuizUp.BL.Services;
 
