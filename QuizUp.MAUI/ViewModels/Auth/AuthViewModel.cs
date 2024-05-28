@@ -29,11 +29,16 @@ public partial class AuthViewModel(
         await tokenHandler.SetAccessTokenAsync(loginResult.AccessToken);
         await tokenHandler.SetRefreshTokenAsync(loginResult.RefreshToken);
 
-        var userClaims = (await oidcClient.GetUserInfoAsync(loginResult.AccessToken)).Claims;
+        var userInfoResult = await oidcClient.GetUserInfoAsync(loginResult.AccessToken);
+        if (userInfoResult.IsError)
+        {
+            EditorText = userInfoResult.ErrorDescription;
+            return;
+        }
 
-        var userId = userClaims.First(claim => claim.Type == JwtClaimTypes.Subject).Value;
-        var userName = userClaims.First(claim => claim.Type == JwtClaimTypes.Name).Value;
-        var email = userClaims.First(claim => claim.Type == JwtClaimTypes.Email).Value;
+        var userId = userInfoResult.Claims.First(claim => claim.Type == JwtClaimTypes.Subject).Value;
+        var userName = userInfoResult.Claims.First(claim => claim.Type == JwtClaimTypes.Name).Value;
+        var email = userInfoResult.Claims.First(claim => claim.Type == JwtClaimTypes.Email).Value;
 
         await userDataStorage.SetUserIdAsync(new Guid(userId));
         await userDataStorage.SetUserNameAsync(userName);

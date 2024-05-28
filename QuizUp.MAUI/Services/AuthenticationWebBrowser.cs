@@ -11,20 +11,20 @@ public class AuthenticationWebBrowser : IdentityModel.OidcClient.Browser.IBrowse
         try
         {
 #if WINDOWS
-            var result = await WinUIEx.WebAuthenticator.AuthenticateAsync(new Uri(options.StartUrl), new Uri(options.EndUrl), cancellationToken);
+            var webAuthenticatorResult = await WinUIEx.WebAuthenticator.AuthenticateAsync(new Uri(options.StartUrl), new Uri(options.EndUrl));
 #else
-            var result = await Microsoft.Maui.Authentication.WebAuthenticator.AuthenticateAsync(new Uri(options.StartUrl), new Uri(options.EndUrl));
+            var webAuthenticatorResult = await WebAuthenticator.AuthenticateAsync(new Uri(options.StartUrl), new Uri(options.EndUrl));
 #endif
+
             var responseUrl = new RequestUrl(AppConfig.MAUI.LoginRedirectUri)
-                .Create(new Parameters(result.Properties));
+                .Create(new Parameters(webAuthenticatorResult.Properties));
 
             return new BrowserResult()
             {
                 ResultType = BrowserResultType.Success,
                 Response = responseUrl
             };
-        }
-        catch (Exception e)
+        } catch (Exception e) 
         {
             return new BrowserResult()
             {

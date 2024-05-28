@@ -2,6 +2,11 @@
 using Microsoft.Extensions.Logging;
 using QuizUp.MAUI.Resources.Constants;
 using QuizUp.MAUI.Services;
+using Microsoft.Maui.LifecycleEvents;
+
+#if WINDOWS
+using WinUIEx;
+#endif
 
 namespace QuizUp.MAUI;
 
@@ -31,6 +36,24 @@ public static class MauiProgram
 #if DEBUG
         builder.Logging.SetMinimumLevel(LogLevel.Trace);
         builder.Logging.AddDebug();
+#endif
+
+#if WINDOWS
+        builder.ConfigureLifecycleEvents(events =>
+        {
+            events.AddWindows(wndLifeCycleBuilder =>
+            {
+                wndLifeCycleBuilder.OnWindowCreated(window =>
+                {
+                    window.CenterOnScreen(1024,768); //Set size and center on screen using WinUIEx extension method
+
+                    var manager = WinUIEx.WindowManager.Get(window);
+                    manager.PersistenceId = "MainWindowPersistanceId"; // Remember window position and size across runs
+                    manager.MinWidth = 640;
+                    manager.MinHeight = 480;
+                });
+            });
+        });
 #endif
 
         var app = builder.Build();
