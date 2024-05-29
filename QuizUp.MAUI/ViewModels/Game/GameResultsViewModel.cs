@@ -9,7 +9,7 @@ namespace QuizUp.MAUI.ViewModels
     [QueryProperty(nameof(GameId), nameof(GameId))]
     public partial class GameResultsViewModel(ViewModelBase.Dependencies dependencies, IGamesClient gamesClient) : ViewModelBase(dependencies)
     {
-        Guid GameId { get; set; }
+        public Guid GameId { get; set; }
 
 
         [ObservableProperty]

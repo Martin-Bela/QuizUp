@@ -7,47 +7,50 @@
              x:DataType="view_models:GameResultsViewModel"
              xmlns:models="clr-namespace:QuizUp.MAUI.Api;assembly=QuizUp.MAUI"
              Shell.TabBarIsVisible="False">
-    <VerticalStackLayout>
-        <Label 
-            Text="{Binding Game.Title}"
-            HorizontalOptions="Center" />
+    <ScrollView>
+        <VerticalStackLayout Margin="15">
+            <Label 
+                Text="{Binding Game.Title}"
+                HorizontalOptions="Center" FontSize="30"/>
 
-        <Label Text="Leaderboard" Grid.Row="1"></Label>
-        <ListView ItemsSource="{Binding Game.Leaderboard}" >
-            <ListView.ItemTemplate>
-                <DataTemplate x:DataType="models:PlayerResultModel">
-                    <ViewCell>
-                        <Grid ColumnDefinitions="*,*">
-                            <Label Grid.Column="0" Text="{Binding UserName}"/>
-                            <Label Grid.Column="1" Text="{Binding Score}"/>
-                        </Grid>
-                    </ViewCell>
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
+            <Label Text="Leaderboard" Grid.Row="1" FontSize="20" Margin="0,20,0,0"/>
+            <ListView ItemsSource="{Binding Game.Leaderboard}" Margin="10">
+                <ListView.ItemTemplate>
+                    <DataTemplate x:DataType="models:PlayerResultModel">
+                        <ViewCell>
+                            <Grid ColumnDefinitions="*,*">
+                                <Label Grid.Column="0" Text="{Binding UserName}"/>
+                                <Label Grid.Column="1" Text="{Binding Score}"/>
+                            </Grid>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
 
-        <Label Text="Question statistics" Grid.Row="2"></Label>
-        <ListView ItemsSource="{Binding Game.QuestionsStatistics}">
-            <ListView.ItemTemplate>
-                <DataTemplate x:DataType="models:QuestionStatisticsModel">
-                    <ViewCell>
-                        <Label Text="{Binding QuestionText}"/>
-                        <Grid RowDefinitions="*,*" ColumnDefinitions="Auto, Auto, Auto, Auto">
-                            <Label Grid.Row="0" Grid.Column="0" Text="{Binding AnswersStatistics[0].AnswerText}"/>
-                            <Label Grid.Row="0" Grid.Column="1" Text="{Binding AnswersStatistics[0].AnsweredCount}"/>
+            <Label Text="Question statistics" Grid.Row="2" FontSize="20" Margin="0,20,0,0"/>
+            <ListView ItemsSource="{Binding Game.QuestionsStatistics}" HasUnevenRows="True">
+                <ListView.ItemTemplate>
+                    <DataTemplate x:DataType="models:QuestionStatisticsModel">
+                        <ViewCell>
+                            <Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto" ColumnDefinitions="*,Auto" Margin="10">
+                                <Label Grid.Row="0" Grid.ColumnSpan="2"  Text="{Binding QuestionText}"/>
 
-                            <Label Grid.Row="1" Grid.Column="0" Text="{Binding AnswersStatistics[1].AnswerText}"/>
-                            <Label Grid.Row="1" Grid.Column="1" Text="{Binding AnswersStatistics[1].AnsweredCount}"/>
+                                <Label Grid.Row="1" Grid.Column="0" Text="{Binding AnswersStatistics[0].AnswerText}"/>
+                                <Label Grid.Row="1" Grid.Column="1" Text="{Binding AnswersStatistics[0].AnsweredCount}"/>
 
-                            <Label Grid.Row="2" Grid.Column="0" Text="{Binding AnswersStatistics[2].AnswerText}"/>
-                            <Label Grid.Row="2" Grid.Column="1" Text="{Binding AnswersStatistics[2].AnsweredCount}"/>
+                                <Label Grid.Row="2" Grid.Column="0" Text="{Binding AnswersStatistics[1].AnswerText}"/>
+                                <Label Grid.Row="2" Grid.Column="1" Text="{Binding AnswersStatistics[1].AnsweredCount}"/>
 
-                            <Label Grid.Row="3" Grid.Column="0" Text="{Binding AnswersStatistics[3].AnswerText}"/>
-                            <Label Grid.Row="3" Grid.Column="1" Text="{Binding AnswersStatistics[3].AnsweredCount}"/>
-                        </Grid>
-                    </ViewCell>
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
-    </VerticalStackLayout>
+                                <Label Grid.Row="3" Grid.Column="0" Text="{Binding AnswersStatistics[2].AnswerText}"/>
+                                <Label Grid.Row="3" Grid.Column="1" Text="{Binding AnswersStatistics[2].AnsweredCount}"/>
+
+                                <Label Grid.Row="4" Grid.Column="0" Text="{Binding AnswersStatistics[3].AnswerText}"/>
+                                <Label Grid.Row="4" Grid.Column="1" Text="{Binding AnswersStatistics[3].AnsweredCount}"/>
+                            </Grid>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </VerticalStackLayout>
+    </ScrollView>
 </views:ViewBase>

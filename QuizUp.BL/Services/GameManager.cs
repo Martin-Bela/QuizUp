@@ -93,7 +93,9 @@ internal class GameManager(IGameService gameService, IQuizService quizService) :
         return games.First(g => g.GameID.ToString() == gameId).HostID;
     }
 
+#pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
     public async Task<QuizQuestionModel?> NextQuestionAsync(string gameId, string connectionId)
+#pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
     {
         var game = games.First(g => g.GameID.ToString() == gameId);
         var quiz = game.Quiz;

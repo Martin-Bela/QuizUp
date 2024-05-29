@@ -21,7 +21,7 @@ namespace QuizUp.MAUI.ViewModels
         }
 
         [RelayCommand]
-        public async Task openGame(Guid gameId)
+        public async Task OpenGame(Guid gameId)
         {
             var route = routingService.GetRouteByViewModel<GameResultsViewModel>();
             await Shell.Current.GoToAsync(route, new Dictionary<string, object> { { "GameId", gameId } });

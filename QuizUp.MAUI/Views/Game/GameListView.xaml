@@ -6,23 +6,25 @@
              x:Class="QuizUp.MAUI.Views.GameListView"
              x:DataType="view_models:GameListViewModel"
              xmlns:models="clr-namespace:QuizUp.MAUI.Api;assembly=QuizUp.MAUI"
-             Shell.TabBarIsVisible="False"
              x:Name="root">
     <VerticalStackLayout>
-        <Grid RowDefinitions="Auto, *">
+        <Grid RowDefinitions="Auto, *" Margin="15">
             <ListView ItemsSource="{Binding Games}">
                 <ListView.ItemTemplate>
                     <DataTemplate x:DataType="models:GameSummaryModel">
                         <ViewCell>
-                            <Grid ColumnDefinitions="*,*">
-                                <Grid.GestureRecognizers>
+                            <Border BackgroundColor="{StaticResource AppControlBackgroundColor}"
+                                StrokeThickness="0"
+                                Padding="10, 0">
+                                <Border.GestureRecognizers>
                                     <TapGestureRecognizer Command="{Binding Path=BindingContext.OpenGameCommand, Source={x:Reference root}}"
-                                                    CommandParameter="{Binding Id}"/>
-                                </Grid.GestureRecognizers>
-
-                                <Label Grid.Column="0" Text="{Binding Title}"/>
-                                <Label Grid.Column="0" Text="{Binding CreatedAt}"/>
-                            </Grid>
+                                                      CommandParameter="{Binding Id}"/>
+                                </Border.GestureRecognizers>
+                                <Grid ColumnDefinitions="*,*">
+                                    <Label Grid.Column="0" Text="{Binding Title}"/>
+                                    <Label Grid.Column="1" Text="{Binding Path=CreatedAt, StringFormat='{}{0:yyyy-MM-dd   hh:mm}'}"/>
+                                </Grid>
+                            </Border>
                         </ViewCell>
                     </DataTemplate>
                 </ListView.ItemTemplate>
