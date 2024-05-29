@@ -6,7 +6,11 @@ using QuizUp.MAUI.Api;
 namespace QuizUp.MAUI.ViewModels;
 
 [QueryProperty(nameof(QuizId), nameof(QuizId))]
-public partial class QuizDetailViewModel(ViewModelBase.Dependencies dependencies, IQuizzesClient quizzesClient, IRunningGameService runningGameService) : ViewModelBase(dependencies)
+public partial class QuizDetailViewModel(
+    ViewModelBase.Dependencies dependencies,
+    IQuizzesClient quizzesClient,
+    IRunningGameService runningGameService
+) : ViewModelBase(dependencies)
 {
     public Guid QuizId { get; set; }
 
@@ -20,14 +24,14 @@ public partial class QuizDetailViewModel(ViewModelBase.Dependencies dependencies
     }
 
     [RelayCommand]
-    public async Task Edit()
+    public async Task EditQuiz()
     {
         var route = routingService.GetRouteByViewModel<QuizEditViewModel>();
         await Shell.Current.GoToAsync(route, new Dictionary<string, object> { { "QuizId", QuizId } });
     }
 
     [RelayCommand]
-    public async Task StartQuiz()
+    public async Task StartGame()
     {
         await runningGameService.CreateGame(QuizId);
     }

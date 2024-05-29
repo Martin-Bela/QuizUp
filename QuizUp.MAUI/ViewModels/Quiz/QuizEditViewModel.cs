@@ -8,7 +8,10 @@ namespace QuizUp.MAUI.ViewModels;
 
 [QueryProperty(nameof(QuizId), nameof(QuizId))]
 [QueryProperty(nameof(Quiz), nameof(Quiz))]
-public partial class QuizEditViewModel(ViewModelBase.Dependencies dependencies, IQuizzesClient quizzesClient) : ViewModelBase(dependencies)
+public partial class QuizEditViewModel(
+    ViewModelBase.Dependencies dependencies,
+    IQuizzesClient quizzesClient
+) : ViewModelBase(dependencies)
 {
     public Guid QuizId { get; set; } = Guid.Empty;
 
@@ -92,6 +95,7 @@ public partial class QuizEditViewModel(ViewModelBase.Dependencies dependencies, 
     [RelayCommand]
     private async Task GoBackAsync()
     {
-        await Shell.Current.GoToAsync("..");
+        var route = routingService.GetRouteByViewModel<QuizListViewModel>();
+        await Shell.Current.GoToAsync(route);
     }
 }

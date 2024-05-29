@@ -8,4 +8,10 @@
         <Setter Property="FontFamily" Value="{x:Static constants:Fonts.Medium}" />
         <Setter Property="FontSize" Value="14" />
     </Style>
+
+    <Style x:Key="TextStyle" TargetType="Label">
+        <Setter Property="TextColor" Value="{StaticResource TextColor}" />
+        <Setter Property="FontFamily" Value="{x:Static constants:Fonts.Medium}" />
+        <Setter Property="FontSize" Value="14" />
+    </Style>
 </ResourceDictionary>

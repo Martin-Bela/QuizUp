@@ -1,53 +1,40 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using QuizUp.MAUI.Services;
+using QuizUp.MAUI.Views;
 
 namespace QuizUp.MAUI.ViewModels;
 
 public partial class JoinGameViewModel(ViewModelBase.Dependencies dependencies, IRunningGameService gameManager) : ViewModelBase(dependencies)
 {
     [ObservableProperty]
-    public string? gameId;
-
-    [ObservableProperty]
-    public string? nickName = null;
-
-    [ObservableProperty]
-    public string quizName = "Quiz";
+    public string gameCode = string.Empty;
 
     [RelayCommand]
-    void JoinGame()
+    private async Task JoinGame()
     {
-        if (string.IsNullOrWhiteSpace(GameId))
+        // to-do: show some alert here -> invalid game code
+        if (string.IsNullOrEmpty(GameCode) || !int.TryParse(GameCode, out var parsedGameCode))
         {
             return;
         }
 
-        if (!int.TryParse(GameId, out var gameCode))
+        var userId = await userDataStorage.TryGetUserIdAsync();
+        var userName = await userDataStorage.TryGetUserNameAsync();
+
+        // and also here -> userId, username not found in storage -> app error
+        if (userId == null || userName == null)
         {
             return;
         }
 
-        if (string.IsNullOrWhiteSpace(NickName))
-        {
-            NickName = "Player";
-        }
-
-        // todo: get playerId from somewhere
-        Guid? playerId = null;
-
-        Task.Run(
-            async () =>
-            {
-                await gameManager.JoinGameAsync(gameCode, NickName, playerId);
-            }
-        );
+        await gameManager.JoinGameAsync(parsedGameCode, userName, userId);
     }
 
     [RelayCommand]
     private async Task GoBackAsync()
     {
-        var route = routingService.GetRouteByViewModel<QuizListViewModel>();
-        await Shell.Current.GoToAsync(route);
+        var listViewRoute = routingService.GetRouteByView<QuizListView>();
+        await Shell.Current.GoToAsync(listViewRoute);
     }
 }
