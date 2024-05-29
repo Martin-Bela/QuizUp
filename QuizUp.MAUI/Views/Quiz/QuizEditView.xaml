@@ -8,6 +8,10 @@
              x:DataType="view_models:QuizEditViewModel"
              x:Name="root"
              Shell.TabBarIsVisible="False">
+    <Shell.BackButtonBehavior>
+        <BackButtonBehavior Command="{Binding GoBackCommand}" />
+    </Shell.BackButtonBehavior>
+    
     <Grid RowDefinitions="Auto, Auto, *">
         <Grid Grid.Row="0"
               Style="{StaticResource PageHeaderStyle}">

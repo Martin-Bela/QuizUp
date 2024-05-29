@@ -6,7 +6,7 @@
     <Style x:Key="PageHeaderStyle" TargetType="Grid">
         <Setter Property="ColumnDefinitions" Value="*, *, *" />
         <Setter Property="Padding" Value="15, 0" />
-        <Setter Property="BackgroundColor" Value="{StaticResource PageHeaderBackgroundColor}" />
+        <Setter Property="BackgroundColor" Value="{StaticResource AppControlBackgroundColor}" />
     </Style>
     
     <Style x:Key="PageHeaderLabelStyle" TargetType="Label">

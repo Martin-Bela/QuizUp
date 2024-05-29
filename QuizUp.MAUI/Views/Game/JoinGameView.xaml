@@ -6,8 +6,13 @@
              xmlns:fonts="clr-namespace:QuizUp.MAUI.Resources.Fonts"
              xmlns:views="clr-namespace:QuizUp.MAUI.Views"
              xmlns:view_models="clr-namespace:QuizUp.MAUI.ViewModels"
-             x:DataType="view_models:JoinGameViewModel">
-    <Grid RowDefinitions="Auto, *, *, Auto">
+             x:DataType="view_models:JoinGameViewModel"
+             Shell.TabBarIsVisible="False">
+    <Shell.BackButtonBehavior>
+        <BackButtonBehavior Command="{Binding GoBackCommand}" />
+    </Shell.BackButtonBehavior>
+    
+    <Grid RowDefinitions="Auto, *, Auto">
         <Grid Grid.Row="0"
               Style="{StaticResource PageHeaderStyle}">
             <Button Grid.Column="0"
@@ -15,7 +20,7 @@
                     Command="{Binding GoBackCommand}">
                 <Button.ImageSource>
                     <FontImageSource Size="22" FontFamily="{x:Static constants:Fonts.FontAwesome}"
-                                     Glyph="{x:Static fonts:FontAwesomeIcons.ChevronLeft}"/>
+                                     Glyph="{x:Static fonts:FontAwesomeIcons.ChevronLeft}" />
                 </Button.ImageSource>
             </Button>
             <Label Grid.Column="1"
@@ -24,24 +29,16 @@
         </Grid>
 
         <Entry Grid.Row="1"
-               Text="{Binding NickName}"
-               Placeholder="NickName"
-               Style="{StaticResource EntryStyle}"
-               HorizontalOptions="Center"
-               VerticalOptions="Center"
-               HorizontalTextAlignment="Center"
-               FontSize="36" />
-
-        <Entry Grid.Row="2"
-               Text="{Binding GameId}"
+               Text="{Binding GameCode}"
                Placeholder="Game Code"
+               Keyboard="Numeric"
                Style="{StaticResource EntryStyle}"
                HorizontalOptions="Center"
                VerticalOptions="Center"
                HorizontalTextAlignment="Center"
                FontSize="36" />
 
-        <Button Grid.Row="3" Text="Enter"
+        <Button Grid.Row="2" Text="Enter"
                 Style="{StaticResource PrimaryButtonStyle}"
                 Command="{Binding JoinGameCommand}"
                 Margin="15, 0, 15, 20" />

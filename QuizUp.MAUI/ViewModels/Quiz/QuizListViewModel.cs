@@ -1,21 +1,19 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using QuizUp.MAUI.Services;
 using QuizUp.MAUI.Api;
+using QuizUp.MAUI.Views;
 
 namespace QuizUp.MAUI.ViewModels;
 
 public partial class QuizListViewModel(
     ViewModelBase.Dependencies dependencies,
-    IRunningGameService gameService,
-    IUsersClient usersClient,
     IQuizzesClient quizClient
-    ) : ViewModelBase(dependencies)
+) : ViewModelBase(dependencies)
 {
     public async override Task OnAppearingAsync()
     {
         await base.OnAppearingAsync();
-        var userId = await usersClient.GetFirstUserIdAsync();
+        var userId = await userDataStorage.TryGetUserIdAsync();
         Quizzes = await quizClient.GetQuizzesByUserIdAsync(userId);
     }
 
@@ -25,20 +23,14 @@ public partial class QuizListViewModel(
     [RelayCommand]
     public async Task OpenQuiz(Guid quizId)
     {
-        var route = routingService.GetRouteByViewModel<QuizDetailViewModel>();
+        var route = routingService.GetRouteByView<QuizDetailView>();
         await Shell.Current.GoToAsync(route, new Dictionary<string, object> { { "QuizId", quizId } });
-    }
-
-    [RelayCommand]
-    public async Task StartQuiz(Guid quizId)
-    {
-        await gameService.CreateGame(quizId);
     }
 
     [RelayCommand]
     public async Task CreateQuiz()
     {
-        var route = routingService.GetRouteByViewModel<QuizEditViewModel>();
+        var route = routingService.GetRouteByView<QuizEditView>();
         await Shell.Current.GoToAsync(route);
     }
 }

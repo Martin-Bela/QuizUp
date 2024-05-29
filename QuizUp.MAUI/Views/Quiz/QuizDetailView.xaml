@@ -7,39 +7,51 @@
              x:DataType="view_models:QuizDetailViewModel"
              xmlns:models="clr-namespace:QuizUp.MAUI.Api;assembly=QuizUp.MAUI"
              Shell.TabBarIsVisible="False">
-    <Grid RowDefinitions="Auto, *, Auto" Padding="10">
-        <Label Text="{Binding Quiz.Title}"
+    <Grid RowDefinitions="Auto, Auto, *, Auto"
+          Padding="15">
+        <Label Grid.Row="0"
+               Text="{Binding Quiz.Title}"
+               Style="{StaticResource TitleStyle}"
                HorizontalOptions="Center"
                VerticalOptions="Center"
-               FontSize="36" 
+               FontSize="16"
                Padding="10"/>
-        <ListView Grid.Row="1"   ItemsSource="{Binding Quiz.Questions}">
+        <Label Grid.Row="1"
+               Text="Questions:"
+               Style="{StaticResource TitleStyle}"
+               Margin="0, 10"/>
+        <ListView Grid.Row="2" 
+                  ItemsSource="{Binding Quiz.Questions}">
             <ListView.ItemTemplate >
                 <DataTemplate x:DataType="models:QuestionDetailModel">
                     <ViewCell>
-                        <Label Text="{Binding QuestionText}" Padding="10"/>
+                        <Border Padding="5, 0"
+                                StrokeThickness="0">
+                            <Label Text="{Binding QuestionText}"
+                               Style="{StaticResource TextStyle}"
+                               VerticalOptions="Center"/>
+                        </Border>
                     </ViewCell>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
-        <Grid ColumnDefinitions="*,*" Grid.Row="2">
-            <Button Command="{Binding StartQuizCommand}" 
-                Grid.Column="1"
-                Text="Start"
-                HorizontalOptions="Center"
-                VerticalOptions="Center"
-                FontSize="30" 
-                Padding="10"/>
+        <Grid Grid.Row="3" 
+              ColumnDefinitions="*, *">
+            <Button Grid.Column="0"
+                    Command="{Binding EditQuizCommand}" 
+                    Text="Edit Quiz"
+                    Style="{StaticResource SecondaryButtonStyle}"
+                    BackgroundColor="{StaticResource AppControlBackgroundColor}"
+                    Padding="5, 15"
+                    Margin="0, 0, 10, 0"/>
 
-            <Button Command="{Binding EditCommand}" 
-                Grid.Column="0"
-                Text="Edit"
-                HorizontalOptions="Center"
-                VerticalOptions="Center"
-                FontSize="30" 
-                Padding="10"/>
+            <Button Grid.Column="1"
+                    Command="{Binding StartGameCommand}" 
+                    Text="Start Game"
+                    Style="{StaticResource SecondaryButtonStyle}"
+                    BackgroundColor="{StaticResource AppControlBackgroundColor}"
+                    Padding="5, 15"
+                    Margin="10, 0, 0, 0"/>
         </Grid>
-
     </Grid>
-
 </views:ViewBase>

@@ -7,25 +7,32 @@
              x:Class="QuizUp.MAUI.Views.QuizListView"
              x:DataType="view_models:QuizListViewModel"
              x:Name="root">
-    <Grid RowDefinitions="*, Auto">
-        <ListView ItemsSource="{Binding Quizzes}">
+    <Grid RowDefinitions="*, Auto"
+          Margin="15">
+        <ListView Grid.Row="0"
+                  ItemsSource="{Binding Quizzes}">
             <ListView.ItemTemplate>
                 <DataTemplate x:DataType="models:QuizSummaryModel">
                     <ViewCell>
-                        <Grid Padding="10" ColumnDefinitions="*,Auto">
-                            <Label Grid.Column="0" Text="{Binding Title}">
-                                <Label.GestureRecognizers>
-                                    <TapGestureRecognizer Command="{Binding Path=BindingContext.OpenQuizCommand, Source={x:Reference root}}"
+                        <Border BackgroundColor="{StaticResource AppControlBackgroundColor}"
+                                StrokeThickness="0"
+                                Padding="10, 0">
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding Path=BindingContext.OpenQuizCommand, Source={x:Reference root}}"
                                                       CommandParameter="{Binding Id}"/>
-                                </Label.GestureRecognizers>
+                            </Border.GestureRecognizers>
+                            <Label Text="{Binding Title}"
+                                   VerticalOptions="Center"
+                                   Style="{StaticResource TitleStyle}">
                             </Label>
-                            <Button Grid.Column="1" Text="Start" Command="{Binding Path=BindingContext.StartQuizCommand, Source={x:Reference root}}"
-                                    CommandParameter="{Binding Id}"/>
-                        </Grid>
+                        </Border>
                     </ViewCell>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
-        <Button Text="CreateGame" Command="{Binding CreateQuizCommand}" Grid.Row="1"/>
+        <Button Grid.Row="1"
+                Text="Create Quiz"
+                Style="{StaticResource PrimaryButtonStyle}"
+                Command="{Binding CreateQuizCommand}"/>
     </Grid>
 </views:ViewBase>

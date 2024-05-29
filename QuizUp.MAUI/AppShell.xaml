@@ -7,7 +7,8 @@
     xmlns:fonts="clr-namespace:QuizUp.MAUI.Resources.Fonts"
     xmlns:views="clr-namespace:QuizUp.MAUI.Views"
     Shell.NavBarIsVisible="False"
-    Shell.TabBarIsVisible="True">
+    Shell.TabBarIsVisible="True"
+    Shell.TabBarBackgroundColor="{StaticResource AppControlBackgroundColor}">
 
     <ShellContent ContentTemplate="{DataTemplate views:LoadingView}" Route="loading" />
 
@@ -15,7 +16,7 @@
 
     <Tab Title="Quizzes">
         <Tab.Icon>
-            <FontImageSource Size="16"
+            <FontImageSource Size="12"
                              FontFamily="{x:Static constants:Fonts.FontAwesome}"
                              Glyph="{x:Static fonts:FontAwesomeIcons.House}"/>
         </Tab.Icon>
@@ -24,7 +25,7 @@
     
     <Tab Title="Join">
         <Tab.Icon>
-            <FontImageSource Size="18"
+            <FontImageSource Size="14"
                              FontFamily="{x:Static constants:Fonts.FontAwesome}"
                              Glyph="{x:Static fonts:FontAwesomeIcons.Gamepad}"/>
         </Tab.Icon>
@@ -33,7 +34,7 @@
 
     <Tab Title="Games">
         <Tab.Icon>
-            <FontImageSource Size="18" 
+            <FontImageSource Size="14" 
                              FontFamily="{x:Static constants:Fonts.FontAwesome}"
                              Glyph="{x:Static fonts:FontAwesomeIcons.G}"/>
         </Tab.Icon>
