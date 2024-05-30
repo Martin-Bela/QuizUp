@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<views:ViewBase xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:views="clr-namespace:QuizUp.MAUI.Views"
+             xmlns:view_models="clr-namespace:QuizUp.MAUI.ViewModels"
+             x:Class="QuizUp.MAUI.Views.QuizGamesListView"
+             x:DataType="view_models:QuizGamesListViewModel"
+             xmlns:models="clr-namespace:QuizUp.MAUI.Api;assembly=QuizUp.MAUI"
+             x:Name="root">
+    <VerticalStackLayout Margin="15">
+        <Label Text="{Binding QuizGames.Title}"
+               FontSize="16"
+               Style="{StaticResource TitleStyle}"
+               HorizontalOptions="Center"/>
+        <Grid RowDefinitions="Auto, *" Margin="15">
+            <ListView ItemsSource="{Binding QuizGames.Games}">
+                <ListView.ItemTemplate>
+                    <DataTemplate x:DataType="models:GameSummaryModel">
+                        <ViewCell>
+                            <Border BackgroundColor="{StaticResource AppControlBackgroundColor}"
+                                StrokeThickness="0"
+                                Padding="10, 0">
+                                <Border.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding Path=BindingContext.OpenGameCommand, Source={x:Reference root}}"
+                                                      CommandParameter="{Binding Id}"/>
+                                </Border.GestureRecognizers>
+                                <Label Grid.Column="1" Text="{Binding Path=CreatedAt, StringFormat='{}{0:yyyy-MM-dd   hh:mm}'}"/>
+                            </Border>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </Grid>
+    </VerticalStackLayout>
+</views:ViewBase>

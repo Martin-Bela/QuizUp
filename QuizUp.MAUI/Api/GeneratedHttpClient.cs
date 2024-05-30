@@ -687,12 +687,12 @@ namespace QuizUp.MAUI.Api
 
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<QuizDetailModel> GetQuizResultsByIdAsync(System.Guid id);
+        System.Threading.Tasks.Task<QuizGamesModel> GetGamesByQuizIdAsync(System.Guid id);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<QuizDetailModel> GetQuizResultsByIdAsync(System.Guid id, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<QuizGamesModel> GetGamesByQuizIdAsync(System.Guid id, System.Threading.CancellationToken cancellationToken);
 
     }
 
@@ -1146,15 +1146,15 @@ namespace QuizUp.MAUI.Api
 
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<QuizDetailModel> GetQuizResultsByIdAsync(System.Guid id)
+        public virtual System.Threading.Tasks.Task<QuizGamesModel> GetGamesByQuizIdAsync(System.Guid id)
         {
-            return GetQuizResultsByIdAsync(id, System.Threading.CancellationToken.None);
+            return GetGamesByQuizIdAsync(id, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<QuizDetailModel> GetQuizResultsByIdAsync(System.Guid id, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<QuizGamesModel> GetGamesByQuizIdAsync(System.Guid id, System.Threading.CancellationToken cancellationToken)
         {
             if (id == null)
                 throw new System.ArgumentNullException("id");
@@ -1170,8 +1170,8 @@ namespace QuizUp.MAUI.Api
 
                     var urlBuilder_ = new System.Text.StringBuilder();
                     if (!string.IsNullOrEmpty(_baseUrl)) urlBuilder_.Append(_baseUrl);
-                    // Operation Path: "api/quizzes/result/{id}"
-                    urlBuilder_.Append("api/quizzes/result/");
+                    // Operation Path: "api/quizzes/games/{id}"
+                    urlBuilder_.Append("api/quizzes/games/");
                     urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(id, System.Globalization.CultureInfo.InvariantCulture)));
 
                     PrepareRequest(client_, request_, urlBuilder_);
@@ -1199,7 +1199,7 @@ namespace QuizUp.MAUI.Api
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<QuizDetailModel>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<QuizGamesModel>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
@@ -1892,6 +1892,20 @@ namespace QuizUp.MAUI.Api
 
         [Newtonsoft.Json.JsonProperty("questions", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public System.Collections.Generic.IList<QuestionDetailModel> Questions { get; set; }
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.0.7.0 (NJsonSchema v11.0.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class QuizGamesModel
+    {
+        [Newtonsoft.Json.JsonProperty("quizId", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public System.Guid QuizId { get; set; }
+
+        [Newtonsoft.Json.JsonProperty("title", Required = Newtonsoft.Json.Required.AllowNull)]
+        public string Title { get; set; }
+
+        [Newtonsoft.Json.JsonProperty("games", Required = Newtonsoft.Json.Required.AllowNull)]
+        public System.Collections.Generic.IList<GameSummaryModel> Games { get; set; }
 
     }
 

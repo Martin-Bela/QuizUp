@@ -5,6 +5,7 @@ using System.Diagnostics;
 namespace QuizUp.Server.Hubs;
 
 using QuizUp.Common;
+using QuizUp.DAL.Entities;
 
 public class QuizHub : Hub
 {
@@ -21,8 +22,8 @@ public class QuizHub : Hub
 
     public async Task CreateGame(Guid quizId)
     {
-        var gameID = await gameManager.CreateGameAsync(quizId, Context.ConnectionId);
-        var gameStartData = gameManager.GetGameStartData(gameID);
+        var gameId = await gameManager.CreateGameAsync(quizId, Context.ConnectionId);
+        var gameStartData = gameManager.GetGameStartData(gameId);
         await Clients.Caller.SendAsync(SignalRHubCommands.GameCreated, gameStartData);
     }
     public async Task JoinGame(int gameCode, string playerName, Guid? playerId)
@@ -33,6 +34,9 @@ public class QuizHub : Hub
         await Groups.AddToGroupAsync(Context.ConnectionId, gameId.ToString());
         Debug.WriteLine($"Player {playerName}({player}) joined game {gameCode}");
         await Clients.Caller.SendAsync(SignalRHubCommands.GameJoined, gameId);
+
+        var gameStartData = gameManager.GetGameStartData(gameId);
+        await Clients.Client(gameManager.GetHostID(gameId)).SendAsync(SignalRHubCommands.GameCreated, gameStartData);
     }
     public async Task NextQuestion(Guid gameId)
     {

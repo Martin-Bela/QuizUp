@@ -35,4 +35,11 @@ public partial class QuizDetailViewModel(
     {
         await runningGameService.CreateGame(QuizId);
     }
+
+    [RelayCommand]
+    public async Task ListGames()
+    {
+        var route = routingService.GetRouteByViewModel<QuizGamesListViewModel>();
+        await Shell.Current.GoToAsync(route, new Dictionary<string, object> { { "QuizId", QuizId } });
+    }
 }
