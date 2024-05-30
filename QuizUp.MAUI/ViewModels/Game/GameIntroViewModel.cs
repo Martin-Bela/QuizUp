@@ -6,8 +6,8 @@ namespace QuizUp.MAUI.ViewModels;
 
 public partial class GameIntroViewModel(ViewModelBase.Dependencies dependencies, IRunningGameService gameService) : ViewModelBase(dependencies)
 {
-    private string? gameId;
-    public string? GameId
+    private Guid? gameId;
+    public Guid? GameId
     {
         get => gameId;
         set

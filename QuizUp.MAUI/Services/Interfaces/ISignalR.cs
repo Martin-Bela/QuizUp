@@ -5,9 +5,9 @@ public interface ISignalR
     Task StartAsync();
     Task StopAsync();
     Task JoinGameAsync(int gameCode, string playerName, Guid? playerId);
-    Task AnswerQuestionAsync(string gameId, int question, int answer);
-    Task NextQuestionAsync(string gameId);
-    Task LeaveQuiz(string gameId);
-    Task StartGameAsync(string gameId);
+    Task AnswerQuestionAsync(Guid gameId, int question, int answer);
+    Task NextQuestionAsync(Guid gameId);
+    Task LeaveQuiz(Guid gameId);
+    Task StartGameAsync(Guid gameId);
     Task CreateGameAsync(Guid quizId);
 }

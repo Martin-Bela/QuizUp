@@ -8,11 +8,14 @@
                        x:DataType="vm:StartGameViewModel"
                        Shell.TabBarIsVisible="False">
     <FlexLayout AlignContent="Center" Direction="Column" JustifyContent="SpaceEvenly" Margin="10">
-        <Label Text="{Binding QuizName}" HorizontalTextAlignment="Center" FontSize="36"/>
+        <Label Text="{Binding GameStartData.QuizName}" HorizontalTextAlignment="Center" FontSize="36"/>
         <VerticalStackLayout>
             <Label Text="Passcode:" HorizontalTextAlignment="Center" FontSize="30"/>
-            <Label Text="{Binding PassCode}" HorizontalTextAlignment="Center" FontSize="36"/>
+            <Label Text="{Binding GameStartData.PassCode}" HorizontalTextAlignment="Center" FontSize="36"/>
         </VerticalStackLayout>
+        <Label Text="{Binding Path=GameStartData.Players.Count, StringFormat='Number of players: {0}'}" 
+               HorizontalTextAlignment="Center"
+               FontSize="30"/>
         <Button Text="Start Game" Command="{Binding StartGameCommand}" FontSize="36"/>
     </FlexLayout>
 </v:ViewBase>
