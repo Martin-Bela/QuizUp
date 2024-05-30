@@ -44,10 +44,10 @@
 
 	<ItemGroup>
 		<!-- App Icon -->
-		<MauiIcon Include="Resources\AppIcon\appicon.png" Color="White"/>
+		<MauiIcon Include="Resources\AppIcon\appicon.png" Color="White" />
 
 		<!-- Splash Screen -->
-		<MauiSplashScreen Include="Resources\Splash\splash.png" Color="White"/>
+		<MauiSplashScreen Include="Resources\Splash\splash.png" Color="White" />
 
 		<!-- Images -->
 		<MauiImage Include="Resources\Images\*" />
@@ -87,6 +87,9 @@
 		</Compile>
 		<Compile Update="Views\Game\GameIntroView.xaml.cs">
 			<DependentUpon>GameIntroView.xaml</DependentUpon>
+		</Compile>
+		<Compile Update="Views\Game\QuizGamesListView.xaml.cs">
+			<DependentUpon>QuizGamesListView.xaml</DependentUpon>
 		</Compile>
 		<Compile Update="Views\Game\GameListView.xaml.cs">
 			<DependentUpon>GameListView.xaml</DependentUpon>
@@ -136,6 +139,9 @@
 		<MauiXaml Update="Views\Game\GameIntroView.xaml">
 			<Generator>MSBuild:Compile</Generator>
 		</MauiXaml>
+		<MauiXaml Update="Views\Game\QuizGamesListView.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
 		<MauiXaml Update="Views\Game\GameListView.xaml">
 			<Generator>MSBuild:Compile</Generator>
 		</MauiXaml>
@@ -172,8 +178,8 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<Folder Include="Resources\Images\" Color="White"/>
-		<Folder Include="ViewModels\Results\" Color="White"/>
+		<Folder Include="Resources\Images\" Color="White" />
+		<Folder Include="ViewModels\Results\" Color="White" />
 	</ItemGroup>
 
 	<ItemGroup>

@@ -101,13 +101,13 @@ public class QuizzesController(IQuizService quizService) : ControllerBase
     }
 
 
-    [HttpGet("result/{id:Guid}")]
-    public async Task<ActionResult<QuizDetailModel>> GetQuizResultsByIdAsync(Guid id)
+    [HttpGet("games/{id:Guid}")]
+    public async Task<ActionResult<QuizGamesModel>> GetGamesByQuizIdAsync(Guid id)
     {
         try
         {
-            var quizDetailModel = await quizService.GetQuizResultsByIdAsync(id);
-            return Ok(quizDetailModel);
+            var quizGamesModel = await quizService.GetGamesByQuizIdAsync(id);
+            return Ok(quizGamesModel);
         }
         catch (NotFoundException e)
         {

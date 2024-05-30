@@ -10,15 +10,15 @@ public partial class QuizListViewModel(
     IQuizzesClient quizClient
 ) : ViewModelBase(dependencies)
 {
+    [ObservableProperty]
+    public IList<QuizSummaryModel> quizzes = [];
+
     public async override Task OnAppearingAsync()
     {
         await base.OnAppearingAsync();
         var userId = await userDataStorage.TryGetUserIdAsync();
         Quizzes = await quizClient.GetQuizzesByUserIdAsync(userId);
     }
-
-    [ObservableProperty]
-    public IList<QuizSummaryModel> quizzes = [];
 
     [RelayCommand]
     public async Task OpenQuiz(Guid quizId)

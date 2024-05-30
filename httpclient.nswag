@@ -59,7 +59,7 @@
       "wrapResponseMethods": [],
       "generateResponseClasses": true,
       "responseClass": "SwaggerResponse",
-      "namespace": "QuizUp.MAUI.Services.Rest",
+      "namespace": "QuizUp.MAUI.Api",
       "requiredPropertiesMustBeDefined": true,
       "dateType": "System.DateTimeOffset",
       "jsonConverters": null,
@@ -93,7 +93,7 @@
       "templateDirectory": null,
       "serviceHost": null,
       "serviceSchemes": null,
-      "output": "QuizUp.MAUI/Services/GeneratedHttpClient.cs",
+      "output": "QuizUp.MAUI/Api/GeneratedHttpClient.cs",
       "newLineBehavior": "LF"
     }
   }

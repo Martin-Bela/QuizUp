@@ -65,6 +65,7 @@ public class DependencyInjection
         builder.RegisterType<ViewModels.ScoreViewModel>().InstancePerDependency();
         builder.RegisterType<ViewModels.GameListViewModel>().InstancePerDependency();
         builder.RegisterType<ViewModels.GameResultsViewModel>().InstancePerDependency();
+        builder.RegisterType<ViewModels.QuizGamesListViewModel>().InstancePerDependency();
 
 
         //Quiz
@@ -95,6 +96,7 @@ public class DependencyInjection
         builder.RegisterType<Views.QuizListView>().InstancePerDependency();
         builder.RegisterType<Views.QuizQuestionAnswerEditView>().InstancePerDependency();
         builder.RegisterType<Views.QuizQuestionEditView>().InstancePerDependency();
+        builder.RegisterType<Views.QuizGamesListView>().InstancePerDependency();
 
         //Auth
         builder.RegisterType<Views.AuthView>().InstancePerDependency();

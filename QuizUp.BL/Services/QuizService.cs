@@ -158,33 +158,21 @@ public class QuizService(ApplicationDbContext dbContext) : IQuizService
         await dbContext.SaveChangesAsync();
     }
 
-    public async Task<QuizResultsModel> GetQuizResultsByIdAsync(Guid quizId)
+    public async Task<QuizGamesModel> GetGamesByQuizIdAsync(Guid quizId)
     {
         var quiz = await dbContext.Quizzes
             .Where(q => q.Id == quizId)
-            .Include(q => q.Questions)
-            .ThenInclude(q => q.Answers)
-            .ToListAsync();
-        return quiz
-            .Select(q => new QuizResultsModel()
-            {
-                QuizId = q.Id,
-                QuizName = q.Title,
-                QuestionResults = q.Questions
-                    .GroupBy(q => q.Id)
-                    .Select(g => new QuestionStatisticsModel()
-                    {
-                        QuestionText = g.First().QuestionText,
-                        AnswersStatistics = g.SelectMany(q => q.Answers)
-                            .GroupBy(a => a.Id)
-                            .Select(ga => new AnswerStatisticsModel()
-                            {
-                                AnswerText = ga.First().AnswerText,
-                                AnsweredCount = ga.Sum(a => a.GameAnswers.Sum(ga => ga.AnsweredCount))
-                            }).ToList()
-                    }).ToList(),
+            .Include(q => q.Games)
+            .FirstAsync();
 
-            })
-            .First();
+        return new QuizGamesModel
+        {
+            QuizId = quizId,
+            Title = quiz.Title,
+            Games = quiz.Games
+                .Select(g => new GameSummaryModel { Id = g.Id, Title = quiz.Title, CreatedAt = g.CreatedAt })
+                .OrderBy(q => q.CreatedAt)
+                .ToList()
+        };
     }
 }

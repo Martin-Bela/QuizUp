@@ -15,12 +15,14 @@ public class ViewRoutingService : IViewRoutingService
         new("//quizzes/detail/edit", typeof(QuizEditView), typeof(QuizEditViewModel)),
         new("//quizzes/detail/edit/question", typeof(QuizQuestionEditView), typeof(QuizQuestionEditViewModel)),
         new("//quizzes/detail/edit/question/answer", typeof(QuizQuestionAnswerEditView), typeof(QuizQuestionAnswerEditViewModel)),
+        new("//quizzes/detail/games", typeof(QuizGamesListView), typeof(QuizGamesListViewModel)),
+        new("//quizzes/detail/games/game", typeof(GameResultsView), typeof(GameResultsViewModel)),
 
         new("//game/start-game", typeof(StartGameView), typeof(StartGameViewModel)),
         new("//game/join-game", typeof(JoinGameView), typeof(JoinGameViewModel)),
         new("//game/question", typeof(QuestionView), typeof(QuestionViewModel)),
         new("//game/game-intro", typeof(GameIntroView), typeof(GameIntroViewModel)),
-        new("//gmae/game-results", typeof(ScoreView), typeof(ScoreViewModel)),
+        new("//game/game-results", typeof(ScoreView), typeof(ScoreViewModel)),
 
         new("//games", typeof(GameListView), typeof(GameListViewModel)),
         new("//games/detail", typeof(GameResultsView), typeof(GameResultsViewModel)),
