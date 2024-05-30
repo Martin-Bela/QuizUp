@@ -1,5 +1,6 @@
 ﻿using QuizUp.BL.Mappers;
 using QuizUp.BL.Models;
+using QuizUp.BL.Models.Game;
 using QuizUp.Common.Models;
 using System.Diagnostics;
 
@@ -8,9 +9,9 @@ namespace QuizUp.BL.Services;
 internal class GameManager(IGameService gameService, IQuizService quizService) : IGameManager
 {
     private readonly List<RunningGame> games = [];
-    public Func<string, bool, List<ScoreModel>, Task>? OnRoundEnded { get; set; } = null;
+    public Func<Guid, bool, List<ScoreModel>, Task>? OnRoundEnded { get; set; } = null;
 
-    public async Task<(int passCode, string gameId, string quizName)> CreateGameAsync(Guid quizId, string hostId)
+    public async Task<Guid> CreateGameAsync(Guid quizId, string hostId)
     {
         var result = await gameService.CreateGameAsync(quizId);
         Debug.Assert(games.All(g => g.GameID != result.Id && g.GameCode != result.Code));
@@ -25,10 +26,23 @@ internal class GameManager(IGameService gameService, IQuizService quizService) :
             GameID = result.Id
         });
 
-        return (result.Code, result.Id.ToString(), result.Title);
+        return result.Id;
     }
 
-    public Task<string> AddPlayerAsync(int gameCode, string connectionId, string playerName, Guid? PlayerId)
+    public GameStartDataModel GetGameStartData(Guid gameId)
+    {
+        var game = games.First(g => g.GameID == gameId);
+
+        return new GameStartDataModel
+        {
+            GameId = gameId,
+            PassCode = game.GameCode,
+            QuizName = game.Quiz.Title,
+            Players = game.Players.Select(p => p.Name).ToList(),
+        };
+    }
+
+    public Task<Guid> AddPlayerAsync(int gameCode, string connectionId, string playerName, Guid? PlayerId)
     {
         var newPlayer = new Player
         {
@@ -38,10 +52,10 @@ internal class GameManager(IGameService gameService, IQuizService quizService) :
         };
         var game = games.First(g => g.GameCode == gameCode);
         game.Players.Add(newPlayer);
-        return Task.FromResult(game.GameID.ToString());
+        return Task.FromResult(game.GameID);
     }
 
-    private async Task EndRoundAsync(string gameId, RunningGame game, QuizDetailModel quiz)
+    private async Task EndRoundAsync(Guid gameId, RunningGame game, QuizDetailModel quiz)
     {
         game.TimerCancellation = null;
         List<ScoreModel> bestPlayers = game.Players.OrderByDescending(p => p.Score).Take(5).Select(p => new ScoreModel { PlayerNickname = p.Name, Score = p.Score }).ToList() ?? [];
@@ -64,9 +78,9 @@ internal class GameManager(IGameService gameService, IQuizService quizService) :
         OnRoundEnded?.Invoke(gameId, quizOver, bestPlayers);
     }
 
-    public async Task<bool> AnswerAsync(string gameId, int question, int answer, string connectionId)
+    public async Task<bool> AnswerAsync(Guid gameId, int question, int answer, string connectionId)
     {
-        var game = games.First(g => g.GameID.ToString() == gameId);
+        var game = games.First(g => g.GameID == gameId);
         var player = game.Players.First(p => p.ConnectionId == connectionId);
         if (player.LastAnsweredQuestion < question && question == game.CurrentQuestion && game.IsQuestionActive())
         {
@@ -88,16 +102,16 @@ internal class GameManager(IGameService gameService, IQuizService quizService) :
         return false;
     }
 
-    public string GetHostID(string gameId)
+    public string GetHostID(Guid gameId)
     {
-        return games.First(g => g.GameID.ToString() == gameId).HostID;
+        return games.First(g => g.GameID == gameId).HostID;
     }
 
 #pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
-    public async Task<QuizQuestionModel?> NextQuestionAsync(string gameId, string connectionId)
+    public async Task<QuizQuestionModel?> NextQuestionAsync(Guid gameId, string connectionId)
 #pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
     {
-        var game = games.First(g => g.GameID.ToString() == gameId);
+        var game = games.First(g => g.GameID == gameId);
         var quiz = game.Quiz;
         if (game.HostID != connectionId)
         {

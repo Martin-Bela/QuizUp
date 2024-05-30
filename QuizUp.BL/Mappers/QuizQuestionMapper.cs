@@ -4,7 +4,7 @@ using QuizUp.Common.Models;
 namespace QuizUp.BL.Mappers;
 internal class QuizQuestionMapper
 {
-    public static QuizQuestionModel MapToQuizQuestion(string gameID, int questionID, QuestionDetailModel quizQuestion)
+    public static QuizQuestionModel MapToQuizQuestion(Guid gameID, int questionID, QuestionDetailModel quizQuestion)
     {
         return new QuizQuestionModel
         {

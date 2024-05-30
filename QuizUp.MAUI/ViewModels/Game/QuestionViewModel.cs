@@ -8,7 +8,7 @@ namespace QuizUp.MAUI.ViewModels;
 [QueryProperty(nameof(QuizQuestion), nameof(QuizQuestion))]
 public partial class QuestionViewModel(ViewModelBase.Dependencies dependencies, IRunningGameService gameManager, IDispatcher dispatcher) : ViewModelBase(dependencies)
 {
-    QuizQuestionModel quizQuestion = new() { GameId = "-1", QuestionId = 0, Answer1 = "1", Answer2 = "2", Answer3 = "3", Answer4 = "4", Question = "QuestionPlaceholder" };
+    QuizQuestionModel quizQuestion = new() { GameId = Guid.Empty, QuestionId = 0, Answer1 = "1", Answer2 = "2", Answer3 = "3", Answer4 = "4", Question = "QuestionPlaceholder" };
 
     public QuizQuestionModel QuizQuestion
     {

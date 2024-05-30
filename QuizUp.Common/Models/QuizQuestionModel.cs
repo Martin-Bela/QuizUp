@@ -1,7 +1,7 @@
 ﻿namespace QuizUp.Common.Models;
 public class QuizQuestionModel
 {
-    public required string GameId { get; set; }
+    public required Guid GameId { get; set; }
     public required int QuestionId { get; set; }
 
     public int TimeLimit { get; set; }

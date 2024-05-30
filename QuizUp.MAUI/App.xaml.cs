@@ -12,7 +12,7 @@ public partial class App : Application
     {
         this.viewRoutingService = viewRoutingService;
         this.tokenHandler = tokenHandler;
-
+        Application.Current.UserAppTheme = AppTheme.Dark;
         InitializeComponent();
 
         MainPage = new AppShell();

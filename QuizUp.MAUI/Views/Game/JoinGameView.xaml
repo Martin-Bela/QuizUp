@@ -7,7 +7,7 @@
              xmlns:views="clr-namespace:QuizUp.MAUI.Views"
              xmlns:view_models="clr-namespace:QuizUp.MAUI.ViewModels"
              x:DataType="view_models:JoinGameViewModel"
-             Shell.TabBarIsVisible="False">
+             Shell.TabBarIsVisible="True">
     <Shell.BackButtonBehavior>
         <BackButtonBehavior Command="{Binding GoBackCommand}" />
     </Shell.BackButtonBehavior>
@@ -15,14 +15,6 @@
     <Grid RowDefinitions="Auto, *, Auto">
         <Grid Grid.Row="0"
               Style="{StaticResource PageHeaderStyle}">
-            <Button Grid.Column="0"
-                    Style="{StaticResource SecondaryButtonStyle}"
-                    Command="{Binding GoBackCommand}">
-                <Button.ImageSource>
-                    <FontImageSource Size="22" FontFamily="{x:Static constants:Fonts.FontAwesome}"
-                                     Glyph="{x:Static fonts:FontAwesomeIcons.ChevronLeft}" />
-                </Button.ImageSource>
-            </Button>
             <Label Grid.Column="1"
                     Text="Join game"
                     Style="{StaticResource PageHeaderLabelStyle}" />

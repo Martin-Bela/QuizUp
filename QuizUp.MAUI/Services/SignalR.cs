@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.SignalR.Client;
+using QuizUp.BL.Models.Game;
 using QuizUp.Common;
 using QuizUp.Common.Models;
 using QuizUp.MAUI.ViewModels;
@@ -26,20 +27,20 @@ public class SignalR : ISignalR
                 );
         });
 
-        hubConnection.On<int, string, string>(SignalRHubCommands.GameCreated, (passCode, gameId, quizName) =>
+        hubConnection.On<GameStartDataModel>(SignalRHubCommands.GameCreated, (gameStartData) =>
         {
             var startGameRoute = routingService.GetRouteByViewModel<StartGameViewModel>();
             Application.Current?.Dispatcher.Dispatch(
                 async () =>
                 {
                     await Shell.Current.GoToAsync(startGameRoute, new Dictionary<string, object> {
-                        { "PassCode", passCode }, { "GameId", gameId }, { "QuizName", quizName }
+                        { "GameStartData", gameStartData },
                     });
                 }
                 );
         });
 
-        hubConnection.On<string>(SignalRHubCommands.GameJoined, (gameId) =>
+        hubConnection.On<Guid>(SignalRHubCommands.GameJoined, (gameId) =>
         {
             var gameRoute = routingService.GetRouteByView<GameIntroView>();
             Application.Current?.Dispatcher.Dispatch(
@@ -74,7 +75,7 @@ public class SignalR : ISignalR
         await hubConnection.InvokeAsync("CreateGame", quizId);
     }
 
-    public async Task StartGameAsync(string gameId)
+    public async Task StartGameAsync(Guid gameId)
     {
         await hubConnection.InvokeAsync("NextQuestion", gameId);
     }
@@ -84,17 +85,17 @@ public class SignalR : ISignalR
         await hubConnection.InvokeAsync("JoinGame", gameCode, playerName, playerId);
     }
 
-    public async Task AnswerQuestionAsync(string gameId, int questionId, int answer)
+    public async Task AnswerQuestionAsync(Guid gameId, int questionId, int answer)
     {
         await hubConnection.InvokeAsync("Answer", gameId, questionId, answer);
     }
 
-    public async Task NextQuestionAsync(string gameId)
+    public async Task NextQuestionAsync(Guid gameId)
     {
         await hubConnection.InvokeAsync("NextQuestion", gameId);
     }
 
-    public async Task LeaveQuiz(string gameId)
+    public async Task LeaveQuiz(Guid gameId)
     {
         await hubConnection.InvokeAsync("LeaveQuiz", gameId);
     }
