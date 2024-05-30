@@ -5,8 +5,6 @@ using System.Diagnostics;
 
 namespace QuizUp.BL.Services;
 
-
-
 internal class GameManager(IGameService gameService, IQuizService quizService) : IGameManager
 {
     private readonly List<RunningGame> games = [];
@@ -14,15 +12,14 @@ internal class GameManager(IGameService gameService, IQuizService quizService) :
 
     public async Task<(int passCode, string gameId, string quizName)> CreateGameAsync(Guid quizId, string hostId)
     {
-        //todo: Remove for production
-        quizId = await quizService.GetFirstQuizID();
-
         var result = await gameService.CreateGameAsync(quizId);
         Debug.Assert(games.All(g => g.GameID != result.Id && g.GameCode != result.Code));
 
+        var quiz = await quizService.GetQuizByIdAsync(quizId);
+
         games.Add(new RunningGame
         {
-            QuizID = quizId,
+            Quiz = quiz,
             HostID = hostId,
             GameCode = result.Code,
             GameID = result.Id
@@ -71,14 +68,14 @@ internal class GameManager(IGameService gameService, IQuizService quizService) :
     {
         var game = games.First(g => g.GameID.ToString() == gameId);
         var player = game.Players.First(p => p.ConnectionId == connectionId);
-        if (player.LastAnsweredQuestion < question && question == game.CurrentQuestion && game.ActiveQuestion)
+        if (player.LastAnsweredQuestion < question && question == game.CurrentQuestion && game.IsQuestionActive())
         {
             player.LastAnsweredQuestion = question;
-            var quiz = await quizService.GetQuizByIdAsync(game.QuizID);
+            var quiz = game.Quiz;
             game.QuestionsStatistics[question].AnswersStatistics[answer].AnsweredCount += 1;
             if (quiz.Questions[question].Answers[answer].IsCorrect)
             {
-                player.Score += 1;
+                player.Score += ComputeScore(game.QuestionStartTime, DateTime.Now, quiz.Questions[question].TimeLimit);
             }
             game.Answers += 1;
             if (game.Answers == game.Players.Count)
@@ -96,14 +93,17 @@ internal class GameManager(IGameService gameService, IQuizService quizService) :
         return games.First(g => g.GameID.ToString() == gameId).HostID;
     }
 
+#pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
     public async Task<QuizQuestionModel?> NextQuestionAsync(string gameId, string connectionId)
+#pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
     {
         var game = games.First(g => g.GameID.ToString() == gameId);
+        var quiz = game.Quiz;
         if (game.HostID != connectionId)
         {
             throw new UnauthorizedAccessException("Only the host change questions");
         }
-        var quiz = await quizService.GetQuizByIdAsync(game.QuizID);
+
         game.CurrentQuestion += 1;
         if (quiz.Questions.Count == game.CurrentQuestion)
         {
@@ -120,6 +120,9 @@ internal class GameManager(IGameService gameService, IQuizService quizService) :
 
         game.TimerCancellation = new CancellationTokenSource();
         var cancellationToken = game.TimerCancellation.Token;
+
+        game.QuestionStartTime = DateTime.Now;
+
         var _ = Task.Run(async () =>
         {
             await Task.Delay(question.TimeLimit * 1000, cancellationToken);
@@ -139,14 +142,26 @@ internal class GameManager(IGameService gameService, IQuizService quizService) :
     private class RunningGame
     {
         public required int GameCode { get; set; }
-        public required Guid QuizID { get; set; }
+        public required QuizDetailModel Quiz { get; set; }
         public required string HostID { get; set; }
         public required Guid GameID { get; set; }
         public List<Player> Players { get; } = [];
         public int CurrentQuestion { get; set; } = -1;
-        public bool ActiveQuestion { get => TimerCancellation != null; }
         public int Answers { get; set; } = 0;
         public CancellationTokenSource? TimerCancellation { get; set; } = null;
+        public DateTime QuestionStartTime { get; set; } = DateTime.Now;
         public List<SaveQuestionStatisticsModel> QuestionsStatistics { get; set; } = [];
+
+        public bool IsQuestionActive() { return (DateTime.Now - QuestionStartTime).TotalMilliseconds <= Quiz.Questions[CurrentQuestion].TimeLimit; }
+    }
+
+    private static int ComputeScore(DateTime startTime, DateTime answerTime, int timeLimit)
+    {
+        var dt = (answerTime - startTime).Nanoseconds;
+        double timeLeftNs = timeLimit - dt;
+        double limitNs = timeLimit * 1_000_000; // 1s = 1_000_000ns
+
+        // from 1000 to 500 points for the correct answer
+        return 500 + Math.Max(0, (int)Math.Ceiling(timeLeftNs / limitNs * 500));
     }
 }
