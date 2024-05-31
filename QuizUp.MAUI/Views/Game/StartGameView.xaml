@@ -7,15 +7,48 @@
                        x:Class="QuizUp.MAUI.Views.StartGameView"
                        x:DataType="vm:StartGameViewModel"
                        Shell.TabBarIsVisible="False">
-    <FlexLayout AlignContent="Center" Direction="Column" JustifyContent="SpaceEvenly" Margin="10">
-        <Label Text="{Binding GameStartData.QuizName}" HorizontalTextAlignment="Center" FontSize="36"/>
-        <VerticalStackLayout>
-            <Label Text="Passcode:" HorizontalTextAlignment="Center" FontSize="30"/>
-            <Label Text="{Binding GameStartData.PassCode}" HorizontalTextAlignment="Center" FontSize="36"/>
+    <Grid RowDefinitions="Auto, *, Auto"
+          Padding="15">
+        <VerticalStackLayout Grid.Row="0"
+                             Margin="0, 0, 0, 20">
+            <Label Text="{Binding GameStartData.QuizName}"
+                   HorizontalTextAlignment="Center"
+                   FontSize="30"
+                   Margin="0, 0, 0, 20"/>
+            <Label Text="Game Code:"
+                   HorizontalTextAlignment="Center"
+                   FontSize="30"/>
+            <Label Text="{Binding GameStartData.PassCode}"
+                   HorizontalTextAlignment="Center"
+                   FontSize="36"/>
         </VerticalStackLayout>
-        <Label Text="{Binding Path=GameStartData.Players.Count, StringFormat='Number of players: {0}'}" 
-               HorizontalTextAlignment="Center"
-               FontSize="30"/>
-        <Button Text="Start Game" Command="{Binding StartGameCommand}" FontSize="36"/>
-    </FlexLayout>
+        <VerticalStackLayout Grid.Row="1"
+                             Spacing="10">
+            <Label 
+               Text="{Binding Path=GameStartData.Players.Count, StringFormat='Number of players: {0}'}" 
+               HorizontalTextAlignment="Start"
+               FontSize="16"/>
+            <ListView
+                      ItemsSource="{Binding GameStartData.Players}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Border BackgroundColor="{StaticResource AppControlBackgroundColor}"
+                                    StrokeThickness="0"
+                                    Padding="10, 0">
+                                <Label Text="{Binding .}"
+                                       VerticalOptions="Center"
+                                       Style="{StaticResource TitleStyle}">
+                                </Label>
+                            </Border>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </VerticalStackLayout>
+        <Button Grid.Row="2"
+                Text="Start Game" 
+                Command="{Binding StartGameCommand}" 
+                Style="{StaticResource PrimaryButtonStyle}"/>
+    </Grid>
 </v:ViewBase>

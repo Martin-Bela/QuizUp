@@ -13,6 +13,8 @@
                 <ResourceDictionary Source="Resources/Styles/EntryStyle.xaml" />
                 <ResourceDictionary Source="Resources/Styles/LabelStyle.xaml" />
                 <ResourceDictionary Source="Resources/Styles/PageHeaderStyle.xaml" />
+                <ResourceDictionary Source="Resources/Styles/EditorStyle.xaml" />
+                <ResourceDictionary Source="Resources/Converters/Converters.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

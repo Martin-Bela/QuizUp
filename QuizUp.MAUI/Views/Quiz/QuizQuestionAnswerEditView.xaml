@@ -15,13 +15,12 @@
         
         <VerticalStackLayout VerticalOptions="Center">
             <Label Text="Add answer"
-                   TextColor="White" />
-            <Frame BackgroundColor="MediumVioletRed"
+                   Style="{StaticResource TitleStyle}"/>
+            <Frame BackgroundColor="{Binding AnswerPos, Converter={StaticResource AnswerFrameColorConverter}}"
                    Margin="0, 5, 0, 0">
-                <Entry Placeholder="Enter answer"
-                       Style="{StaticResource EntryStyle}"
-                       TextColor="Black"
-                       PlaceholderColor="Black" 
+                <Editor Placeholder="Enter answer"
+                       Style="{StaticResource EditorStyle}"
+                       PlaceholderColor="Gray"
                        Text="{Binding Answer.AnswerText}"/>
             </Frame>
             <Frame BackgroundColor="{StaticResource Gray600}"
@@ -32,7 +31,8 @@
                     <Label Text="Correct answer"
                        TextColor="White"
                        VerticalOptions="Center" />
-                    <Switch OnColor="LightGreen" IsToggled="{Binding Answer.IsCorrect}" />
+                    <Switch OnColor="Green"
+                            IsToggled="{Binding Answer.IsCorrect}" />
                 </FlexLayout>
             </Frame>
         </VerticalStackLayout>

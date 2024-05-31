@@ -16,6 +16,7 @@
 
     <Color x:Key="SecondaryButtonBackgroundColor">Transparent</Color>
     <Color x:Key="SecondaryButtonTextColor">White</Color>
+    <Color x:Key="AnswerButtonTextColor">White</Color>
 
     <Color x:Key="EntryBackgroundColor">Transparent</Color>
     <Color x:Key="EntryTextColor">White</Color>
@@ -25,6 +26,12 @@
     <Color x:Key="PageHeaderLabelColor">White</Color>
     <Color x:Key="TitleColor">White</Color>
     <Color x:Key="TextColor">White</Color>
+
+    <Color x:Key="AnswerRed">#C62909</Color>
+    <Color x:Key="AnswerBlue">#0542B9</Color>
+    <Color x:Key="AnswerYellow">#D89E00</Color>
+    <Color x:Key="AnswerGreen">#106B03</Color>
+    <Color x:Key="AnswerDefaultColor">Black</Color>
 
     <Color x:Key="Primary">#512BD4</Color>
     <Color x:Key="PrimaryDark">#ac99ea</Color>
