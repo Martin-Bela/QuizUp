@@ -48,13 +48,19 @@ public class SignalR : ISignalR
             );
         });
 
-        hubConnection.On(SignalRHubCommands.Score, (bool quizOver, List<ScoreModel> bestPlayers) =>
+        hubConnection.On(SignalRHubCommands.Score, (bool quizOver, List<ScoreModel> bestPlayers, PlayerRoundResult playerRoundResult) =>
         {
             var scoreRoute = routingService.GetRouteByViewModel<ScoreViewModel>();
+            PlayerRoundResult? nullablePlayerResult = playerRoundResult;
+
             Application.Current?.Dispatcher.Dispatch(
                 async () =>
                 {
-                    await Shell.Current.GoToAsync(scoreRoute, new Dictionary<string, object> { { "QuizOver", quizOver }, { "BestPlayers", bestPlayers } });
+                    await Shell.Current.GoToAsync(scoreRoute, new Dictionary<string, object> {
+                        { "QuizOver", quizOver },
+                        { "BestPlayers", bestPlayers },
+                        { "PlayerRoundResult", nullablePlayerResult }
+                    });
                 }
             );
         });

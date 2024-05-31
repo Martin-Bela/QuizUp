@@ -5,6 +5,7 @@ using System.Diagnostics;
 namespace QuizUp.Server.Hubs;
 
 using QuizUp.Common;
+using QuizUp.Common.Models;
 using QuizUp.DAL.Entities;
 
 public class QuizHub : Hub
@@ -13,9 +14,12 @@ public class QuizHub : Hub
     public QuizHub(IGameManager gameManager)
     {
         this.gameManager = gameManager;
-        gameManager.OnRoundEnded += async (gameId, quizOver, bestPlayers, hostId) =>
+        gameManager.OnRoundEnded += async (gameId, quizOver, bestPlayers, hostId, playerResults) =>
         {
-            await Clients.Group(gameId.ToString()).SendAsync(SignalRHubCommands.Score, quizOver, bestPlayers);
+            foreach (var (playerConnectionId, playerResult) in playerResults)
+            {
+                await Clients.Client(playerConnectionId).SendAsync(SignalRHubCommands.Score, quizOver, bestPlayers, playerResult);
+            }
             await Clients.Client(hostId).SendAsync(SignalRHubCommands.Score, quizOver, bestPlayers);
         };
     }

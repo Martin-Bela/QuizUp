@@ -7,6 +7,7 @@ namespace QuizUp.MAUI.ViewModels;
 
 [QueryProperty(nameof(QuizOver), nameof(QuizOver))]
 [QueryProperty(nameof(BestPlayers), nameof(BestPlayers))]
+[QueryProperty(nameof(PlayerRoundResult), nameof(PlayerRoundResult))]
 public partial class ScoreViewModel : ViewModelBase
 {
     IRunningGameService gameService;
@@ -19,6 +20,9 @@ public partial class ScoreViewModel : ViewModelBase
 
     [ObservableProperty]
     public string nextText = "Next";
+
+    [ObservableProperty]
+    public PlayerRoundResult? playerRoundResult = null;
 
     public bool quizOver;
     public bool QuizOver
