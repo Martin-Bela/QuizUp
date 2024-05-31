@@ -16,18 +16,17 @@
         </ResourceDictionary>
     </ContentPage.Resources>
 
-    <Grid ColumnDefinitions="*,*" RowDefinitions="*,*,*">
-        <FlexLayout Margin="20" Grid.ColumnSpan="2" Direction="Row" JustifyContent ="SpaceBetween" AlignContent="Center">
-            <Label Text="{Binding QuizQuestion.Question}"/>
-            <Label Text="{Binding RemainingTime}"/>
-        </FlexLayout>
-        <Button Margin="20" Grid.Row="1" Grid.Column="0" Text="{Binding QuizQuestion.Answer1}" Command="{Binding AnswerCommand}" CommandParameter="0"
+    <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto,*,*">
+        <Label Grid.Row="0" Grid.ColumnSpan="2" Text="{Binding RemainingTime}" FontSize="20" Margin="15" HorizontalTextAlignment="End"/>
+        <Label Grid.Row="1" Grid.ColumnSpan="2" Text="{Binding QuizQuestion.Question}" FontSize="20" Margin="20"/>
+
+        <Button Margin="20" Grid.Row="2" Grid.Column="0" Text="{Binding QuizQuestion.Answer1}" Command="{Binding AnswerCommand}" CommandParameter="0"
                 BackgroundColor="{Binding SelectedAnswer, Converter={StaticResource ButtonColorConverter}, ConverterParameter=0}"/>
-        <Button Margin="20" Grid.Row="1" Grid.Column="1" Text="{Binding QuizQuestion.Answer2}" Command="{Binding AnswerCommand}" CommandParameter="1"
+        <Button Margin="20" Grid.Row="2" Grid.Column="1" Text="{Binding QuizQuestion.Answer2}" Command="{Binding AnswerCommand}" CommandParameter="1"
                 BackgroundColor="{Binding SelectedAnswer, Converter={StaticResource ButtonColorConverter}, ConverterParameter=1}"/>
-        <Button Margin="20" Grid.Row="2" Grid.Column="0" Text="{Binding QuizQuestion.Answer3}" Command="{Binding AnswerCommand}" CommandParameter="2"
+        <Button Margin="20" Grid.Row="3" Grid.Column="0" Text="{Binding QuizQuestion.Answer3}" Command="{Binding AnswerCommand}" CommandParameter="2"
                 BackgroundColor="{Binding SelectedAnswer, Converter={StaticResource ButtonColorConverter}, ConverterParameter=2}"/>
-        <Button Margin="20" Grid.Row="2" Grid.Column="1" Text="{Binding QuizQuestion.Answer4}" Command="{Binding AnswerCommand}" CommandParameter="3"
+        <Button Margin="20" Grid.Row="3" Grid.Column="1" Text="{Binding QuizQuestion.Answer4}" Command="{Binding AnswerCommand}" CommandParameter="3"
                 BackgroundColor="{Binding SelectedAnswer, Converter={StaticResource ButtonColorConverter}, ConverterParameter=3}"/>
     </Grid>
 

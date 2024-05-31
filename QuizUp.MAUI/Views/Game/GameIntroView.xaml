@@ -8,7 +8,7 @@
              xmlns:view_models="clr-namespace:QuizUp.MAUI.ViewModels"
              x:DataType="view_models:GameIntroViewModel"
              Shell.TabBarIsVisible="False">
-    <Grid RowDefinitions="*">
+    <Grid RowDefinitions="*" Margin="15">
         <Label
                Text="Wait for the game to start"
                HorizontalOptions="Center"

@@ -17,6 +17,9 @@ public partial class ScoreViewModel : ViewModelBase
     [ObservableProperty]
     public List<ScoreModel> bestPlayers = [];
 
+    [ObservableProperty]
+    public string nextText = "Next";
+
     public bool quizOver;
     public bool QuizOver
     {
@@ -27,6 +30,7 @@ public partial class ScoreViewModel : ViewModelBase
             if (value == true)
             {
                 NextButtonEnabled = true;
+                NextText = "End quiz";
             }
         }
     }

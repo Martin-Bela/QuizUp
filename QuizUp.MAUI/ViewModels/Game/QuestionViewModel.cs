@@ -17,7 +17,7 @@ public partial class QuestionViewModel(ViewModelBase.Dependencies dependencies, 
         {
             SetProperty(ref quizQuestion, value);
             SelectedAnswer = -1;
-            RemainingTime = "30s";
+            RemainingTime = quizQuestion.TimeLimit.ToString();
             CreateTimer();
         }
     }

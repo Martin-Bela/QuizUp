@@ -63,9 +63,15 @@ internal class GameManager(IGameService gameService, IQuizService quizService) :
         return result;
     }
 
-    private void EndRound(Guid gameId, RunningGame game, QuizDetailModel quiz)
+    private void EndRound(Guid gameId, RunningGame game, QuizDetailModel quiz, int currentQuestion)
     {
         game.Mutex.WaitOne();
+        if (game.CurrentQuestion != currentQuestion)
+        {
+            game.Mutex.ReleaseMutex();
+            return;
+        }
+
         game.TimerCancellation = null;
         List<ScoreModel> bestPlayers = game.Players.OrderByDescending(p => p.Score).Take(5).Select(p => new ScoreModel { PlayerNickname = p.Name, Score = p.Score }).ToList() ?? [];
         var quizOver = game.CurrentQuestion + 1 == quiz.Questions.Count;
@@ -108,7 +114,7 @@ internal class GameManager(IGameService gameService, IQuizService quizService) :
             {
                 game.TimerCancellation?.Cancel();
                 game.Mutex.ReleaseMutex();
-                EndRound(gameId, game, quiz);
+                EndRound(gameId, game, quiz, game.CurrentQuestion);
                 return true;
             }
         }
@@ -124,15 +130,18 @@ internal class GameManager(IGameService gameService, IQuizService quizService) :
     public QuizQuestionModel? NextQuestion(Guid gameId, string connectionId)
     {
         var game = games.First(g => g.GameID == gameId);
+        game.Mutex.WaitOne();
         var quiz = game.Quiz;
         if (game.HostID != connectionId)
         {
+            game.Mutex.ReleaseMutex();
             throw new UnauthorizedAccessException("Only the host change questions");
         }
 
         game.CurrentQuestion += 1;
         if (quiz.Questions.Count == game.CurrentQuestion)
         {
+            game.Mutex.ReleaseMutex();
             return null;
         }
 
@@ -148,12 +157,13 @@ internal class GameManager(IGameService gameService, IQuizService quizService) :
         var cancellationToken = game.TimerCancellation.Token;
 
         game.QuestionStartTime = DateTime.Now;
-
+        var current_question = game.CurrentQuestion;
         var _ = Task.Run(async () =>
         {
             await Task.Delay(question.TimeLimit * 1000, cancellationToken);
-            EndRound(gameId, game, quiz);
+            EndRound(gameId, game, quiz, current_question);
         });
+        game.Mutex.ReleaseMutex();
         return QuizQuestionMapper.MapToQuizQuestion(gameId, game.CurrentQuestion, question);
     }
 
