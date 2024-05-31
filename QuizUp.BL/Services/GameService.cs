@@ -123,12 +123,7 @@ public class GameService(ApplicationDbContext dbContext) : IGameService
 
     public async Task DeleteGameByIdAsync(Guid gameId)
     {
-        var game = await dbContext.Games.FindAsync(gameId);
-        if (game == null)
-        {
-            throw new NotFoundException($"Game with id ${gameId} not found");
-        }
-
+        var game = await dbContext.Games.FindAsync(gameId) ?? throw new NotFoundException($"Game with id ${gameId} not found");
         dbContext.Games.Remove(game);
 
         await dbContext.SaveChangesAsync();
