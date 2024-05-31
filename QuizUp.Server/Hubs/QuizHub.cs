@@ -20,7 +20,7 @@ public class QuizHub : Hub
             {
                 await Clients.Client(playerConnectionId).SendAsync(SignalRHubCommands.Score, quizOver, bestPlayers, playerResult);
             }
-            await Clients.Client(hostId).SendAsync(SignalRHubCommands.Score, quizOver, bestPlayers);
+            await Clients.Client(hostId).SendAsync(SignalRHubCommands.Score, quizOver, bestPlayers, null);
         };
     }
 
