@@ -2,19 +2,19 @@
 using System.Globalization;
 
 namespace QuizUp.MAUI.Converters;
-public class ButtonColorConverter : IValueConverter
+public class AnswerFrameColorConverter : IValueConverter
 {
-    public object Convert(object? value, Type targetType, object? buttonIndex, CultureInfo culture)
+    public object Convert(object? answerIndex, Type targetType, object? parameter, CultureInfo culture)
     {
-        Debug.Assert(buttonIndex != null && Application.Current != null);
+        Debug.Assert(answerIndex != null && Application.Current != null);
 
-        var parsingSuceeded = int.TryParse(buttonIndex.ToString(), out var buttonIndexInt);
+        var parsingSuceeded = int.TryParse(answerIndex.ToString(), out var answerIndexInt);
         if (!parsingSuceeded)
         {
-            buttonIndexInt = -1;
+            answerIndexInt = -1;
         }
 
-        var colorName = ButtonIndexToColorName(buttonIndexInt);
+        var colorName = ButtonIndexToColorName(answerIndexInt);
 
         Application.Current.Resources.TryGetValue(colorName, out var colorValue);
 

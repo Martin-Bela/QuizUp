@@ -43,7 +43,7 @@
                     Style="{StaticResource SecondaryButtonStyle}"
                     BackgroundColor="{StaticResource AppControlBackgroundColor}"
                     Padding="5, 15"
-                    Margin="0, 0, 10, 0"/>
+                    Margin="0, 0, 5, 0"/>
 
             <Button Grid.Column="1"
                     Command="{Binding StartGameCommand}" 
@@ -51,7 +51,7 @@
                     Style="{StaticResource SecondaryButtonStyle}"
                     BackgroundColor="{StaticResource AppControlBackgroundColor}"
                     Padding="5, 15"
-                    Margin="10, 0, 10, 0"/>
+                    Margin="5, 0, 5, 0"/>
 
             <Button Grid.Column="2"
                     Command="{Binding ListGamesCommand}" 
@@ -59,7 +59,7 @@
                     Style="{StaticResource SecondaryButtonStyle}"
                     BackgroundColor="{StaticResource AppControlBackgroundColor}"
                     Padding="5, 15"
-                    Margin="10, 0, 0, 0"/>
+                    Margin="5, 0, 0, 0"/>
         </Grid>
     </Grid>
 </views:ViewBase>

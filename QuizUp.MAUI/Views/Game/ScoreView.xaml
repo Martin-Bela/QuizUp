@@ -9,19 +9,61 @@
              xmlns:common_models="clr-namespace:QuizUp.Common.Models;assembly=QuizUp.Common"
              x:DataType="view_models:ScoreViewModel"
              Shell.TabBarIsVisible="True">
-    <Grid RowDefinitions="*, Auto" Padding="10">
-        <ListView ItemsSource="{Binding BestPlayers}">
+    <Grid RowDefinitions="Auto, Auto, *, Auto" 
+          Padding="15">
+        <VerticalStackLayout Grid.Row="0"
+                             IsVisible="{Binding PreviousAnswerResultEnabled}"
+                             Margin="0, 0, 0, 20"
+                             Spacing="10">
+            <Label Text="{Binding PlayerRoundResult.AnswerResult, Converter={StaticResource AnswerResultTextConverter}}"
+                   HorizontalOptions="Center"
+                   Style="{StaticResource TextStyle}"
+                   FontSize="24"/>
+            <Image HorizontalOptions="Center">
+                <Image.Source>
+                    <FontImageSource Size="50"
+                             FontFamily="{x:Static constants:Fonts.FontAwesome}"
+                             Glyph="{Binding PlayerRoundResult.AnswerResult, Converter={StaticResource AnswerResultIconConverter}}" />
+                </Image.Source>
+            </Image>
+            <Label Text="{Binding PlayerRoundResult.Score, StringFormat='+{0} points!'}"
+                   HorizontalOptions="Center"
+                   Style="{StaticResource TextStyle}"
+                   FontSize="24"/>
+        </VerticalStackLayout>
+        <Label Grid.Row="1"
+               Text="Leaderboard:"
+               Style="{StaticResource TitleStyle}"
+               FontSize="24"
+               Margin="0, 0, 0, 15"/>
+        <ListView Grid.Row="2"
+                  ItemsSource="{Binding BestPlayers}">
             <ListView.ItemTemplate>
                 <DataTemplate x:DataType="common_models:ScoreModel">
                     <ViewCell>
-                        <Grid Padding="10" ColumnDefinitions="*,*">
-                            <Label Grid.Column="0" Text="{Binding PlayerNickname}"/>
-                            <Label Grid.Column="1" Text="{Binding Score}" HorizontalOptions="End" />
-                        </Grid>
+                        <Border BackgroundColor="{StaticResource AppControlBackgroundColor}"
+                                StrokeThickness="0">
+                            <Grid ColumnDefinitions="*, *"
+                                  VerticalOptions="Center"
+                                  Padding="10, 0">
+                                <Label Grid.Column="0" 
+                                       Text="{Binding PlayerNickname}"
+                                       Style="{StaticResource TextStyle}"/>
+                                <Label Grid.Column="1" 
+                                       Text="{Binding Score}" 
+                                       HorizontalOptions="End"
+                                       Style="{StaticResource TextStyle}"/>
+                            </Grid>
+                        </Border>
                     </ViewCell>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
-        <Button Grid.Row="1" IsEnabled="{Binding NextButtonEnabled}" IsVisible="{Binding NextButtonEnabled}" Command="{Binding NextCommand}" Text="{Binding NextText}" />
+        <Button Grid.Row="3" 
+                IsEnabled="{Binding NextButtonEnabled}"
+                IsVisible="{Binding NextButtonEnabled}" 
+                Command="{Binding NextCommand}" 
+                Text="{Binding NextText}"
+                Style="{StaticResource PrimaryButtonStyle}"/>
     </Grid>
 </views:ViewBase>

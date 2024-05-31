@@ -6,39 +6,57 @@
              x:Class="QuizUp.MAUI.Views.QuizQuestionEditView"
              x:DataType="view_models:QuizQuestionEditViewModel"
              Shell.TabBarIsVisible="False">
-    <VerticalStackLayout>
+    <Grid RowDefinitions="Auto, Auto, *">
+        <Grid Grid.Row="0"
+              Style="{StaticResource PageHeaderStyle}"
+              Margin="0, 0, 0, 15">
             <Button Grid.Column="0"
-                        Text="Back"
-                        Command="{Binding GoBackCommand}" 
-                        WidthRequest="100"
-                        Margin="20"
-                    />
-        <!--<Grid Style="{StaticResource PageHeaderStyle}">
-
-            <Label Grid.Column="1"
-                    Text="Add question"
-                    Style="{StaticResource PageHeaderLabelStyle}" />
-            <Button Grid.Column="2"
                     Text="Back"
                     Style="{StaticResource SecondaryButtonStyle}"
-                    Command="{Binding GoBackCommand}"/>
-        </Grid> -->
+                    Command="{Binding GoBackCommand}"
+                    Margin="0, 20"/>
+        </Grid>
 
-        <Entry Placeholder="Enter question"
-               Style="{StaticResource EntryStyle}"
-               Margin="15, 15, 15, 0" 
-               Text="{Binding Question.QuestionText}"/>
+        <Editor Grid.Row="1"
+            Placeholder="Enter question"
+            Text="{Binding Question.QuestionText}"
+            Style="{StaticResource EditorStyle}"
+            Margin="15, 0"/>
 
-        <Grid RowDefinitions="*, *"
+        <Grid Grid.Row="2"
+              RowDefinitions="*, *"
               ColumnDefinitions="*, *"
               RowSpacing="10"
               ColumnSpacing="10"
-              Padding="15"
-              HeightRequest="250">
-            <Button Grid.Row="0" Grid.Column="0" Text="{Binding Question.Answers[0].AnswerText}" BackgroundColor="MediumVioletRed" Command="{Binding EditAnswerCommand}" CommandParameter="0"/>
-            <Button Grid.Row="0" Grid.Column="1" Text="{Binding Question.Answers[1].AnswerText}" BackgroundColor="Green" Command="{Binding EditAnswerCommand}" CommandParameter="1"/>
-            <Button Grid.Row="1" Grid.Column="0" Text="{Binding Question.Answers[2].AnswerText}" BackgroundColor="Blue" Command="{Binding EditAnswerCommand}" CommandParameter="2"/>
-            <Button Grid.Row="1" Grid.Column="1" Text="{Binding Question.Answers[3].AnswerText}" BackgroundColor="YellowGreen" Command="{Binding EditAnswerCommand}" CommandParameter="3"/>
+              Padding="15">
+            <Button Grid.Row="0" 
+                    Grid.Column="0" 
+                    Text="{Binding Question.Answers[0].AnswerText}" 
+                    Style="{StaticResource AnswerButtonStyle}"
+                    BackgroundColor="{Binding Question, Converter={StaticResource ButtonColorConverter}, ConverterParameter=0}"
+                    Command="{Binding EditAnswerCommand}" 
+                    CommandParameter="0"/>
+            <Button Grid.Row="0" 
+                    Grid.Column="1" 
+                    Text="{Binding Question.Answers[1].AnswerText}"
+                    Style="{StaticResource AnswerButtonStyle}"
+                    BackgroundColor="{Binding Question, Converter={StaticResource ButtonColorConverter}, ConverterParameter=1}"
+                    Command="{Binding EditAnswerCommand}"
+                    CommandParameter="1"/>
+            <Button Grid.Row="1"
+                    Grid.Column="0" 
+                    Text="{Binding Question.Answers[2].AnswerText}"
+                    Style="{StaticResource AnswerButtonStyle}"
+                    BackgroundColor="{Binding Question, Converter={StaticResource ButtonColorConverter}, ConverterParameter=2}"
+                    Command="{Binding EditAnswerCommand}" 
+                    CommandParameter="2"/>
+            <Button Grid.Row="1"
+                    Grid.Column="1"
+                    Text="{Binding Question.Answers[3].AnswerText}"
+                    Style="{StaticResource AnswerButtonStyle}"
+                    BackgroundColor="{Binding Question, Converter={StaticResource ButtonColorConverter}, ConverterParameter=3}"
+                    Command="{Binding EditAnswerCommand}"
+                    CommandParameter="3"/>
         </Grid>
-    </VerticalStackLayout>
+    </Grid>
 </views:ViewBase>

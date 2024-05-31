@@ -25,4 +25,13 @@
         <Setter Property="WidthRequest" Value="-1" />
         <Setter Property="HeightRequest" Value="-1" />
     </Style>
+
+    <Style x:Key="AnswerButtonStyle" TargetType="Button" BasedOn="{StaticResource ButtonBaseStyle}">
+        <Setter Property="Padding" Value="10" />
+        <Setter Property="CornerRadius" Value="5" />
+        <Setter Property="TextColor" Value="{StaticResource AnswerButtonTextColor}" />
+        <Setter Property="FontSize" Value="16" />
+        <Setter Property="FontFamily" Value="{x:Static constants:Fonts.Medium}" />
+        <Setter Property="LineBreakMode" Value="WordWrap" />
+    </Style>
 </ResourceDictionary>

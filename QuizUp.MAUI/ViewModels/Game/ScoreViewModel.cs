@@ -16,6 +16,9 @@ public partial class ScoreViewModel : ViewModelBase
     public bool nextButtonEnabled;
 
     [ObservableProperty]
+    public bool previousAnswerResultEnabled;
+
+    [ObservableProperty]
     public List<ScoreModel> bestPlayers = [];
 
     [ObservableProperty]
@@ -44,6 +47,8 @@ public partial class ScoreViewModel : ViewModelBase
         this.gameService = gameService;
 
         NextButtonEnabled = gameService.IsHost;
+
+        PreviousAnswerResultEnabled = !gameService.IsHost;
     }
 
     [RelayCommand]
