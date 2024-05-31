@@ -5,10 +5,10 @@ namespace QuizUp.BL.Services;
 public interface IGameManager
 {
     string GetHostID(Guid gameId);
-    Func<Guid, bool, List<ScoreModel>, Task>? OnRoundEnded { get; set; }
+    Func<Guid, bool, List<ScoreModel>, string, Task>? OnRoundEnded { get; set; }
     Task<Guid> CreateGameAsync(Guid quizId, string hostId);
     GameStartDataModel GetGameStartData(Guid gameId);
-    Task<Guid> AddPlayerAsync(int gameCode, string playerID, string playerName, Guid? PlayerId);
-    Task<bool> AnswerAsync(Guid gameId, int question, int answer, string connectionId);
-    Task<QuizQuestionModel?> NextQuestionAsync(Guid gameId, string connectionId);
+    Guid AddPlayer(int gameCode, string playerID, string playerName, Guid? PlayerId);
+    bool Answer(Guid gameId, int question, int answer, string connectionId);
+    QuizQuestionModel? NextQuestion(Guid gameId, string connectionId);
 }

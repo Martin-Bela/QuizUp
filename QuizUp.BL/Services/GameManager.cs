@@ -8,12 +8,13 @@ namespace QuizUp.BL.Services;
 
 internal class GameManager(IGameService gameService, IQuizService quizService) : IGameManager
 {
-    private readonly List<RunningGame> games = [];
-    public Func<Guid, bool, List<ScoreModel>, Task>? OnRoundEnded { get; set; } = null;
+    private SynchronizedCollection<RunningGame> games = [];
+    public Func<Guid, bool, List<ScoreModel>, string, Task>? OnRoundEnded { get; set; } = null;
 
     public async Task<Guid> CreateGameAsync(Guid quizId, string hostId)
     {
         var result = await gameService.CreateGameAsync(quizId);
+
         Debug.Assert(games.All(g => g.GameID != result.Id && g.GameCode != result.Code));
 
         var quiz = await quizService.GetQuizByIdAsync(quizId);
@@ -32,17 +33,19 @@ internal class GameManager(IGameService gameService, IQuizService quizService) :
     public GameStartDataModel GetGameStartData(Guid gameId)
     {
         var game = games.First(g => g.GameID == gameId);
-
-        return new GameStartDataModel
+        game.Mutex.WaitOne();
+        var result = new GameStartDataModel
         {
             GameId = gameId,
             PassCode = game.GameCode,
             QuizName = game.Quiz.Title,
             Players = game.Players.Select(p => p.Name).ToList(),
         };
+        game.Mutex.ReleaseMutex();
+        return result;
     }
 
-    public Task<Guid> AddPlayerAsync(int gameCode, string connectionId, string playerName, Guid? PlayerId)
+    public Guid AddPlayer(int gameCode, string connectionId, string playerName, Guid? PlayerId)
     {
         var newPlayer = new Player
         {
@@ -51,12 +54,18 @@ internal class GameManager(IGameService gameService, IQuizService quizService) :
             PlayerId = PlayerId
         };
         var game = games.First(g => g.GameCode == gameCode);
+
+        game.Mutex.WaitOne();
         game.Players.Add(newPlayer);
-        return Task.FromResult(game.GameID);
+        var result = game.GameID;
+        game.Mutex.ReleaseMutex();
+
+        return result;
     }
 
-    private async Task EndRoundAsync(Guid gameId, RunningGame game, QuizDetailModel quiz)
+    private void EndRound(Guid gameId, RunningGame game, QuizDetailModel quiz)
     {
+        game.Mutex.WaitOne();
         game.TimerCancellation = null;
         List<ScoreModel> bestPlayers = game.Players.OrderByDescending(p => p.Score).Take(5).Select(p => new ScoreModel { PlayerNickname = p.Name, Score = p.Score }).ToList() ?? [];
         var quizOver = game.CurrentQuestion + 1 == quiz.Questions.Count;
@@ -67,20 +76,23 @@ internal class GameManager(IGameService gameService, IQuizService quizService) :
                 .Select(p => new SavePlayerResultModel { UserId = p.PlayerId!.Value, Score = p.Score })
                 .ToList();
 
-            await gameService.SaveGameResultsAsync(new SaveGameResultsModel
+            games.Remove(game);
+
+            Task.Run(() => gameService.SaveGameResultsAsync(new SaveGameResultsModel
             {
                 GameId = game.GameID,
                 PlayersResults = playersResults,
                 QuestionsStatistics = game.QuestionsStatistics
-            });
-            games.Remove(game);
+            }));
         }
-        OnRoundEnded?.Invoke(gameId, quizOver, bestPlayers);
+        game.Mutex.ReleaseMutex();
+        OnRoundEnded?.Invoke(gameId, quizOver, bestPlayers, game.HostID);
     }
 
-    public async Task<bool> AnswerAsync(Guid gameId, int question, int answer, string connectionId)
+    public bool Answer(Guid gameId, int question, int answer, string connectionId)
     {
         var game = games.First(g => g.GameID == gameId);
+        game.Mutex.WaitOne();
         var player = game.Players.First(p => p.ConnectionId == connectionId);
         if (player.LastAnsweredQuestion < question && question == game.CurrentQuestion && game.IsQuestionActive())
         {
@@ -95,10 +107,12 @@ internal class GameManager(IGameService gameService, IQuizService quizService) :
             if (game.Answers == game.Players.Count)
             {
                 game.TimerCancellation?.Cancel();
-                await EndRoundAsync(gameId, game, quiz);
+                game.Mutex.ReleaseMutex();
+                EndRound(gameId, game, quiz);
                 return true;
             }
         }
+        game.Mutex.ReleaseMutex();
         return false;
     }
 
@@ -107,9 +121,7 @@ internal class GameManager(IGameService gameService, IQuizService quizService) :
         return games.First(g => g.GameID == gameId).HostID;
     }
 
-#pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
-    public async Task<QuizQuestionModel?> NextQuestionAsync(Guid gameId, string connectionId)
-#pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
+    public QuizQuestionModel? NextQuestion(Guid gameId, string connectionId)
     {
         var game = games.First(g => g.GameID == gameId);
         var quiz = game.Quiz;
@@ -140,7 +152,7 @@ internal class GameManager(IGameService gameService, IQuizService quizService) :
         var _ = Task.Run(async () =>
         {
             await Task.Delay(question.TimeLimit * 1000, cancellationToken);
-            await EndRoundAsync(gameId, game, quiz);
+            EndRound(gameId, game, quiz);
         });
         return QuizQuestionMapper.MapToQuizQuestion(gameId, game.CurrentQuestion, question);
     }
@@ -155,10 +167,11 @@ internal class GameManager(IGameService gameService, IQuizService quizService) :
     }
     private class RunningGame
     {
+        public required Guid GameID { get; set; }
         public required int GameCode { get; set; }
+        public Mutex Mutex { get; } = new(); // protects everything except GameId and GameCode which are constant
         public required QuizDetailModel Quiz { get; set; }
         public required string HostID { get; set; }
-        public required Guid GameID { get; set; }
         public List<Player> Players { get; } = [];
         public int CurrentQuestion { get; set; } = -1;
         public int Answers { get; set; } = 0;
@@ -166,14 +179,14 @@ internal class GameManager(IGameService gameService, IQuizService quizService) :
         public DateTime QuestionStartTime { get; set; } = DateTime.Now;
         public List<SaveQuestionStatisticsModel> QuestionsStatistics { get; set; } = [];
 
-        public bool IsQuestionActive() { return (DateTime.Now - QuestionStartTime).TotalMilliseconds <= Quiz.Questions[CurrentQuestion].TimeLimit; }
+        public bool IsQuestionActive() { return (DateTime.Now - QuestionStartTime).Nanoseconds <= Quiz.Questions[CurrentQuestion].TimeLimit * 1_000_000; }
     }
 
     private static int ComputeScore(DateTime startTime, DateTime answerTime, int timeLimit)
     {
-        var dt = (answerTime - startTime).Nanoseconds;
-        double timeLeftNs = timeLimit - dt;
-        double limitNs = timeLimit * 1_000_000; // 1s = 1_000_000ns
+        var dt = (answerTime - startTime).TotalMicroseconds;
+        double limitNs = timeLimit * 1_000_000; // 1s = 1_000_0000ms
+        double timeLeftNs = limitNs - dt;
 
         // from 1000 to 500 points for the correct answer
         return 500 + Math.Max(0, (int)Math.Ceiling(timeLeftNs / limitNs * 500));

@@ -22,6 +22,6 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
-        <Button IsEnabled="{Binding NextButtonEnabled}" IsVisible="{Binding NextButtonEnabled}" Command="{Binding NextCommand}" Text="Next" />
+        <Button Grid.Row="1" IsEnabled="{Binding NextButtonEnabled}" IsVisible="{Binding NextButtonEnabled}" Command="{Binding NextCommand}" Text="Next" />
     </Grid>
 </views:ViewBase>
