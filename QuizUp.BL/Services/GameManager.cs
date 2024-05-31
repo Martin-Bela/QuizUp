@@ -1,4 +1,5 @@
-﻿using QuizUp.BL.Mappers;
+﻿using Microsoft.AspNetCore.Connections.Features;
+using QuizUp.BL.Mappers;
 using QuizUp.BL.Models;
 using QuizUp.BL.Models.Game;
 using QuizUp.Common.Models;
@@ -6,10 +7,13 @@ using System.Diagnostics;
 
 namespace QuizUp.BL.Services;
 
+using OnRoundEndedCallback = Func<Guid, bool, List<ScoreModel>, string,
+    IList<(string ConnectionId, PlayerRoundResult result)>, Task>;
+
 internal class GameManager(IGameService gameService, IQuizService quizService) : IGameManager
 {
     private SynchronizedCollection<RunningGame> games = [];
-    public Func<Guid, bool, List<ScoreModel>, string, Task>? OnRoundEnded { get; set; } = null;
+    public OnRoundEndedCallback? OnRoundEnded { get; set; } = null;
 
     public async Task<Guid> CreateGameAsync(Guid quizId, string hostId)
     {
@@ -75,6 +79,25 @@ internal class GameManager(IGameService gameService, IQuizService quizService) :
         game.TimerCancellation = null;
         List<ScoreModel> bestPlayers = game.Players.OrderByDescending(p => p.Score).Take(5).Select(p => new ScoreModel { PlayerNickname = p.Name, Score = p.Score }).ToList() ?? [];
         var quizOver = game.CurrentQuestion + 1 == quiz.Questions.Count;
+
+        var playerResults = game.Players.Select(player =>
+        {
+            PlayerRoundResult result;
+            if (player.LastAnsweredQuestion != currentQuestion)
+            {
+                result = new PlayerRoundResult() { Score = 0, AnswerResult = AnswerResult.TimeExpired };
+            }
+            else
+            {
+                result = new PlayerRoundResult()
+                {
+                    Score = player.LastRoundScore,
+                    AnswerResult = player.LastRoundScore == 0 ? AnswerResult.Incorrect : AnswerResult.Correct,
+                };
+            }
+            return (player.ConnectionId, result);
+        }).ToList();
+
         if (quizOver)
         {
             var playersResults = game.Players
@@ -92,7 +115,7 @@ internal class GameManager(IGameService gameService, IQuizService quizService) :
             }));
         }
         game.Mutex.ReleaseMutex();
-        OnRoundEnded?.Invoke(gameId, quizOver, bestPlayers, game.HostID);
+        OnRoundEnded?.Invoke(gameId, quizOver, bestPlayers, game.HostID, playerResults);
     }
 
     public bool Answer(Guid gameId, int question, int answer, string connectionId)
@@ -107,7 +130,12 @@ internal class GameManager(IGameService gameService, IQuizService quizService) :
             game.QuestionsStatistics[question].AnswersStatistics[answer].AnsweredCount += 1;
             if (quiz.Questions[question].Answers[answer].IsCorrect)
             {
-                player.Score += ComputeScore(game.QuestionStartTime, DateTime.Now, quiz.Questions[question].TimeLimit);
+                player.LastRoundScore = ComputeScore(game.QuestionStartTime, DateTime.Now, quiz.Questions[question].TimeLimit);
+                player.Score += player.LastRoundScore;
+            }
+            else
+            {
+                player.LastRoundScore = 0;
             }
             game.Answers += 1;
             if (game.Answers == game.Players.Count)
@@ -173,6 +201,8 @@ internal class GameManager(IGameService gameService, IQuizService quizService) :
         public required string Name { get; set; }
         public Guid? PlayerId { get; set; }
         public int Score { get; set; } = 0;
+
+        public int LastRoundScore { get; set; } = 0;
         public int LastAnsweredQuestion { get; set; } = -1;
     }
     private class RunningGame
