@@ -7,4 +7,8 @@ public interface ITokenHandler
     public Task SetRefreshTokenAsync(string refreshToken);
 
     public Task<string?> TryGetAccessTokenAsync();
+
+    public void RemoveAccessToken();
+
+    public void RemoveRefreshToken();
 }

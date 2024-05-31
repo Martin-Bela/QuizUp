@@ -40,4 +40,13 @@
         </Tab.Icon>
         <ShellContent ContentTemplate="{DataTemplate views:GameListView}" Route="games" />
     </Tab>
+
+    <Tab Title="Profile">
+        <Tab.Icon>
+            <FontImageSource Size="18" 
+                             FontFamily="{x:Static constants:Fonts.FontAwesome}"
+                             Glyph="{x:Static fonts:FontAwesomeIcons.User}"/>
+        </Tab.Icon>
+        <ShellContent ContentTemplate="{DataTemplate views:ProfileView}" Route="profile" />
+    </Tab>
 </Shell>

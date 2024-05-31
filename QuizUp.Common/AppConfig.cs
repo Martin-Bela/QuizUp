@@ -19,7 +19,7 @@ public static class AppConfig
     {
         //public const string host = "localhost";
         //public const string BaseUrl = $"https://{host}:7126";
-        public const string BaseUrl = "https://e792-147-251-22-5.ngrok-free.app";
+        public const string BaseUrl = "https://6dfd-109-183-191-100.ngrok-free.app";
 
         public const string SignalRUrl = $"{BaseUrl}/quizHub";
 
@@ -37,7 +37,7 @@ public static class AppConfig
     public static class IdentityServer
     {
         //public const string BaseUrl = $"https://{Server.host}:5001";
-        public const string BaseUrl = "https://38c5-147-251-22-5.ngrok-free.app";
+        public const string BaseUrl = "https://75f5-109-183-191-100.ngrok-free.app";
 
         public const string AuthorizationUrl = $"{BaseUrl}/connect/authorize";
 
@@ -59,5 +59,7 @@ public static class AppConfig
         public const string LoginCallbackScheme = "quizup-app";
 
         public const string LoginRedirectUri = $"{LoginCallbackScheme}://";
+
+        public const string LogoutRedirectUri = $"{LoginCallbackScheme}://";
     }
 }

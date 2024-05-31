@@ -163,6 +163,9 @@
 		<MauiXaml Update="Views\LoadingView.xaml">
 			<Generator>MSBuild:Compile</Generator>
 		</MauiXaml>
+		<MauiXaml Update="Views\Profile\ProfileView.xaml">
+		  <Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
 		<MauiXaml Update="Views\Quiz\QuizDetailView.xaml">
 			<Generator>MSBuild:Compile</Generator>
 		</MauiXaml>
@@ -197,5 +200,4 @@
 			<Version>2.3.4</Version>
 		</PackageReference>
 	</ItemGroup>
-
 </Project>

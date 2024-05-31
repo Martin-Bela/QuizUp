@@ -51,6 +51,16 @@ public class TokenHandler(OidcClient oidcClient) : ITokenHandler
         return refreshTokenResult.AccessToken;
     }
 
+    public void RemoveAccessToken()
+    {
+        SecureStorage.Remove(StorageKeys.AccessTokenKey);
+    }
+
+    public void RemoveRefreshToken()
+    {
+        SecureStorage.Remove(StorageKeys.AccessTokenKey);
+    }
+
     private static bool IsTokenValid(string token)
     {
         //try
