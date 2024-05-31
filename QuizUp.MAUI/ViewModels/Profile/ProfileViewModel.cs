@@ -1,4 +1,5 @@
-﻿using CommunityToolkit.Mvvm.Input;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using IdentityModel.OidcClient;
 using QuizUp.MAUI.Services;
 using QuizUp.MAUI.Views;

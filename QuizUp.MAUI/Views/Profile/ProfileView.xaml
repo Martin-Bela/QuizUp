@@ -5,11 +5,10 @@
              xmlns:view_models="clr-namespace:QuizUp.MAUI.ViewModels"
              x:Class="QuizUp.MAUI.Views.ProfileView"
              x:DataType="view_models:ProfileViewModel">
-    <Grid>
-        <VerticalStackLayout VerticalOptions="Center">
-            <Button Text="Logout"
-                    Style="{StaticResource PrimaryButtonStyle}"
-                    Command="{Binding LogoutCommand}" />
-        </VerticalStackLayout>
+    <Grid Padding="15">
+        <Button Text="Logout"
+                Style="{StaticResource PrimaryButtonStyle}"
+                Command="{Binding LogoutCommand}"
+                VerticalOptions="End" />
     </Grid>
 </views:ViewBase>
