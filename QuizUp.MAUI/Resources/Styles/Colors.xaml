@@ -16,6 +16,7 @@
 
     <Color x:Key="SecondaryButtonBackgroundColor">Transparent</Color>
     <Color x:Key="SecondaryButtonTextColor">White</Color>
+    
     <Color x:Key="AnswerButtonTextColor">White</Color>
 
     <Color x:Key="EntryBackgroundColor">Transparent</Color>
@@ -32,7 +33,7 @@
     <Color x:Key="ThirdAnswerColor">#D89E00</Color>
     <Color x:Key="FourthAnswerColor">#106B03</Color>
     <Color x:Key="DefaultAnswerColor">Black</Color>
-
+    
     <Color x:Key="Primary">#512BD4</Color>
     <Color x:Key="PrimaryDark">#ac99ea</Color>
     <Color x:Key="PrimaryDarkText">#242424</Color>

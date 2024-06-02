@@ -6,32 +6,21 @@ public class AnswerFrameColorConverter : IValueConverter
 {
     public object Convert(object? answerIndex, Type targetType, object? parameter, CultureInfo culture)
     {
-        Debug.Assert(answerIndex != null && Application.Current != null);
+        Debug.Assert(Application.Current != null);
 
-        var parsingSuceeded = int.TryParse(answerIndex.ToString(), out var answerIndexInt);
-        if (!parsingSuceeded)
-        {
-            answerIndexInt = -1;
-        }
+        var answerIndexInt = ConverterUtils.TryParseIndex(answerIndex);
 
-        var colorName = ButtonIndexToColorName(answerIndexInt);
+        var colorName = ConverterUtils.AnswerIndexToColorName(answerIndexInt);
 
-        Application.Current.Resources.TryGetValue(colorName, out var colorValue);
+        Application.Current.Resources.TryGetValue(colorName, out var colorObject);
 
-        return colorValue;
+        var color = (Color)colorObject;
+
+        return color;
     }
 
     public object ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)
     {
         throw new NotImplementedException();
     }
-
-    private static string ButtonIndexToColorName(int index) => index switch
-    {
-        0 => "AnswerRed",
-        1 => "AnswerBlue",
-        2 => "AnswerYellow",
-        3 => "AnswerGreen",
-        _ => "AnswerDefaultColor"
-    };
 }

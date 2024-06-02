@@ -31,16 +31,10 @@ public partial class QuizQuestionAnswerEditViewModel(ViewModelBase.Dependencies 
         }
     }
 
+    [ObservableProperty]
     int answerPos = -1;
-    public int AnswerPos
-    {
-        get => answerPos;
-        set
-        {
-            answerPos = value;
-            SetAnswer();
-        }
-    }
+
+    partial void OnAnswerPosChanged(int value) => SetAnswer();
 
     [ObservableProperty]
     public AnswerDetailModel? answer;

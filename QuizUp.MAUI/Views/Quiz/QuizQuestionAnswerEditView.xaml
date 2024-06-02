@@ -19,9 +19,9 @@
             <Frame BackgroundColor="{Binding AnswerPos, Converter={StaticResource AnswerFrameColorConverter}}"
                    Margin="0, 5, 0, 0">
                 <Editor Placeholder="Enter answer"
-                       Style="{StaticResource EditorStyle}"
-                       PlaceholderColor="Gray"
-                       Text="{Binding Answer.AnswerText}"/>
+                        Style="{StaticResource EditorStyle}"
+                        PlaceholderColor="Gray"
+                        Text="{Binding Answer.AnswerText}"/>
             </Frame>
             <Frame BackgroundColor="{StaticResource Gray600}"
                Padding="20, 5"
