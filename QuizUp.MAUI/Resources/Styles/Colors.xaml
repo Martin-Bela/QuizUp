@@ -33,7 +33,10 @@
     <Color x:Key="ThirdAnswerColor">#D89E00</Color>
     <Color x:Key="FourthAnswerColor">#106B03</Color>
     <Color x:Key="DefaultAnswerColor">Black</Color>
-    
+
+    <Color x:Key="CorrectAnswerColor">#106B03</Color>
+    <Color x:Key="WrongAnswerColor">#303030</Color>
+
     <Color x:Key="Primary">#512BD4</Color>
     <Color x:Key="PrimaryDark">#ac99ea</Color>
     <Color x:Key="PrimaryDarkText">#242424</Color>

@@ -1,7 +1,4 @@
-﻿
-
-
-using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using QuizUp.MAUI.Api;
 
 namespace QuizUp.MAUI.ViewModels
@@ -10,7 +7,6 @@ namespace QuizUp.MAUI.ViewModels
     public partial class GameResultsViewModel(ViewModelBase.Dependencies dependencies, IGamesClient gamesClient) : ViewModelBase(dependencies)
     {
         public Guid GameId { get; set; }
-
 
         [ObservableProperty]
         GameResultsModel game = null!;

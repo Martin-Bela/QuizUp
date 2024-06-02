@@ -7,4 +7,5 @@
     <converters:AnswerResultTextConverter x:Key="AnswerResultTextConverter" />
     <converters:AnswerResultIconConverter x:Key="AnswerResultIconConverter" />
     <converters:AnswerFrameColorConverter x:Key="AnswerFrameColorConverter" />
+    <converters:AnswerStatisticsColorConverter x:Key="AnswerStatisticsColorConverter" />
 </ResourceDictionary>

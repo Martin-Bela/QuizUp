@@ -8,44 +8,121 @@
              xmlns:models="clr-namespace:QuizUp.MAUI.Api;assembly=QuizUp.MAUI"
              Shell.TabBarIsVisible="False">
     <ScrollView>
-        <VerticalStackLayout Margin="15">
+        <VerticalStackLayout Margin="15, 15, 15, 0">
             <Label 
                 Text="{Binding Game.Title}"
-                HorizontalOptions="Center" FontSize="30"/>
+                HorizontalOptions="Center" 
+                Style="{StaticResource TitleStyle}"
+                FontSize="30"
+                Margin="0, 0, 0, 20"/>
 
-            <Label Text="Leaderboard" Grid.Row="1" FontSize="20" Margin="0,20,0,0"/>
-            <ListView ItemsSource="{Binding Game.Leaderboard}" Margin="10">
+            <Label Text="Leaderboard" 
+                   Grid.Row="1"
+                   Style="{StaticResource TitleStyle}"
+                   FontSize="20" 
+                   Margin="0, 0, 0, 10"/>
+            
+            <ListView ItemsSource="{Binding Game.Leaderboard}"
+                      Margin="10, 0, 0, 20"
+                      SeparatorVisibility="None">
                 <ListView.ItemTemplate>
                     <DataTemplate x:DataType="models:PlayerResultModel">
                         <ViewCell>
-                            <Grid ColumnDefinitions="*,*">
-                                <Label Grid.Column="0" Text="{Binding UserName}"/>
-                                <Label Grid.Column="1" Text="{Binding Score}"/>
-                            </Grid>
+                            <Border BackgroundColor="{StaticResource AppControlBackgroundColor}"
+                                    StrokeThickness="0"
+                                    Padding="10, 0">
+                                <FlexLayout Direction="Row" 
+                                            JustifyContent="SpaceBetween">
+                                    <Label Text="{Binding UserName}"
+                                           Style="{StaticResource TextStyle}"
+                                           VerticalOptions="Center"/>
+                                    <Label Text="{Binding Score}"
+                                           Style="{StaticResource TextStyle}"
+                                           VerticalOptions="Center"/>
+                                </FlexLayout>
+                            </Border>
                         </ViewCell>
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
 
-            <Label Text="Question statistics" Grid.Row="2" FontSize="20" Margin="0,20,0,0"/>
-            <ListView ItemsSource="{Binding Game.QuestionsStatistics}" HasUnevenRows="True">
+            <Label Text="Question statistics"
+                   Grid.Row="2"
+                   Style="{StaticResource TitleStyle}"
+                   FontSize="20"
+                   Margin="0, 0, 0, 10"/>
+            
+            <ListView ItemsSource="{Binding Game.QuestionsStatistics}"
+                      HasUnevenRows="True"
+                      SeparatorVisibility="None">
                 <ListView.ItemTemplate>
                     <DataTemplate x:DataType="models:QuestionStatisticsModel">
                         <ViewCell>
-                            <Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto" ColumnDefinitions="*,Auto" Margin="10">
-                                <Label Grid.Row="0" Grid.ColumnSpan="2"  Text="{Binding QuestionText}"/>
+                            <Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto" 
+                                  ColumnDefinitions="*,Auto"
+                                  Margin="10, 0, 0, 0">
+                                <Label Grid.Row="0"
+                                       Grid.ColumnSpan="2"
+                                       Text="{Binding QuestionText}"
+                                       Style="{StaticResource TitleStyle}"
+                                       Margin="0, 0, 0, 10"/>
 
-                                <Label Grid.Row="1" Grid.Column="0" Text="{Binding AnswersStatistics[0].AnswerText}"/>
-                                <Label Grid.Row="1" Grid.Column="1" Text="{Binding AnswersStatistics[0].AnsweredCount}"/>
+                                <Border Grid.Row="1"
+                                        Grid.ColumnSpan="2"
+                                        BackgroundColor="{Binding AnswersStatistics[0].IsCorrect, Converter={StaticResource AnswerStatisticsColorConverter}}"
+                                        StrokeThickness="0"
+                                        Margin="10, 0, 0, 0"
+                                        Padding="10, 10">
+                                    <FlexLayout Direction="Row" 
+                                                JustifyContent="SpaceBetween">
+                                        <Label Text="{Binding AnswersStatistics[0].AnswerText}"
+                                               Style="{StaticResource TextStyle}"/>
+                                        <Label Text="{Binding AnswersStatistics[0].AnsweredCount}"
+                                               Style="{StaticResource TextStyle}"/>
+                                    </FlexLayout>
+                                </Border>
 
-                                <Label Grid.Row="2" Grid.Column="0" Text="{Binding AnswersStatistics[1].AnswerText}"/>
-                                <Label Grid.Row="2" Grid.Column="1" Text="{Binding AnswersStatistics[1].AnsweredCount}"/>
+                                <Border Grid.Row="2"
+                                        Grid.ColumnSpan="2"
+                                        BackgroundColor="{Binding AnswersStatistics[1].IsCorrect, Converter={StaticResource AnswerStatisticsColorConverter}}"
+                                        StrokeThickness="0"
+                                        Margin="10, 0, 0, 0"
+                                        Padding="10, 10">
+                                    <FlexLayout Direction="Row" JustifyContent="SpaceBetween">
+                                        <Label Text="{Binding AnswersStatistics[1].AnswerText}"
+                                               Style="{StaticResource TextStyle}"/>
+                                        <Label Text="{Binding AnswersStatistics[1].AnsweredCount}"
+                                               Style="{StaticResource TextStyle}"/>
+                                    </FlexLayout>
+                                </Border>
 
-                                <Label Grid.Row="3" Grid.Column="0" Text="{Binding AnswersStatistics[2].AnswerText}"/>
-                                <Label Grid.Row="3" Grid.Column="1" Text="{Binding AnswersStatistics[2].AnsweredCount}"/>
+                                <Border Grid.Row="3"
+                                        Grid.ColumnSpan="2"
+                                        BackgroundColor="{Binding AnswersStatistics[2].IsCorrect, Converter={StaticResource AnswerStatisticsColorConverter}}"
+                                        StrokeThickness="0"
+                                        Margin="10, 0, 0, 0"
+                                        Padding="10, 10">
+                                    <FlexLayout Direction="Row" JustifyContent="SpaceBetween">
+                                        <Label Text="{Binding AnswersStatistics[2].AnswerText}"
+                                               Style="{StaticResource TextStyle}"/>
+                                        <Label Text="{Binding AnswersStatistics[2].AnsweredCount}"
+                                               Style="{StaticResource TextStyle}"/>
+                                    </FlexLayout>
+                                </Border>
 
-                                <Label Grid.Row="4" Grid.Column="0" Text="{Binding AnswersStatistics[3].AnswerText}"/>
-                                <Label Grid.Row="4" Grid.Column="1" Text="{Binding AnswersStatistics[3].AnsweredCount}"/>
+                                <Border Grid.Row="4"
+                                        Grid.ColumnSpan="2"
+                                        BackgroundColor="{Binding AnswersStatistics[3].IsCorrect, Converter={StaticResource AnswerStatisticsColorConverter}}"
+                                        StrokeThickness="0"
+                                        Margin="10, 0, 0, 10"
+                                        Padding="10, 10">
+                                    <FlexLayout Direction="Row" JustifyContent="SpaceBetween">
+                                        <Label Text="{Binding AnswersStatistics[3].AnswerText}"
+                                               Style="{StaticResource TextStyle}"/>
+                                        <Label Text="{Binding AnswersStatistics[3].AnsweredCount}"
+                                               Style="{StaticResource TextStyle}"/>
+                                    </FlexLayout>
+                                </Border>
                             </Grid>
                         </ViewCell>
                     </DataTemplate>
