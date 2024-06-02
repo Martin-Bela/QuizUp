@@ -9,13 +9,14 @@
     <Color x:Key="AppBackgroundColor">#222222</Color>
     <Color x:Key="AppControlBackgroundColor">#303030</Color>
     
-    <Color x:Key="ModalBackgroundColor">#66000000</Color>
+    <Color x:Key="ModalBackgroundColor">#B2000000</Color>
     
     <Color x:Key="PrimaryButtonBackgroundColor">#0542b9</Color>
     <Color x:Key="PrimaryButtonTextColor">White</Color>
 
     <Color x:Key="SecondaryButtonBackgroundColor">Transparent</Color>
     <Color x:Key="SecondaryButtonTextColor">White</Color>
+    
     <Color x:Key="AnswerButtonTextColor">White</Color>
 
     <Color x:Key="EntryBackgroundColor">Transparent</Color>
@@ -27,11 +28,14 @@
     <Color x:Key="TitleColor">White</Color>
     <Color x:Key="TextColor">White</Color>
 
-    <Color x:Key="AnswerRed">#C62909</Color>
-    <Color x:Key="AnswerBlue">#0542B9</Color>
-    <Color x:Key="AnswerYellow">#D89E00</Color>
-    <Color x:Key="AnswerGreen">#106B03</Color>
-    <Color x:Key="AnswerDefaultColor">Black</Color>
+    <Color x:Key="FirstAnswerColor">#C62909</Color>
+    <Color x:Key="SecondAnswerColor">#0542B9</Color>
+    <Color x:Key="ThirdAnswerColor">#D89E00</Color>
+    <Color x:Key="FourthAnswerColor">#106B03</Color>
+    <Color x:Key="DefaultAnswerColor">Black</Color>
+
+    <Color x:Key="CorrectAnswerColor">#106B03</Color>
+    <Color x:Key="WrongAnswerColor">#303030</Color>
 
     <Color x:Key="Primary">#512BD4</Color>
     <Color x:Key="PrimaryDark">#ac99ea</Color>

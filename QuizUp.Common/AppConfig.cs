@@ -17,9 +17,7 @@ public static class AppConfig
 
     public static class Server
     {
-        //public const string host = "localhost";
-        //public const string BaseUrl = $"https://{host}:7126";
-        public const string BaseUrl = "https://6dfd-109-183-191-100.ngrok-free.app";
+        public const string BaseUrl = "https://98ce-109-183-191-100.ngrok-free.app";
 
         public const string SignalRUrl = $"{BaseUrl}/quizHub";
 
@@ -36,8 +34,7 @@ public static class AppConfig
 
     public static class IdentityServer
     {
-        //public const string BaseUrl = $"https://{Server.host}:5001";
-        public const string BaseUrl = "https://75f5-109-183-191-100.ngrok-free.app";
+        public const string BaseUrl = "https://463c-109-183-191-100.ngrok-free.app";
 
         public const string AuthorizationUrl = $"{BaseUrl}/connect/authorize";
 

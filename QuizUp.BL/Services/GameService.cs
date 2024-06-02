@@ -57,7 +57,8 @@ public class GameService(ApplicationDbContext dbContext) : IGameService
                         .Select(ga => new AnswerStatisticsModel()
                         {
                             AnswerText = ga.Answer.AnswerText,
-                            AnsweredCount = ga.AnsweredCount
+                            AnsweredCount = ga.AnsweredCount,
+                            IsCorrect = ga.Answer.IsCorrect
                         }).ToList()
                 }).ToList()
         };

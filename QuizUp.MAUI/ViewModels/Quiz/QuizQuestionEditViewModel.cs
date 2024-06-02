@@ -35,12 +35,28 @@ public partial class QuizQuestionEditViewModel(ViewModelBase.Dependencies depend
     [ObservableProperty]
     QuestionDetailModel? question;
 
+    [ObservableProperty]
+    public int timeLimitIndex = 2;
+
+    partial void OnTimeLimitIndexChanged(int value) => SetTimeLimit();
+
+    public List<string> PossibleTimeLimits => ["10s", "20s", "30s", "60s", "90s"];
+
     private void SetQuestion()
     {
         if (Quiz is not null && QuestionPos >= 0)
         {
             Question = null;
             Question = Quiz.Questions[QuestionPos];
+            TimeLimitIndex = PossibleTimeLimits.IndexOf($"{Question.TimeLimit}s");
+        }
+    }
+
+    private void SetTimeLimit()
+    {
+        if (Question is not null)
+        {
+            Question.TimeLimit = int.Parse(PossibleTimeLimits[TimeLimitIndex].Replace("s", ""));
         }
     }
 
@@ -55,6 +71,16 @@ public partial class QuizQuestionEditViewModel(ViewModelBase.Dependencies depend
     [RelayCommand]
     private async Task GoBackAsync()
     {
+        await Shell.Current.GoToAsync("..", new Dictionary<string, object> { { "Quiz", Quiz } });
+    }
+
+    [RelayCommand]
+    private async Task DeleteQuestion()
+    {
+        Debug.Assert(Quiz != null && QuestionPos != -1);
+
+        Quiz.Questions.RemoveAt(QuestionPos);
+
         await Shell.Current.GoToAsync("..", new Dictionary<string, object> { { "Quiz", Quiz } });
     }
 }

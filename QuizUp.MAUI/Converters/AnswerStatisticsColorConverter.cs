@@ -2,15 +2,15 @@
 using System.Globalization;
 
 namespace QuizUp.MAUI.Converters;
-public class AnswerFrameColorConverter : IValueConverter
+public class AnswerStatisticsColorConverter : IValueConverter
 {
-    public object Convert(object? answerIndex, Type targetType, object? parameter, CultureInfo culture)
+    public object Convert(object? isAnswerCorrect, Type targetType, object? parameter, CultureInfo culture)
     {
-        Debug.Assert(Application.Current != null);
+        Debug.Assert(isAnswerCorrect != null && Application.Current != null);
 
-        var answerIndexInt = ConverterUtils.TryParseIndex(answerIndex);
+        var isAnswerCorrectBool = (bool)isAnswerCorrect;
 
-        var colorName = ConverterUtils.AnswerIndexToColorName(answerIndexInt);
+        var colorName = isAnswerCorrectBool ? "CorrectAnswerColor" : "WrongAnswerColor";
 
         Application.Current.Resources.TryGetValue(colorName, out var colorObject);
 

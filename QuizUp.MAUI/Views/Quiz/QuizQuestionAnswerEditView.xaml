@@ -15,22 +15,26 @@
         
         <VerticalStackLayout VerticalOptions="Center">
             <Label Text="Add answer"
-                   Style="{StaticResource TitleStyle}"/>
+                   Style="{StaticResource TitleStyle}"
+                   FontSize="16"
+                   Margin="0, 0, 0, 5"/>
+            
             <Frame BackgroundColor="{Binding AnswerPos, Converter={StaticResource AnswerFrameColorConverter}}"
                    Margin="0, 5, 0, 0">
                 <Editor Placeholder="Enter answer"
-                       Style="{StaticResource EditorStyle}"
-                       PlaceholderColor="Gray"
-                       Text="{Binding Answer.AnswerText}"/>
+                        Style="{StaticResource EditorStyle}"
+                        PlaceholderColor="White"
+                        Text="{Binding Answer.AnswerText}"/>
             </Frame>
-            <Frame BackgroundColor="{StaticResource Gray600}"
-               Padding="20, 5"
-               Margin="0, 10, 0, 0">
+
+            <Frame BackgroundColor="{StaticResource AppControlBackgroundColor}"
+                   Padding="20, 5"
+                   Margin="0, 10, 0, 0">
                 <FlexLayout Direction="Row"
-                        JustifyContent="SpaceBetween">
+                            JustifyContent="SpaceBetween">
                     <Label Text="Correct answer"
-                       TextColor="White"
-                       VerticalOptions="Center" />
+                           Style="{StaticResource TextStyle}"
+                           VerticalOptions="Center" />
                     <Switch OnColor="Green"
                             IsToggled="{Binding Answer.IsCorrect}" />
                 </FlexLayout>
