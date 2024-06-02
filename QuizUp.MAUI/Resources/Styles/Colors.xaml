@@ -27,11 +27,11 @@
     <Color x:Key="TitleColor">White</Color>
     <Color x:Key="TextColor">White</Color>
 
-    <Color x:Key="AnswerRed">#C62909</Color>
-    <Color x:Key="AnswerBlue">#0542B9</Color>
-    <Color x:Key="AnswerYellow">#D89E00</Color>
-    <Color x:Key="AnswerGreen">#106B03</Color>
-    <Color x:Key="AnswerDefaultColor">Black</Color>
+    <Color x:Key="FirstAnswerColor">#C62909</Color>
+    <Color x:Key="SecondAnswerColor">#0542B9</Color>
+    <Color x:Key="ThirdAnswerColor">#D89E00</Color>
+    <Color x:Key="FourthAnswerColor">#106B03</Color>
+    <Color x:Key="DefaultAnswerColor">Black</Color>
 
     <Color x:Key="Primary">#512BD4</Color>
     <Color x:Key="PrimaryDark">#ac99ea</Color>

@@ -32,28 +32,28 @@
                 Style="{StaticResource AnswerButtonStyle}"
                 Command="{Binding AnswerCommand}" 
                 CommandParameter="0"
-                BackgroundColor="{Binding SelectedAnswer, Converter={StaticResource ButtonColorConverter}, ConverterParameter=0}"/>
+                BackgroundColor="{Binding SelectedAnswer, Converter={StaticResource AnswerButtonColorConverter}, ConverterParameter=0}"/>
         <Button Grid.Row="2" 
                 Grid.Column="1" 
                 Text="{Binding QuizQuestion.Answer2}" 
                 Style="{StaticResource AnswerButtonStyle}"
                 Command="{Binding AnswerCommand}" 
                 CommandParameter="1"
-                BackgroundColor="{Binding SelectedAnswer, Converter={StaticResource ButtonColorConverter}, ConverterParameter=1}"/>
+                BackgroundColor="{Binding SelectedAnswer, Converter={StaticResource AnswerButtonColorConverter}, ConverterParameter=1}"/>
         <Button Grid.Row="3" 
                 Grid.Column="0" 
                 Text="{Binding QuizQuestion.Answer3}"
                 Style="{StaticResource AnswerButtonStyle}"
                 Command="{Binding AnswerCommand}" 
                 CommandParameter="2"
-                BackgroundColor="{Binding SelectedAnswer, Converter={StaticResource ButtonColorConverter}, ConverterParameter=2}"/>
+                BackgroundColor="{Binding SelectedAnswer, Converter={StaticResource AnswerButtonColorConverter}, ConverterParameter=2}"/>
         <Button Grid.Row="3" 
                 Grid.Column="1"
                 Text="{Binding QuizQuestion.Answer4}"
                 Style="{StaticResource AnswerButtonStyle}"
                 Command="{Binding AnswerCommand}"
                 CommandParameter="3"
-                BackgroundColor="{Binding SelectedAnswer, Converter={StaticResource ButtonColorConverter}, ConverterParameter=3}"/>
+                BackgroundColor="{Binding SelectedAnswer, Converter={StaticResource AnswerButtonColorConverter}, ConverterParameter=3}"/>
     </Grid>
 
 </views:ViewBase>
