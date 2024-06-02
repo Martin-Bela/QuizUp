@@ -11,15 +11,8 @@
     <Shell.BackButtonBehavior>
         <BackButtonBehavior Command="{Binding GoBackCommand}" />
     </Shell.BackButtonBehavior>
-    
-    <Grid RowDefinitions="Auto, *, Auto">
-        <Grid Grid.Row="0"
-              Style="{StaticResource PageHeaderStyle}">
-            <Label Grid.Column="1"
-                    Text="Join game"
-                    Style="{StaticResource PageHeaderLabelStyle}" />
-        </Grid>
 
+    <Grid RowDefinitions="Auto, *, Auto">
         <Entry Grid.Row="1"
                Text="{Binding GameCode}"
                Placeholder="Game Code"

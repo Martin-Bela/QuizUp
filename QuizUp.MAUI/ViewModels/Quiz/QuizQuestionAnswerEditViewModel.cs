@@ -47,7 +47,6 @@ public partial class QuizQuestionAnswerEditViewModel(ViewModelBase.Dependencies 
         }
     }
 
-
     [RelayCommand]
     private async Task SaveAnswerAsync()
     {

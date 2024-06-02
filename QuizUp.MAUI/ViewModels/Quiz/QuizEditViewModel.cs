@@ -74,7 +74,13 @@ public partial class QuizEditViewModel(
     [RelayCommand]
     private async Task SaveQuizAsync()
     {
-        Debug.Assert(Quiz is not null);
+        Debug.Assert(Quiz != null);
+
+        var checkResult = await CheckQuizBeforeSave(Quiz);
+        if (!checkResult)
+        {
+            return;
+        }
 
         if (QuizId is Guid id)
         {
@@ -89,6 +95,7 @@ public partial class QuizEditViewModel(
                 Questions = Quiz.Questions.Select(q => q.MapToCreateQuestionModel()).ToList()
             });
         }
+
         await GoBackAsync();
     }
 
@@ -97,5 +104,37 @@ public partial class QuizEditViewModel(
     {
         var route = routingService.GetRouteByViewModel<QuizListViewModel>();
         await Shell.Current.GoToAsync(route);
+    }
+
+    private static async Task<bool> CheckQuizBeforeSave(QuizDetailModel quiz)
+    {
+        if (string.IsNullOrWhiteSpace(quiz.Title))
+        {
+            await Shell.Current.DisplayAlert(null, "Please fill in quiz title before saving.", "Ok");
+            return false;
+        }
+
+        foreach (var question in quiz.Questions)
+        {
+            if (string.IsNullOrWhiteSpace(question.QuestionText))
+            {
+                await Shell.Current.DisplayAlert(null, "Please fill in all question titles before saving.", "Ok");
+                return false;
+            }
+
+            if (question.Answers.Any(a => string.IsNullOrWhiteSpace(a.AnswerText)))
+            {
+                await Shell.Current.DisplayAlert(null, $"Please fill in all answer texts of question {question.QuestionText} before saving.", "Ok");
+                return false;
+            }
+
+            if (!question.Answers.Any(a => a.IsCorrect))
+            {
+                await Shell.Current.DisplayAlert(null, $"Question {question.QuestionText} must have at least one correct answer.", "Ok");
+                return false;
+            }
+        }
+
+        return true;
     }
 }

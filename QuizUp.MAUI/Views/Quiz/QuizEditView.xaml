@@ -18,14 +18,16 @@
             <Button Grid.Column="0"
                     Text="Cancel"
                     Style="{StaticResource SecondaryButtonStyle}"
-                    Command="{Binding GoBackCommand}" />
+                    Command="{Binding GoBackCommand}"
+                    HorizontalOptions="Start"/>
             <Label Grid.Column="1"
                     Text="Create quiz"
                     Style="{StaticResource PageHeaderLabelStyle}" />
             <Button Grid.Column="2"
                     Text="Save"
                     Style="{StaticResource SecondaryButtonStyle}" 
-                    Command="{Binding SaveQuizCommand}"/>
+                    Command="{Binding SaveQuizCommand}"
+                    HorizontalOptions="End"/>
         </Grid>
 
         <VerticalStackLayout Grid.Row="1"
@@ -45,7 +47,8 @@
                    Style="{StaticResource TitleStyle}"
                    Margin="0, 0, 0, 15"/>
             <ScrollView Grid.Row="1">
-                <ListView ItemsSource="{Binding Quiz.Questions}">
+                <ListView ItemsSource="{Binding Quiz.Questions}"
+                          RowHeight="55">
                     <ListView.ItemTemplate>
                         <DataTemplate x:DataType="models:QuestionDetailModel">
                             <ViewCell>
@@ -69,8 +72,6 @@
             <Button Grid.Row="2" 
                     Text="Add question"
                     Style="{StaticResource PrimaryButtonStyle}"
-                    HorizontalOptions="End"
-                    Padding="25, 10"
                     Command="{Binding CreateQuestionCommand}"/>
         </Grid>
     </Grid>

@@ -24,8 +24,6 @@ public class DataInitializer(ApplicationDbContext applicationDbContext, UserMana
         var gameApplicationUsers = PrepareGameApplicationUsers(games, applicationUsers);
         var gameAnswers = PrepareGameAnswers(games, gameApplicationUsers, questions, answers);
 
-        //applicationDbContext.ApplicationUsers.AddRange(applicationUsers);
-
         applicationDbContext.Quizzes.AddRange(quizzes);
 
         applicationDbContext.Questions.AddRange(questions);
@@ -159,7 +157,7 @@ public class DataInitializer(ApplicationDbContext applicationDbContext, UserMana
 
     public static List<Game> PrepareGames(List<Quiz> quizzes)
     {
-        int numOfGames = quizzes.Count * 2;
+        int numOfGames = quizzes.Count;
 
         var games = new List<Game>();
         // random number of games for each quiz
@@ -194,7 +192,7 @@ public class DataInitializer(ApplicationDbContext applicationDbContext, UserMana
         List<ApplicationUser> applicationUsers
     )
     {
-        const int minPlayersPerGame = 2;
+        const int minPlayersPerGame = 3;
         Debug.Assert(applicationUsers.Count >= minPlayersPerGame);
 
         const int maxScore = 1000;

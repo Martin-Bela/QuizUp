@@ -6,15 +6,23 @@
              x:Class="QuizUp.MAUI.Views.AuthView"
              x:DataType="view_models:AuthViewModel"
              Shell.TabBarIsVisible="False">
-    <Grid>
-        <VerticalStackLayout VerticalOptions="Center"
-                             Spacing="20"
-                             Padding="15">
-            <Button Text="Login"
+    <Grid RowDefinitions="Auto, Auto, Auto"
+          VerticalOptions="Center"
+          RowSpacing="25"
+          Padding="15">
+            <Label Grid.Row="0"
+                   Text="Welcome to QuizUp!"
+                   Style="{StaticResource TitleStyle}"
+                   FontSize="28"
+                   HorizontalOptions="Center"
+                   VerticalOptions="Center"
+                   Margin="0, 0, 0, 25"/>
+            <Button Grid.Row="1"
+                    Text="Login"
                     Style="{StaticResource PrimaryButtonStyle}"
                     Command="{Binding LoginCommand}" />
-            <Button Text="Register"
+            <Button Grid.Row="2"
+                    Text="Register"
                     Style="{StaticResource PrimaryButtonStyle}" />
-        </VerticalStackLayout>
     </Grid>
 </views:ViewBase>

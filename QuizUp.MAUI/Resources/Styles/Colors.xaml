@@ -9,7 +9,7 @@
     <Color x:Key="AppBackgroundColor">#222222</Color>
     <Color x:Key="AppControlBackgroundColor">#303030</Color>
     
-    <Color x:Key="ModalBackgroundColor">#66000000</Color>
+    <Color x:Key="ModalBackgroundColor">#B2000000</Color>
     
     <Color x:Key="PrimaryButtonBackgroundColor">#0542b9</Color>
     <Color x:Key="PrimaryButtonTextColor">White</Color>

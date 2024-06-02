@@ -12,10 +12,16 @@ public partial class ProfileViewModel(
     ITokenHandler tokenHandler
 ) : ViewModelBase(dependencies)
 {
+    [ObservableProperty]
+    public string userName = string.Empty;
+
+    [ObservableProperty]
+    public string email = string.Empty;
+
     [RelayCommand]
-    private async Task LogoutAsync()
+    public async Task LogoutAsync()
     {
-        var result = await oidcClient.LogoutAsync();
+        await oidcClient.LogoutAsync();
 
         tokenHandler.RemoveAccessToken();
         tokenHandler.RemoveRefreshToken();
@@ -26,5 +32,13 @@ public partial class ProfileViewModel(
 
         var authViewRoute = routingService.GetRouteByView<AuthView>();
         await Shell.Current.GoToAsync(authViewRoute);
+    }
+
+    public async override Task OnAppearingAsync()
+    {
+        await base.OnAppearingAsync();
+
+        UserName = await userDataStorage.TryGetUserNameAsync() ?? string.Empty;
+        Email = await userDataStorage.TryGetEmailAsync() ?? string.Empty;
     }
 }

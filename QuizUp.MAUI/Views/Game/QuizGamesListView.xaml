@@ -7,29 +7,38 @@
              x:DataType="view_models:QuizGamesListViewModel"
              xmlns:models="clr-namespace:QuizUp.MAUI.Api;assembly=QuizUp.MAUI"
              x:Name="root">
-    <VerticalStackLayout Margin="15">
-        <Label Text="{Binding QuizGames.Title}"
-               FontSize="16"
-               Style="{StaticResource TitleStyle}"
-               HorizontalOptions="Center"/>
-        <Grid RowDefinitions="Auto, *" Margin="15">
-            <ListView ItemsSource="{Binding QuizGames.Games}">
+    <ScrollView Margin="15">
+        <Grid RowDefinitions="Auto, *">
+            <Label Grid.Row="0"
+                   Text="{Binding QuizGames.Title}"
+                   Style="{StaticResource TitleStyle}"
+                   FontSize="26"
+                   HorizontalOptions="Center"
+                   Margin="0, 0, 0, 20"/>
+
+            <ListView Grid.Row="1"
+                      ItemsSource="{Binding QuizGames.Games}"
+                      VerticalScrollBarVisibility="Never"
+                      RowHeight="55">
                 <ListView.ItemTemplate>
                     <DataTemplate x:DataType="models:GameSummaryModel">
                         <ViewCell>
                             <Border BackgroundColor="{StaticResource AppControlBackgroundColor}"
-                                StrokeThickness="0"
-                                Padding="10, 0">
+                                    StrokeThickness="0"
+                                    Padding="10, 0">
                                 <Border.GestureRecognizers>
                                     <TapGestureRecognizer Command="{Binding Path=BindingContext.OpenGameCommand, Source={x:Reference root}}"
-                                                      CommandParameter="{Binding Id}"/>
+                                                          CommandParameter="{Binding Id}"/>
                                 </Border.GestureRecognizers>
-                                <Label Grid.Column="1" Text="{Binding Path=CreatedAt, StringFormat='{}{0:yyyy-MM-dd   hh:mm}'}"/>
+                                <Label Grid.Column="1"
+                                       Text="{Binding Path=CreatedAt, StringFormat='{}{0:yyyy-MM-dd HH:mm}'}"
+                                       Style="{StaticResource TextStyle}"
+                                       VerticalOptions="Center"/>
                             </Border>
                         </ViewCell>
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
         </Grid>
-    </VerticalStackLayout>
+    </ScrollView>
 </views:ViewBase>

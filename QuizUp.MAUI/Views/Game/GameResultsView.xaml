@@ -8,12 +8,12 @@
              xmlns:models="clr-namespace:QuizUp.MAUI.Api;assembly=QuizUp.MAUI"
              Shell.TabBarIsVisible="False">
     <ScrollView>
-        <VerticalStackLayout Margin="15, 15, 15, 0">
+        <VerticalStackLayout Margin="15, 15, 15, 5">
             <Label 
                 Text="{Binding Game.Title}"
                 HorizontalOptions="Center" 
                 Style="{StaticResource TitleStyle}"
-                FontSize="30"
+                FontSize="26"
                 Margin="0, 0, 0, 20"/>
 
             <Label Text="Leaderboard" 
@@ -54,7 +54,8 @@
             
             <ListView ItemsSource="{Binding Game.QuestionsStatistics}"
                       HasUnevenRows="True"
-                      SeparatorVisibility="None">
+                      SeparatorVisibility="None"
+                      VerticalScrollBarVisibility="Never">
                 <ListView.ItemTemplate>
                     <DataTemplate x:DataType="models:QuestionStatisticsModel">
                         <ViewCell>
@@ -71,7 +72,6 @@
                                         Grid.ColumnSpan="2"
                                         BackgroundColor="{Binding AnswersStatistics[0].IsCorrect, Converter={StaticResource AnswerStatisticsColorConverter}}"
                                         StrokeThickness="0"
-                                        Margin="10, 0, 0, 0"
                                         Padding="10, 10">
                                     <FlexLayout Direction="Row" 
                                                 JustifyContent="SpaceBetween">
@@ -86,7 +86,6 @@
                                         Grid.ColumnSpan="2"
                                         BackgroundColor="{Binding AnswersStatistics[1].IsCorrect, Converter={StaticResource AnswerStatisticsColorConverter}}"
                                         StrokeThickness="0"
-                                        Margin="10, 0, 0, 0"
                                         Padding="10, 10">
                                     <FlexLayout Direction="Row" JustifyContent="SpaceBetween">
                                         <Label Text="{Binding AnswersStatistics[1].AnswerText}"
@@ -100,7 +99,6 @@
                                         Grid.ColumnSpan="2"
                                         BackgroundColor="{Binding AnswersStatistics[2].IsCorrect, Converter={StaticResource AnswerStatisticsColorConverter}}"
                                         StrokeThickness="0"
-                                        Margin="10, 0, 0, 0"
                                         Padding="10, 10">
                                     <FlexLayout Direction="Row" JustifyContent="SpaceBetween">
                                         <Label Text="{Binding AnswersStatistics[2].AnswerText}"
@@ -114,7 +112,7 @@
                                         Grid.ColumnSpan="2"
                                         BackgroundColor="{Binding AnswersStatistics[3].IsCorrect, Converter={StaticResource AnswerStatisticsColorConverter}}"
                                         StrokeThickness="0"
-                                        Margin="10, 0, 0, 10"
+                                        Margin="0, 0, 0, 10"
                                         Padding="10, 10">
                                     <FlexLayout Direction="Row" JustifyContent="SpaceBetween">
                                         <Label Text="{Binding AnswersStatistics[3].AnswerText}"

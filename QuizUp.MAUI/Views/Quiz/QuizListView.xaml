@@ -10,7 +10,8 @@
     <Grid RowDefinitions="*, Auto"
           Margin="15">
         <ListView Grid.Row="0"
-                  ItemsSource="{Binding Quizzes}">
+                  ItemsSource="{Binding Quizzes}"
+                  RowHeight="55">
             <ListView.ItemTemplate>
                 <DataTemplate x:DataType="models:QuizSummaryModel">
                     <ViewCell>
@@ -23,8 +24,7 @@
                             </Border.GestureRecognizers>
                             <Label Text="{Binding Title}"
                                    VerticalOptions="Center"
-                                   Style="{StaticResource TitleStyle}">
-                            </Label>
+                                   Style="{StaticResource TitleStyle}"/>
                         </Border>
                     </ViewCell>
                 </DataTemplate>
