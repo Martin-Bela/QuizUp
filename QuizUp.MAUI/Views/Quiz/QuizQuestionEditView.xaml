@@ -33,28 +33,28 @@
                     Grid.Column="0" 
                     Text="{Binding Question.Answers[0].AnswerText}" 
                     Style="{StaticResource AnswerButtonStyle}"
-                    BackgroundColor="{Binding Question, Converter={StaticResource ButtonColorConverter}, ConverterParameter=0}"
+                    BackgroundColor="{Binding ., Converter={StaticResource AnswerButtonColorConverter}, ConverterParameter=0}"
                     Command="{Binding EditAnswerCommand}" 
                     CommandParameter="0"/>
             <Button Grid.Row="0" 
                     Grid.Column="1" 
                     Text="{Binding Question.Answers[1].AnswerText}"
                     Style="{StaticResource AnswerButtonStyle}"
-                    BackgroundColor="{Binding Question, Converter={StaticResource ButtonColorConverter}, ConverterParameter=1}"
+                    BackgroundColor="{Binding ., Converter={StaticResource AnswerButtonColorConverter}, ConverterParameter=1}"
                     Command="{Binding EditAnswerCommand}"
                     CommandParameter="1"/>
             <Button Grid.Row="1"
                     Grid.Column="0" 
                     Text="{Binding Question.Answers[2].AnswerText}"
                     Style="{StaticResource AnswerButtonStyle}"
-                    BackgroundColor="{Binding Question, Converter={StaticResource ButtonColorConverter}, ConverterParameter=2}"
+                    BackgroundColor="{Binding ., Converter={StaticResource AnswerButtonColorConverter}, ConverterParameter=2}"
                     Command="{Binding EditAnswerCommand}" 
                     CommandParameter="2"/>
             <Button Grid.Row="1"
                     Grid.Column="1"
                     Text="{Binding Question.Answers[3].AnswerText}"
                     Style="{StaticResource AnswerButtonStyle}"
-                    BackgroundColor="{Binding Question, Converter={StaticResource ButtonColorConverter}, ConverterParameter=3}"
+                    BackgroundColor="{Binding ., Converter={StaticResource AnswerButtonColorConverter}, ConverterParameter=3}"
                     Command="{Binding EditAnswerCommand}"
                     CommandParameter="3"/>
         </Grid>

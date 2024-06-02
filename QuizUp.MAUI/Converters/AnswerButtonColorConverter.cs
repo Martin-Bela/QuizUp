@@ -6,7 +6,7 @@ public class AnswerButtonColorConverter : IValueConverter
 {
     public object Convert(object? selectedAnswerIndex, Type targetType, object? buttonIndex, CultureInfo culture)
     {
-        Debug.Assert(selectedAnswerIndex != null && buttonIndex != null && Application.Current != null);
+        Debug.Assert(Application.Current != null);
 
         var selectedAnswerIndexInt = TryParseIndex(selectedAnswerIndex);
         var buttonIndexInt = TryParseIndex(buttonIndex);
@@ -38,8 +38,13 @@ public class AnswerButtonColorConverter : IValueConverter
         throw new NotImplementedException();
     }
 
-    private static int TryParseIndex(object index)
+    private static int TryParseIndex(object? index)
     {
+        if (index == null)
+        {
+            return -1;
+        }
+
         var parsingSucceeded = int.TryParse(index.ToString(), out var indexInt);
         return parsingSucceeded ? indexInt : -1;
     }
