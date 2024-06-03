@@ -9,12 +9,13 @@ namespace QuizUp.BL.Services;
 
 public class QuizService(ApplicationDbContext dbContext) : IQuizService
 {
-    //todo: Remove
-    public async Task<Guid> GetFirstQuizID()
+    public async Task<bool> DoesQuizBelongToUser(Guid quizId, Guid userId)
     {
-        dbContext.Database.EnsureCreated();
-        var quiz = await dbContext.Quizzes.FirstAsync();
-        return quiz.Id;
+        var result = await dbContext.Quizzes
+            .Where(q => q.Id == quizId && q.ApplicationUserId == userId)
+            .FirstOrDefaultAsync();
+
+        return result != null;
     }
 
     public async Task<List<QuizSummaryModel>> GetQuizzessByUserIdAsync(Guid userId)

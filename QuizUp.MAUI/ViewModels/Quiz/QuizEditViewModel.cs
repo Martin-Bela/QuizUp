@@ -74,7 +74,9 @@ public partial class QuizEditViewModel(
     [RelayCommand]
     private async Task SaveQuizAsync()
     {
-        Debug.Assert(Quiz != null);
+        var userId = await userDataStorage.TryGetUserIdAsync();
+
+        Debug.Assert(Quiz != null && userId != null);
 
         var checkResult = await CheckQuizBeforeSave(Quiz);
         if (!checkResult)
@@ -82,15 +84,15 @@ public partial class QuizEditViewModel(
             return;
         }
 
-        if (QuizId is Guid id)
+        if (QuizId != Guid.Empty)
         {
-            await quizzesClient.EditQuizAsync(id, Quiz!.MapToEditQuizModel());
+            await quizzesClient.EditQuizAsync(QuizId, Quiz!.MapToEditQuizModel());
         }
         else
         {
             await quizzesClient.CreateQuizAsync(new CreateQuizModel
             {
-                UserId = Guid.Empty,
+                UserId = userId ?? Guid.Empty,
                 Title = Quiz!.Title,
                 Questions = Quiz.Questions.Select(q => q.MapToCreateQuestionModel()).ToList()
             });

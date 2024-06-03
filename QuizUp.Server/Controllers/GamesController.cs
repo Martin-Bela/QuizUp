@@ -3,12 +3,13 @@ using Microsoft.AspNetCore.Mvc;
 using QuizUp.BL.Exceptions;
 using QuizUp.BL.Services;
 using QuizUp.BL.Models;
+using System.Security.Claims;
 
 namespace QuizUp.Server.Controllers;
 
 [Route("api/games")]
 [ApiController]
-//[Authorize]
+[Authorize]
 public class GamesController(IGameService gameService) : ControllerBase
 {
     private ActionResult InternalServerError =>
@@ -17,6 +18,12 @@ public class GamesController(IGameService gameService) : ControllerBase
     [HttpGet]
     public async Task<ActionResult<List<GameSummaryModel>>> GetGamesByUserIdAsync([FromQuery] Guid userId)
     {
+        var accessTokenUserId = GetAccessTokenUserId();
+        if (accessTokenUserId == null || accessTokenUserId != userId)
+        {
+            return Unauthorized();
+        }
+
         try
         {
             var gameSummaryModels = await gameService.GetGamesByUserIdAsync(userId);
@@ -35,6 +42,12 @@ public class GamesController(IGameService gameService) : ControllerBase
     [HttpGet("{id:Guid}")]
     public async Task<ActionResult<GameResultsModel>> GetGameResultsByIdAsync(Guid id)
     {
+        var gameBelongsToUser = await DoesGameBelongToUser(id);
+        if (!gameBelongsToUser)
+        {
+            return Unauthorized();
+        }
+
         try
         {
             var gameResultsModel = await gameService.GetGameResultsByIdAsync(id);
@@ -87,6 +100,12 @@ public class GamesController(IGameService gameService) : ControllerBase
     [HttpDelete("{id:Guid}")]
     public async Task<ActionResult> DeleteGameAsync(Guid id)
     {
+        var gameBelongsToUser = await DoesGameBelongToUser(id);
+        if (!gameBelongsToUser)
+        {
+            return Unauthorized();
+        }
+
         try
         {
             await gameService.DeleteGameByIdAsync(id);
@@ -100,5 +119,27 @@ public class GamesController(IGameService gameService) : ControllerBase
         {
             return InternalServerError;
         }
+    }
+
+    private Guid? GetAccessTokenUserId()
+    {
+        var userIdString = User.FindFirstValue(ClaimTypes.NameIdentifier);
+        if (userIdString == null)
+        {
+            return null;
+        }
+
+        return new Guid(userIdString);
+    }
+
+    private async Task<bool> DoesGameBelongToUser(Guid gameId)
+    {
+        var userId = GetAccessTokenUserId();
+        if (userId == null)
+        {
+            return false;
+        }
+
+        return await gameService.DoesGameBelongToUser(gameId, userId ?? Guid.Empty);
     }
 }
