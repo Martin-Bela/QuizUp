@@ -44,7 +44,12 @@ public static class AppConfig
 
         public const string OfflineAccessScope = "offline_access";
 
-        public const string PublicKey = "64B3C08AC507ACF9BAA60B7DA347611D";
+        // to-do: get those from discovery document
+        public const string PublicKeyModulus = "rX38X7GpT0XSlgUEZOB4598_b4OPsf6Wt-VVaQU6D6fG0du7omzaPGhWMUS1SKta4s5GIf9VZgLVU-r4_3YaGQBYa9Qd3S0abTeg-50NR1TNRgB35GUdz7IIxE97QAfn2yfzb3cojDOYSKVAixaxodKGsoZDH5q_UgUuCRWfWPozNr8SAdNdVChDbwsCa2yJSqDobAST_5RQphgd1QvvgyrBn3_ZRroJQ10fw-Z8C7uAJE93eTkrubEYwWAGt1c1rRzmQgTyCK3NgHz36-36fh6cmqqv4CjFbNBGI5cdtZk4_18-MbTQpFtRq6YJL8TdXr3Lrr27gI3ZjUs_dgW2UQ";
+
+        public const string PublicKeyExponent = "AQAB";
+
+        public const string PublicKeyId = "64B3C08AC507ACF9BAA60B7DA347611D";
     }
 
     public static class MAUI

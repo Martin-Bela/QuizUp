@@ -76,6 +76,9 @@ public static class Config
                     "user-info",
                     AppConfig.Server.ApiScopeName
                 },
+
+                // for test purposes only -> one week
+                AccessTokenLifetime = 3600 * 24 * 7
             }
         ];
 }
