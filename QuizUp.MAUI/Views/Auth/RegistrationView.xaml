@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<views:ViewBase xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:views="clr-namespace:QuizUp.MAUI.Views"
+             xmlns:view_models="clr-namespace:QuizUp.MAUI.ViewModels"
+             x:Class="QuizUp.MAUI.Views.RegistrationView"
+             x:DataType="view_models:RegistrationViewModel"
+             Shell.TabBarIsVisible="False">
+    <Grid RowDefinitions="Auto, Auto, Auto, Auto, Auto, Auto, Auto, Auto, Auto"
+          VerticalOptions="Center"
+          Padding="15">
+        <Label Grid.Row="0"
+               Text="Email:"
+               Style="{StaticResource TitleStyle}"/>
+        <Entry Grid.Row="1"
+               Text="{Binding Email}"
+               Style="{StaticResource EntryStyle}"
+               Margin="0, 0, 0, 10"/>
+        <Label Grid.Row="2"
+               Text="Username:"
+               Style="{StaticResource TitleStyle}"/>
+        <Entry Grid.Row="3"
+               Text="{Binding UserName}"
+               Style="{StaticResource EntryStyle}"
+               Margin="0, 0, 0, 10"/>
+        <Label Grid.Row="4"
+               Text="Password:"
+               Style="{StaticResource TitleStyle}"/>
+        <Entry Grid.Row="5"
+               Text="{Binding Password}"
+               Style="{StaticResource EntryStyle}"
+               IsPassword="True"
+               Margin="0, 0, 0, 20"/>
+        <Label Grid.Row="6"
+               Text="Confirm password:"
+               Style="{StaticResource TitleStyle}"/>
+        <Entry Grid.Row="7"
+               Text="{Binding PasswordConfirmation}"
+               Style="{StaticResource EntryStyle}"
+               IsPassword="True"
+               Margin="0, 0, 0, 20"/>
+        <Button Grid.Row="8"
+                Text="Register"
+                Style="{StaticResource PrimaryButtonStyle}"
+                Command="{Binding RegisterCommand}" />
+    </Grid>
+</views:ViewBase>

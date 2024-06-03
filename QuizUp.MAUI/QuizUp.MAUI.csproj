@@ -153,6 +153,9 @@
 		<MauiXaml Update="Views\Auth\AuthView.xaml">
 			<Generator>MSBuild:Compile</Generator>
 		</MauiXaml>
+		<MauiXaml Update="Views\Auth\RegistrationView.xaml">
+		  <Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
 		<MauiXaml Update="Views\Base\ViewBase.xaml">
 			<Generator>MSBuild:Compile</Generator>
 		</MauiXaml>

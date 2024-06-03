@@ -32,6 +32,9 @@
     <MauiXaml Update="Views\Auth\AuthView.xaml">
       <SubType>Designer</SubType>
     </MauiXaml>
+    <MauiXaml Update="Views\Auth\RegistrationView.xaml">
+      <SubType>Designer</SubType>
+    </MauiXaml>
     <MauiXaml Update="Views\Base\ViewBase.xaml">
       <SubType>Designer</SubType>
     </MauiXaml>
