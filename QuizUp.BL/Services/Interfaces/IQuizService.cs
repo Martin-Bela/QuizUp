@@ -4,8 +4,7 @@ namespace QuizUp.BL.Services;
 
 public interface IQuizService
 {
-    //todo: Remove this method
-    public Task<Guid> GetFirstQuizID();
+    public Task<bool> DoesQuizBelongToUser(Guid quizId, Guid userId);
 
     public Task<List<QuizSummaryModel>> GetQuizzessByUserIdAsync(Guid userId);
 

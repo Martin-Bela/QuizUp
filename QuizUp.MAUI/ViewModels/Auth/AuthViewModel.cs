@@ -1,5 +1,4 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
+﻿using CommunityToolkit.Mvvm.Input;
 using IdentityModel;
 using IdentityModel.OidcClient;
 using QuizUp.MAUI.Services;
@@ -13,16 +12,13 @@ public partial class AuthViewModel(
     ITokenHandler tokenHandler
 ) : ViewModelBase(dependencies)
 {
-    [ObservableProperty]
-    public string editorText = "Initial editor text";
-
     [RelayCommand]
     private async Task LoginAsync()
     {
         var loginResult = await oidcClient.LoginAsync();
         if (loginResult.IsError)
         {
-            EditorText = loginResult.ErrorDescription;
+            await Shell.Current.DisplayAlert(null, "Error happened during login.", "Ok");
             return;
         }
 
@@ -32,7 +28,7 @@ public partial class AuthViewModel(
         var userInfoResult = await oidcClient.GetUserInfoAsync(loginResult.AccessToken);
         if (userInfoResult.IsError)
         {
-            EditorText = userInfoResult.ErrorDescription;
+            await Shell.Current.DisplayAlert(null, "Error happened during login.", "Ok");
             return;
         }
 
@@ -44,9 +40,14 @@ public partial class AuthViewModel(
         await userDataStorage.SetUserNameAsync(userName);
         await userDataStorage.SetEmailAsync(email);
 
-        EditorText = userId + "\n" + userName + "\n" + email;
-
         var quizListViewRoute = routingService.GetRouteByView<QuizListView>();
         await Shell.Current.GoToAsync(quizListViewRoute);
+    }
+
+    [RelayCommand]
+    public async Task RegisterAsync()
+    {
+        var registerViewRoute = routingService.GetRouteByView<RegistrationView>();
+        await Shell.Current.GoToAsync(registerViewRoute);
     }
 }

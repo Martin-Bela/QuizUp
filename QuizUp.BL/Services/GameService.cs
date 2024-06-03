@@ -9,6 +9,15 @@ namespace QuizUp.BL.Services;
 
 public class GameService(ApplicationDbContext dbContext) : IGameService
 {
+    public async Task<bool> DoesGameBelongToUser(Guid gameId, Guid userId)
+    {
+        var result = await dbContext.Games
+            .Where(g => g.Id == gameId && g.Quiz.ApplicationUserId == userId)
+            .FirstOrDefaultAsync();
+
+        return result != null;
+    }
+
     public async Task<List<GameSummaryModel>> GetGamesByUserIdAsync(Guid userId)
     {
         var user = await dbContext.ApplicationUsers.FindAsync(userId) ?? throw new NotFoundException($"Application user with id {userId} not found.");

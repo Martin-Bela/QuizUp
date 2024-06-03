@@ -4,6 +4,8 @@ namespace QuizUp.BL.Services;
 
 public interface IGameService
 {
+    public Task<bool> DoesGameBelongToUser(Guid gameId, Guid userId);
+
     public Task<List<GameSummaryModel>> GetGamesByUserIdAsync(Guid userId);
 
     public Task<GameResultsModel> GetGameResultsByIdAsync(Guid gameId);

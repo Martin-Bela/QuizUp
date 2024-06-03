@@ -23,6 +23,7 @@
                     Command="{Binding LoginCommand}" />
             <Button Grid.Row="2"
                     Text="Register"
-                    Style="{StaticResource PrimaryButtonStyle}" />
+                    Style="{StaticResource PrimaryButtonStyle}"
+                    Command="{Binding RegisterCommand}" />
     </Grid>
 </views:ViewBase>

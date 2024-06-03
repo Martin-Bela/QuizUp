@@ -9,6 +9,7 @@ public class ViewRoutingService : IViewRoutingService
     public IList<RouteModel> Routes =>
     [
         new("//auth", typeof(AuthView), typeof(AuthViewModel)),
+        new("//auth/registration", typeof(RegistrationView), typeof(RegistrationViewModel)),
 
         new("//quizzes", typeof(QuizListView), typeof(QuizListViewModel)),
         new("//quizzes/detail", typeof(QuizDetailView), typeof(QuizDetailViewModel)),
@@ -28,17 +29,6 @@ public class ViewRoutingService : IViewRoutingService
         new("//games/detail", typeof(GameResultsView), typeof(GameResultsViewModel)),
 
         new("//profile", typeof(ProfileView), typeof(ProfileViewModel))
-
-        //new("//game/detail", typeof(GameDetailView), typeof(GameDetailViewModel)),
-        //new("//game/question", typeof(GameQuestionView), typeof(GameQuestionViewModel)),
-        //new("//game/leaderboard", typeof(GameLeaderboardView), typeof(GameLeaderboardViewModel)),
-        //new("//game/podium", typeof(GamePodiumView), typeof(GamePodiumViewModel)),
-
-        //new("//registration", typeof(RegistrationView), typeof(RegistrationViewModel)),
-        //new("//login", typeof(LoginView), typeof(LoginViewModel)),
-
-        //new("//profile", typeof(ProfileView), typeof(ProfileViewModel)),
-        //new("//profile/edit", typeof(ProfileEditView), typeof(ProfileEditViewModel))
     ];
 
     public string GetRouteByViewModel<TViewModel>()

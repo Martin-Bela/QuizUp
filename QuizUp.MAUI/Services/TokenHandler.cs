@@ -1,6 +1,9 @@
-﻿using IdentityModel.OidcClient;
+﻿using IdentityModel;
+using IdentityModel.OidcClient;
 using Microsoft.IdentityModel.Tokens;
 using QuizUp.Common;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Cryptography;
 using System.Text;
 
 namespace QuizUp.MAUI.Services;
@@ -33,7 +36,7 @@ public class TokenHandler(OidcClient oidcClient) : ITokenHandler
         }
 
         var refreshToken = await SecureStorage.GetAsync(StorageKeys.RefreshTokenKey);
-        if (refreshToken == null || !IsTokenValid(refreshToken))
+        if (refreshToken == null)
         {
             return null;
         }
@@ -63,24 +66,37 @@ public class TokenHandler(OidcClient oidcClient) : ITokenHandler
 
     private static bool IsTokenValid(string token)
     {
-        //try
-        //{
-        //    var handler = new JwtSecurityTokenHandler();
-        //    var validationParameters = GetTokenValidationParameters();
+        try
+        {
+            var handler = new JwtSecurityTokenHandler();
+            var validationParameters = GetTokenValidationParameters();
 
-        //    handler.ValidateToken(token, validationParameters, out var _);
-        //    return true;
-        //}
-        //catch (Exception ex) {
-        //    Console.WriteLine(ex.Message);
-        //    return false;
-        //}
-        return true;
+            handler.ValidateToken(token, validationParameters, out var validationResult);
+
+            var timeDifference = (validationResult.ValidTo - DateTime.UtcNow).TotalSeconds;
+
+            // if access token expires in less than 30 seconds, use refresh token to get a new access token
+            return timeDifference > 30;
+        }
+        catch
+        {
+            return false;
+        }
     }
 
     private static TokenValidationParameters GetTokenValidationParameters()
     {
-        var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(AppConfig.IdentityServer.PublicKey));
+        var rsa = RSA.Create();
+        rsa.ImportParameters(new RSAParameters
+        {
+            Modulus = Base64UrlEncoder.DecodeBytes(AppConfig.IdentityServer.PublicKeyModulus),
+            Exponent = Base64UrlEncoder.DecodeBytes(AppConfig.IdentityServer.PublicKeyExponent)
+        });
+
+        var securityKey = new RsaSecurityKey(rsa)
+        {
+            KeyId = AppConfig.IdentityServer.PublicKeyId
+        };
 
         return new TokenValidationParameters()
         {
